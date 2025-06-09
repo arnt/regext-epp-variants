@@ -19,6 +19,11 @@ author:
   city: Bellevue
   country: Washington
   email: jgalvin@identity.digital
+- name: Michael Bauland
+  org: Identity Digital
+  city: Bellevue
+  country: Washington
+  email: jgalvin@identity.digital
 
 normative:
   RFC5730:
@@ -59,31 +64,38 @@ domain. The remainder of this document describes the specific details.
 
 # Terms
 
-Variant group: An implicit set of domains. This set is not expressed
+Variant set: An implicit set of domains. This set is not expressed
 explicitly in EPP, because it can be impractically large. At the time
 of writing, a domain is registered whose a variant group would contain
 10¹⁵ variants.
 
 Primary domain: The chronologically first domain in a variant group.
+TODO: Defines the diposition value of the variant group.
+Variants are determined by the primary. => Michael
 
-Variant domain: A domain in a variant group.
+Variant domain: A domain in a variant group which is not a primary domain.
 
-Allocatable variant: A domain that has not been registered, and which
+Allocatable variant: A domain that has not been activated but is allocatable (according to the RZ LGR), and which
 is conceptually tied to an existing primary domain.
 
 Allocated variant: A domain that has been registered, and which is
 tied to an existing primary domain.
 
-(The set of allocated variants is expressed in EPP. The EPP client
-sends this to the server and the server checks its accuracy. It is
-never transmitted from server to client.)
+Activated variant: A domain that has been registered and is in the DNS, and which is  tied to an existing primary domain.
+
+
 
 Exempted domain: A preexisting domain that would form a variant
 group if it were registered now.
 
-Blocked domain: A domain that has not been registered, and which is
-conceptually tied to one or more existing exempted domains.
+TOOD: Say these things in technical terms in the context of the DNS and not policy terms in the context of ICANN, e.g. don't say registered.
 
+Blocked domain: A domain that has not been registered, and which is
+conceptually tied to one or more existing exempted domains or which is
+not available for allocation due to the LGR's disposation value (TODO: rephrase)
+
+
+TODO: probably don't need this
 Normal domain: Any domain that has no variants, ie. its variant group
 would consist of only the domain itself. "42.example" might be such a
 domain, assuming that there are no equivalent variants of "42".
@@ -92,12 +104,28 @@ domain, assuming that there are no equivalent variants of "42".
 
 ## EPP &lt;check&gt; command
 
-The EPP &lt;check&gt; command may return three new results:
+Distinction between: registrar understands variants or does not understand variants.
+
+Legacy (registrar does not understand variants):
+* availability is no, if any domain within the variant group exists
+** reason is free to choose for the registry
+
+Registrar supports variants:
+
+Requests needs and extension, containing the primary name.
+
+The EPP &lt;check&gt; command may return five new results:
 
  - The domain cannot be provisioned because it is a variant of a
    primary domain, and the primary domain was not mentioned in the
    &lt;check&gt; command.
+   
+ - The domain cannot be provisioned because it is a variant of a
+   primary domain, and the incorrect primary domain was mentioned in the
+   &lt;check&gt; command.
 
+ - The domain cannot be provisioned because its disposition value is blocked.
+   
  - The domain cannot be provisioned because it is a variant of at
    least one exempted domain.
 
@@ -111,6 +139,28 @@ TODO XML examples of at least one
 The EPP &lt;info&gt; command is not extended, but its response is extended
 with the name of the primary domain if the &lt;info&gt; command concerns a
 variant domain.
+
+* If you ask about a primary domain name
+** you must return all existing primaries
+** you must return all activated variants in that TLD
+** you may return all activated variants in all variant TLDs
+
+* if you ask about a variant
+** you must return the primary label for that variant
+** you must return all primary labels in all variant TLDs
+** you may return all activated variants in that TLDs
+** you may return all activated variants in all variant TLDs
+
+The main part of the response must contain the actual data of the queried domain name 
+(contacts, hosts, status values, etc.)
+
+TODO: check whether EPP spec says anything about the alignment of check and info.
+
+For registrars not supporting variants:
+inquiring about a non-allocated variant should have the similar result as
+inquiring about a reserved name.
+If you don't have a policy, suggest a policy.
+
 
 TODO XML example of response
 
