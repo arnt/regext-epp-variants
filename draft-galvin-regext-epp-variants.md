@@ -20,15 +20,16 @@ author:
   country: Washington
   email: jgalvin@identity.digital
 - name: Michael Bauland
-  org: Identity Digital
-  city: Bellevue
-  country: Washington
-  email: jgalvin@identity.digital
+  org: Knipp Medien und Kommunikation GmbH
+  city: Dortmund
+  country: Germany
+  email: michael.bauland@knipp.de
 
 normative:
   RFC5730:
 
 informative:
+  RFC7940
   https://www.icann.org/en/public-comment/proceeding/phase-2-initial-report-of-the-epdp-on-internationalized-domain-names-11-04-2024
 
 --- abstract
@@ -64,41 +65,44 @@ domain. The remainder of this document describes the specific details.
 
 # Terms
 
-Variant set: An implicit set of domains. This set is not expressed
-explicitly in EPP, because it can be impractically large. At the time
-of writing, a domain is registered whose a variant group would contain
-10¹⁵ variants.
+Label Generation Rules (LGR): A standard way of defining IDN tables. 
+Among others they define the variant relationships as well as their
+disposition values (blocked or allocatable).
+
+Variant group: An implicit set of domains defined by the Label 
+Generation Rule (LGR) of the registry. The variant relationship is
+symmetric and transitive. Hence, an arbitrary element of a variant set
+defines the whole set. This set is not expressed explicitly in EPP,
+because it can be impractically large. At the time of writing, a domain
+is registered whose variant set would contain 10¹⁵ variants.
 
 Primary domain: The chronologically first domain in a variant group.
-TODO: Defines the diposition value of the variant group.
-Variants are determined by the primary. => Michael
+While the variant relationship is symmetric, its disposition value is not.
+It can either be blocked or allocatable. The primary domain name therefore
+partitions the variant group into allocatable variants and blocked variants.
+In case of variant TLDs, there can be a primary domain per TLD.
 
 Variant domain: A domain in a variant group which is not a primary domain.
 
-Allocatable variant: A domain that has not been activated but is allocatable (according to the RZ LGR), and which
-is conceptually tied to an existing primary domain.
+Allocated variant: A domain that has been created in the registry, and
+which is tied to an existing primary domain.
 
-Allocated variant: A domain that has been registered, and which is
-tied to an existing primary domain.
+Allocatable variant: A domain that has not been allocated but is allocatable
+(according to the LGR), and which is conceptually tied to an existing
+primary domain.
 
-Activated variant: A domain that has been registered and is in the DNS, and which is  tied to an existing primary domain.
+Activated variant: An allocated domain that is in the DNS.
+TODO: Do we need to differentiate between allocated and activated? Does it
+make any difference, whether a variant has DNS name servers or not?
 
+Exempted domain: A preexisting domain that exists as a stand-alone domain,
+but would be part of a variant group if it were allocated now. The same
+entity principle does not apply to exempted domains. The exemption stops
+as soon as 0 or 1 allocated domains remain within a variant group.
 
+Blocked domain: A domain that cannot be allocated due to its disposition
+value in relation to the primary domain name.
 
-Exempted domain: A preexisting domain that would form a variant
-group if it were registered now.
-
-TOOD: Say these things in technical terms in the context of the DNS and not policy terms in the context of ICANN, e.g. don't say registered.
-
-Blocked domain: A domain that has not been registered, and which is
-conceptually tied to one or more existing exempted domains or which is
-not available for allocation due to the LGR's disposation value (TODO: rephrase)
-
-
-TODO: probably don't need this
-Normal domain: Any domain that has no variants, ie. its variant group
-would consist of only the domain itself. "42.example" might be such a
-domain, assuming that there are no equivalent variants of "42".
 
 # EPP Commands
 
