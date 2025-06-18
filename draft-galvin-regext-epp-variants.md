@@ -108,35 +108,147 @@ value in relation to the primary domain name.
 
 ## EPP &lt;check&gt; command
 
-Distinction between: registrar understands variants or does not understand variants.
+TODO: probably better not to have a command extension. For Registrars it
+would be difficult to determine the suitable primary domain. Therefore,
+it is better to not ask them to send it, but rather return the appropriate 
+primary domain name in the response.
 
-Legacy (registrar does not understand variants):
-* availability is no, if any domain within the variant group exists
-** reason is free to choose for the registry
 
-Registrar supports variants:
+`This extension defines a new command called the Variant Check Command
+that defines an additional primary domain name element for the EPP
+&lt;check&gt; command.
 
-Requests needs and extension, containing the primary name.
+
+The command MAY contain an &lt;extension&gt; element, which MUST contain a
+&lt;var:check&gt; element. The &lt;var:check&gt; element MUST contain one
+&lt;var:primary&gt; element containing the intended primary domain.
+
+C: &lt;?xml version="1.0" encoding="utf-8" standalone="no"?&gt;
+C: &lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+C:   &lt;command&gt;
+C:     &lt;check&gt;
+C:       &lt;domain:check
+C:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0"&gt;
+C:         &lt;domain:name&gt;examplev1.com&lt;/domain:name&gt;
+C:         &lt;domain:name&gt;examplev1.net&lt;/domain:name&gt;
+C:         &lt;domain:name&gt;examplev1.xyz&lt;/domain:name&gt;
+C:       &lt;/domain:check&gt;
+C:     &lt;/check&gt;
+C:     &lt;extension&gt;
+C:       &lt;var:check xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0"&gt;
+C:         &lt;var:primary&gt;example.com&lt;var:primary&gt;
+C:       &lt;/var:check&gt;
+C:     &lt;/extension&gt;
+C:     &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+C:   &lt;/command&gt;
+C: &lt;/epp&gt;`
+
+For the response there is a disctinction between variant-aware 
+clients (having supplied this extension durin the EPP &lt;login&gt;)
+and clients that are agnostic of variants.
+
+When the server receives a &lt;check&gt; command from a 
+variant-agnostic client and any domain within the checked domain's
+variant group is allocated (or at least one exempted
+domain within the variant group exists) the server MUST NOT include
+an &lt;extension&gt; element. Instead its response response MUST 
+be available = "false". The optional reason MAY be 
+"Unavailable (except as variant)" to tell the registrar it
+might be available as a variant.
+
+When the server receives a &lt;check&gt; command from a variant-aware
+client and the checked domain is part of a variant group with at least one
+allocated variant (or exempted domain) 
+its response MUST contain an &lt;extension&gt; element, which MUST
+contain a child &lt;var:chkData&gt; element. The &lt;fee:chkData&gt; 
+element MUST contain a &lt;var:cd&gt; element for each object referenced in
+the client &lt;check&gt; command.
+
+Each &lt;var:cd&gt; (check data) element MUST contain the following child
+elements:
+
+*  A &lt;var:objID&gt; element, which MUST match an element referenced in
+   the client &lt;check&gt; command.
+*  An OPTIONAL &lt;var:primary&gt; element.
+*  A &lt;var:status&gt; element, which explains in more details the availability
+   status of the queried doamin.
+
+Example &lt;check&gt; response:
+
+S: &lt;?xml version="1.0" encoding="utf-8" standalone="no"?&gt;
+S: &lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+S:   &lt;response&gt;
+S:     &lt;result code="1000"&gt;
+S:       &lt;msg&gt;Command completed successfully&lt;/msg&gt;
+S:     &lt;/result&gt;
+S:     &lt;resData&gt;
+S:       &lt;domain:chkData
+S:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0"&gt;
+S:         &lt;domain:cd&gt;
+S:           &lt;domain:name avail="1"&gt;examplev1.com&lt;/domain:name&gt;
+S:         &lt;/domain:cd&gt;
+S:         &lt;domain:cd&gt;
+S:           &lt;domain:name avail="0"&gt;examplev1.net&lt;/domain:name&gt;
+S:         &lt;/domain:cd&gt;
+S:         &lt;domain:cd&gt;
+S:           &lt;domain:name avail="0"&gt;examplev1.tel&lt;/domain:name&gt;
+S:         &lt;/domain:cd&gt;
+S:         &lt;domain:cd&gt;
+S:           &lt;domain:name avail="0"&gt;examplev1.swiss&lt;/domain:name&gt;
+S:         &lt;/domain:cd&gt;
+S:       &lt;/domain:chkData&gt;
+S:     &lt;/resData&gt;
+S:     &lt;extension&gt;
+S:       &lt;var:chkData
+S:           xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0"&gt;
+S:         &lt;var:cd avail="1"&gt;
+S:           &lt;var:objID&gt;example.com&lt;/var:objID&gt;
+S:           &lt;var:primary&gt;example.com&lt;/var:primary&gt;
+S:           &lt;var:status&gt;AllocatableVariant&lt;/var:status&gt;
+S:         &lt;/var:cd&gt;
+S:         &lt;var:cd avail="0"&gt;
+S:           &lt;var:objID&gt;example.net&lt;/var:objID&gt;
+S:           &lt;var:status&gt;NotSameEntity&lt;/var:status&gt;
+S:         &lt;/var:cd&gt;
+S:         &lt;var:cd avail="0"&gt;
+S:           &lt;var:objID&gt;example.tel&lt;/var:objID&gt;
+S:           &lt;var:status&gt;Blocked&lt;/var:status&gt;
+S:         &lt;/var:cd&gt;
+S:         &lt;var:cd avail="0"&gt;
+S:           &lt;var:objID&gt;example.swiss&lt;/var:objID&gt;
+S:           &lt;var:status&gt;PendingTransfer&lt;/var:status&gt;
+S:         &lt;/var:cd&gt;
+S:       &lt;/var:chkData&gt;
+S:     &lt;/extension&gt;
+S:     &lt;trID&gt;
+S:       &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+S:       &lt;svTRID&gt;54322-XYZ&lt;/svTRID&gt;
+S:     &lt;/trID&gt;
+S:   &lt;/response&gt;
+S: &lt;/epp&gt;
+
 
 The EPP &lt;check&gt; command may return five new results:
 
- - The domain cannot be provisioned because it is a variant of a
-   primary domain, and the primary domain was not mentioned in the
-   &lt;check&gt; command.
-   
- - The domain cannot be provisioned because it is a variant of a
-   primary domain, and the incorrect primary domain was mentioned in the
-   &lt;check&gt; command.
+ 
+- The domain cannot be provisioned because it is a variant of a
+  primary domain, and the primary domain belongs to a different client
+=&gt; sNotSameEntity
 
- - The domain cannot be provisioned because its disposition value is blocked.
+- The domain cannot be provisioned because its disposition value is blocked.
+=&gt; Blocked
    
  - The domain cannot be provisioned because it is a variant of at
    least one exempted domain.
+=&gt; Exempted
 
  - The domain cannot be provisioned because it is a variant in a group
    that is currently being transferred to a different registrar.
+=&gt; PendingTransfer
 
-TODO XML examples of at least one
+Additional custom value, that may be used for server peculiarities.
+=&gt; Custom
+
 
 # EPP &lt;info&gt; command
 
