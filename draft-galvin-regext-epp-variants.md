@@ -65,11 +65,11 @@ domain. The remainder of this document describes the specific details.
 
 # Terms
 
-Label Generation Rules (LGR): A standard way of defining IDN tables. 
-Among others they define the variant relationships as well as their
+Label Generation Rules (LGR): A standard way of defining IDN tables.
+Among others, they define the variant relationships as well as their
 disposition values (blocked or allocatable).
 
-Variant group: An implicit set of domains defined by the Label 
+Variant group: An implicit set of domains defined by the Label
 Generation Rule (LGR) of the registry. The variant relationship is
 symmetric and transitive. Hence, an arbitrary element of a variant set
 defines the whole set. This set is not expressed explicitly in EPP,
@@ -92,13 +92,13 @@ Allocatable variant: A domain that has not been allocated but is allocatable
 primary domain.
 
 Activated variant: An allocated domain that is in the DNS.
-TODO: Do we need to differentiate between allocated and activated? Does it
+__TODO__: Do we need to differentiate between allocated and activated? Does it
 make any difference, whether a variant has DNS name servers or not?
 
 Exempted domain: A preexisting domain that exists as a stand-alone domain,
 but would be part of a variant group if it were allocated now. The same
 entity principle does not apply to exempted domains. The exemption stops
-as soon as 0 or 1 allocated domains remain within a variant group.
+as soon as at most 1 allocated domain remains within a variant group.
 
 Blocked domain: A domain that cannot be allocated due to its disposition
 value in relation to the primary domain name.
@@ -108,16 +108,15 @@ value in relation to the primary domain name.
 
 ## EPP &lt;check&gt; command
 
-TODO: probably better not to have a command extension. For Registrars it
+__TODO__: probably better not to have a command extension. For Registrars, it
 would be difficult to determine the suitable primary domain. Therefore,
-it is better to not ask them to send it, but rather return the appropriate 
+it is better to not ask them to send it, but rather return the appropriate
 primary domain name in the response.
 
 
 `This extension defines a new command called the Variant Check Command
 that defines an additional primary domain name element for the EPP
 &lt;check&gt; command.
-
 
 The command MAY contain an &lt;extension&gt; element, which MUST contain a
 &lt;var:check&gt; element. The &lt;var:check&gt; element MUST contain one
@@ -143,24 +142,24 @@ C:     &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
 C:   &lt;/command&gt;
 C: &lt;/epp&gt;`
 
-For the response there is a disctinction between variant-aware 
+For the response, there is a distinction between variant-aware
 clients (having supplied this extension durin the EPP &lt;login&gt;)
 and clients that are agnostic of variants.
 
-When the server receives a &lt;check&gt; command from a 
+When the server receives a &lt;check&gt; command from a
 variant-agnostic client and any domain within the checked domain's
 variant group is allocated (or at least one exempted
 domain within the variant group exists) the server MUST NOT include
-an &lt;extension&gt; element. Instead its response response MUST 
-be available = "false". The optional reason MAY be 
+an &lt;extension&gt; element. Instead, its response MUST
+be available = "false". The optional reason MAY be
 "Unavailable (except as variant)" to tell the registrar it
 might be available as a variant.
 
 When the server receives a &lt;check&gt; command from a variant-aware
 client and the checked domain is part of a variant group with at least one
-allocated variant (or exempted domain) 
+allocated variant (or exempted domain),
 its response MUST contain an &lt;extension&gt; element, which MUST
-contain a child &lt;var:chkData&gt; element. The &lt;fee:chkData&gt; 
+contain a child &lt;var:chkData&gt; element. The &lt;fee:chkData&gt;
 element MUST contain a &lt;var:cd&gt; element for each object referenced in
 the client &lt;check&gt; command.
 
@@ -168,10 +167,10 @@ Each &lt;var:cd&gt; (check data) element MUST contain the following child
 elements:
 
 *  A &lt;var:objID&gt; element, which MUST match an element referenced in
-   the client &lt;check&gt; command.
+the client &lt;check&gt; command.
 *  An OPTIONAL &lt;var:primary&gt; element.
-*  A &lt;var:status&gt; element, which explains in more details the availability
-   status of the queried doamin.
+*  A &lt;var:status&gt; element, which explains in more detail the availability
+status of the queried domain.
 
 Example &lt;check&gt; response:
 
@@ -230,23 +229,23 @@ S: &lt;/epp&gt;
 
 The EPP &lt;check&gt; command may return five new results:
 
- 
+
 - The domain cannot be provisioned because it is a variant of a
-  primary domain, and the primary domain belongs to a different client
-=&gt; sNotSameEntity
+primary domain, and the primary domain belongs to a different client
+=&gt; NotSameEntity
 
 - The domain cannot be provisioned because its disposition value is blocked.
 =&gt; Blocked
-   
- - The domain cannot be provisioned because it is a variant of at
-   least one exempted domain.
+
+- The domain cannot be provisioned because it is a variant of at
+least one exempted domain.
 =&gt; Exempted
 
- - The domain cannot be provisioned because it is a variant in a group
-   that is currently being transferred to a different registrar.
+- The domain cannot be provisioned because it is a variant in a group
+that is currently being transferred to a different registrar.
 =&gt; PendingTransfer
 
-Additional custom value, that may be used for server peculiarities.
+- Additional custom value that may be used for server peculiarities.
 =&gt; Custom
 
 
@@ -257,17 +256,17 @@ with the name of the primary domain if the &lt;info&gt; command concerns a
 variant domain.
 
 * If you ask about a primary domain name
-** you must return all existing primaries
-** you must return all activated variants in that TLD
-** you may return all activated variants in all variant TLDs
+* you must return all existing primaries
+* you must return all activated variants in that TLD
+* you may return all activated variants in all variant TLDs
 
 * if you ask about a variant
-** you must return the primary label for that variant
-** you must return all primary labels in all variant TLDs
-** you may return all activated variants in that TLDs
-** you may return all activated variants in all variant TLDs
+* you must return the primary label for that variant
+* you must return all primary labels in all variant TLDs
+* you may return all activated variants in that TLDs
+* you may return all activated variants in all variant TLDs
 
-The main part of the response must contain the actual data of the queried domain name 
+The main part of the response must contain the actual data of the queried domain name
 (contacts, hosts, status values, etc.)
 
 TODO: check whether EPP spec says anything about the alignment of check and info.
@@ -284,10 +283,15 @@ TODO XML example of response
 
 The EPP &lt;transfer&gt; command is modified as follows:
 
- - A transfer of a primary domain also transfers all of the variants
-   of that domain.
+- A transfer of a primary domain also transfers all the variants
+of that domain.
 
- - A transfer of a variant domain returns en error.
+- A transfer of a variant domain returns en error.
+
+__TODO__: There must be a safeguard for variant-agnostic clients to not
+accidentally transfer-in a bundle of domains. Therefore, the transfer
+command needs to have an extension, and a command must fail in case the
+extension is not used, but there are variants.
 
 # EPP &lt;create&gt; command
 
