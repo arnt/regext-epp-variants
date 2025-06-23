@@ -174,78 +174,78 @@ status of the queried domain.
 
 Example &lt;check&gt; response:
 
-S: &lt;?xml version="1.0" encoding="utf-8" standalone="no"?&gt;
-S: &lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
-S:   &lt;response&gt;
-S:     &lt;result code="1000"&gt;
-S:       &lt;msg&gt;Command completed successfully&lt;/msg&gt;
-S:     &lt;/result&gt;
-S:     &lt;resData&gt;
-S:       &lt;domain:chkData
-S:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0"&gt;
-S:         &lt;domain:cd&gt;
-S:           &lt;domain:name avail="1"&gt;examplev1.com&lt;/domain:name&gt;
-S:         &lt;/domain:cd&gt;
-S:         &lt;domain:cd&gt;
-S:           &lt;domain:name avail="0"&gt;examplev1.net&lt;/domain:name&gt;
-S:         &lt;/domain:cd&gt;
-S:         &lt;domain:cd&gt;
-S:           &lt;domain:name avail="0"&gt;examplev1.tel&lt;/domain:name&gt;
-S:         &lt;/domain:cd&gt;
-S:         &lt;domain:cd&gt;
-S:           &lt;domain:name avail="0"&gt;examplev1.swiss&lt;/domain:name&gt;
-S:         &lt;/domain:cd&gt;
-S:       &lt;/domain:chkData&gt;
-S:     &lt;/resData&gt;
-S:     &lt;extension&gt;
-S:       &lt;var:chkData
-S:           xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0"&gt;
-S:         &lt;var:cd avail="1"&gt;
-S:           &lt;var:objID&gt;example.com&lt;/var:objID&gt;
-S:           &lt;var:primary&gt;example.com&lt;/var:primary&gt;
-S:           &lt;var:status&gt;AllocatableVariant&lt;/var:status&gt;
-S:         &lt;/var:cd&gt;
-S:         &lt;var:cd avail="0"&gt;
-S:           &lt;var:objID&gt;example.net&lt;/var:objID&gt;
-S:           &lt;var:status&gt;NotSameEntity&lt;/var:status&gt;
-S:         &lt;/var:cd&gt;
-S:         &lt;var:cd avail="0"&gt;
-S:           &lt;var:objID&gt;example.tel&lt;/var:objID&gt;
-S:           &lt;var:status&gt;Blocked&lt;/var:status&gt;
-S:         &lt;/var:cd&gt;
-S:         &lt;var:cd avail="0"&gt;
-S:           &lt;var:objID&gt;example.swiss&lt;/var:objID&gt;
-S:           &lt;var:status&gt;PendingTransfer&lt;/var:status&gt;
-S:         &lt;/var:cd&gt;
-S:       &lt;/var:chkData&gt;
-S:     &lt;/extension&gt;
-S:     &lt;trID&gt;
-S:       &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
-S:       &lt;svTRID&gt;54322-XYZ&lt;/svTRID&gt;
-S:     &lt;/trID&gt;
-S:   &lt;/response&gt;
-S: &lt;/epp&gt;
+S: &lt;?xml version="1.0" encoding="utf-8" standalone="no"?&gt;  
+S: &lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;  
+S:   &lt;response&gt;  
+S:     &lt;result code="1000"&gt;  
+S:       &lt;msg&gt;Command completed successfully&lt;/msg&gt;  
+S:     &lt;/result&gt;  
+S:     &lt;resData&gt;  
+S:       &lt;domain:chkData  
+S:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0"&gt;  
+S:         &lt;domain:cd&gt;  
+S:           &lt;domain:name avail="1"&gt;examplev1.com&lt;/domain:name&gt;  
+S:         &lt;/domain:cd&gt;  
+S:         &lt;domain:cd&gt;  
+S:           &lt;domain:name avail="0"&gt;examplev1.net&lt;/domain:name&gt;  
+S:         &lt;/domain:cd&gt;  
+S:         &lt;domain:cd&gt;  
+S:           &lt;domain:name avail="0"&gt;examplev1.tel&lt;/domain:name&gt;  
+S:         &lt;/domain:cd&gt;  
+S:         &lt;domain:cd&gt;  
+S:           &lt;domain:name avail="0"&gt;examplev1.swiss&lt;/domain:name&gt;  
+S:         &lt;/domain:cd&gt;  
+S:       &lt;/domain:chkData&gt;  
+S:     &lt;/resData&gt;  
+S:     &lt;extension&gt;  
+S:       &lt;var:chkData  
+S:           xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0"&gt;  
+S:         &lt;var:cd avail="1"&gt;  
+S:           &lt;var:objID&gt;example.com&lt;/var:objID&gt;  
+S:           &lt;var:primary&gt;example.com&lt;/var:primary&gt;  
+S:           &lt;var:status&gt;AllocatableVariant&lt;/var:status&gt;  
+S:         &lt;/var:cd&gt;  
+S:         &lt;var:cd avail="0"&gt;  
+S:           &lt;var:objID&gt;example.net&lt;/var:objID&gt;  
+S:           &lt;var:status&gt;NotSameEntity&lt;/var:status&gt;  
+S:         &lt;/var:cd&gt;  
+S:         &lt;var:cd avail="0"&gt;  
+S:           &lt;var:objID&gt;example.tel&lt;/var:objID&gt;  
+S:           &lt;var:status&gt;Blocked&lt;/var:status&gt;  
+S:         &lt;/var:cd&gt;  
+S:         &lt;var:cd avail="0"&gt;  
+S:           &lt;var:objID&gt;example.swiss&lt;/var:objID&gt;  
+S:           &lt;var:status&gt;PendingTransfer&lt;/var:status&gt;  
+S:         &lt;/var:cd&gt;  
+S:       &lt;/var:chkData&gt;  
+S:     &lt;/extension&gt;  
+S:     &lt;trID&gt;  
+S:       &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;  
+S:       &lt;svTRID&gt;54322-XYZ&lt;/svTRID&gt;  
+S:     &lt;/trID&gt;  
+S:   &lt;/response&gt;  
+S: &lt;/epp&gt;  
 
 
 The EPP &lt;check&gt; command may return five new results:
 
 
 - The domain cannot be provisioned because it is a variant of a
-primary domain, and the primary domain belongs to a different client
+primary domain, and the primary domain belongs to a different client  
 =&gt; NotSameEntity
 
-- The domain cannot be provisioned because its disposition value is blocked.
+- The domain cannot be provisioned because its disposition value is blocked.  
 =&gt; Blocked
 
 - The domain cannot be provisioned because it is a variant of at
-least one exempted domain.
+least one exempted domain.  
 =&gt; Exempted
 
 - The domain cannot be provisioned because it is a variant in a group
-that is currently being transferred to a different registrar.
+that is currently being transferred to a different registrar.  
 =&gt; PendingTransfer
 
-- Additional custom value that may be used for server peculiarities.
+- Additional custom value that may be used for server peculiarities.  
 =&gt; Custom
 
 
