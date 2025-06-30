@@ -251,23 +251,38 @@ that is currently being transferred to a different registrar.
 
 # EPP &lt;info&gt; command
 
-The EPP &lt;info&gt; command is not extended, but its response is extended
-with the name of the primary domain if the &lt;info&gt; command concerns a
-variant domain.
+Just like with the &lt;check&gt; there needs to be a distinction between
+variant-aware and variant-agnostic clients. For variant-agnostic clients
+there is no change to the standard behaviour. The response contains the
+actual data of the domain, independent of the fact whether it is a variant
+or not.
 
+For variant-aware clients, the EPP &lt;info&gt; command is not extended, 
+but its response is extended
+if the &lt;info&gt; command concerns a variant domain, i.e., at least two
+domains within a variant gruop have been activated. The response then always
+MUST include all primary domain names across any variant TLDs. Optionally
+the response may include the list of all activated variants (across
+all variant TLDs).
+
+In case a primary domain name is queried in the &lt;info&gt; command, 
+the list of activated variants within the same TLD MUST be returned.
+
+In other words:
 * If you ask about a primary domain name
-* you must return all existing primaries
-* you must return all activated variants in that TLD
-* you may return all activated variants in all variant TLDs
+  * you must return all existing primaries
+  * you must return all activated variants in that TLD
+  * you may return all activated variants in all variant TLDs
 
 * if you ask about a variant
-* you must return the primary label for that variant
-* you must return all primary labels in all variant TLDs
-* you may return all activated variants in that TLDs
-* you may return all activated variants in all variant TLDs
+  * you must return the primary label for that variant
+  * you must return all primary labels in all variant TLDs
+  * you may return all activated variants in that TLDs
+  * you may return all activated variants in all variant TLDs
 
-The main part of the response must contain the actual data of the queried domain name
-(contacts, hosts, status values, etc.)
+The main part of the response MUST contain the actual data of the queried 
+domain name
+(contacts, hosts, status values, etc.)`
 
 TODO: check whether EPP spec says anything about the alignment of check and info.
 
@@ -281,17 +296,23 @@ TODO XML example of response
 
 # EPP &lt;transfer&gt; command
 
-The EPP &lt;transfer&gt; command is modified as follows:
+In order to have a safeguard for variant-agnostic clients to not 
+accidentally transfer a bundle of domains when initiating a transfer-in,
+the EPP &lt;transfer&gt; command is extended to include a flag 
+"include-all-variants". If the flag is set to true, the server knows that
+the client is aware of variants and willing to include them within the
+requested transfer. In case the flag is set to false (or the extension 
+is missing), the client is expecting to just transfer the single domain.
 
-- A transfer of a primary domain also transfers all the variants
-of that domain.
+The &lt;transfer&gt; is extended to include the full list of activated
+variants accross all TLDs that are transferred together with the main
+domain. This allows the gaining client to prepare those variant domains
+in its local database.
 
-- A transfer of a variant domain returns en error.
+It is up to the server policy to define whether a variant group can
+only be transferred in case the (a?) primary domain is used in the
+request.
 
-__TODO__: There must be a safeguard for variant-agnostic clients to not
-accidentally transfer-in a bundle of domains. Therefore, the transfer
-command needs to have an extension, and a command must fail in case the
-extension is not used, but there are variants.
 
 # EPP &lt;create&gt; command
 
