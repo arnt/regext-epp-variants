@@ -4,9 +4,9 @@ ipr: trust200902
 cat: std
 submissiontype: IETF
 area: Applications
-wg: EXTRA
+wg: regext
 
-docname: draft-ietf-regext-epp-variants-00
+docname: draft-galvin-regext-epp-variants-02
 
 title: Domain variant support for EPP
 abbrev: EPP Variants
