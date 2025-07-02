@@ -17,7 +17,8 @@ author:
 - name: James Galvin
   org: Identity Digital
   city: Bellevue
-  country: Washington
+  state: Washington
+  country: US
   email: jgalvin@identity.digital
 - name: Michael Bauland
   org: Knipp Medien und Kommunikation GmbH
@@ -31,7 +32,11 @@ normative:
 informative:
   RFC7940:
   EPDP:
+    title: Phase 2 Initial Report of the EPDP on Internationalized Domain Names
     target: https://www.icann.org/en/public-comment/proceeding/phase-2-initial-report-of-the-epdp-on-internationalized-domain-names-11-04-2024
+    date: 2024
+    author:
+      name: ICANN
 
 --- abstract
 
@@ -123,25 +128,27 @@ The command MAY contain an &lt;extension&gt; element, which MUST contain a
 &lt;var:check&gt; element. The &lt;var:check&gt; element MUST contain one
 &lt;var:primary&gt; element containing the intended primary domain.
 
-C: &lt;?xml version="1.0" encoding="utf-8" standalone="no"?&gt;
-C: &lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
-C:   &lt;command&gt;
-C:     &lt;check&gt;
-C:       &lt;domain:check
-C:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0"&gt;
-C:         &lt;domain:name&gt;examplev1.com&lt;/domain:name&gt;
-C:         &lt;domain:name&gt;examplev1.net&lt;/domain:name&gt;
-C:         &lt;domain:name&gt;examplev1.xyz&lt;/domain:name&gt;
-C:       &lt;/domain:check&gt;
-C:     &lt;/check&gt;
-C:     &lt;extension&gt;
-C:       &lt;var:check xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0"&gt;
-C:         &lt;var:primary&gt;example.com&lt;var:primary&gt;
-C:       &lt;/var:check&gt;
-C:     &lt;/extension&gt;
-C:     &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
-C:   &lt;/command&gt;
-C: &lt;/epp&gt;`
+~~~~~~~~~~~
+C: <?xml version="1.0" encoding="utf-8" standalone="no"?>
+C: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+C:   <command>
+C:     <check>
+C:       <domain:check
+C:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+C:         <domain:name>examplev1.com</domain:name>
+C:         <domain:name>examplev1.net</domain:name>
+C:         <domain:name>examplev1.xyz</domain:name>
+C:       </domain:check>
+C:     </check>
+C:     <extension>
+C:       <var:check xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
+C:         <var:primary>example.com<var:primary>
+C:       </var:check>
+C:     </extension>
+C:     <clTRID>ABC-12345</clTRID>
+C:   </command>
+C: </epp>`
+~~~~~~~~~~~
 
 For the response, there is a distinction between variant-aware
 clients (having supplied this extension durin the EPP &lt;login&gt;)
@@ -175,57 +182,59 @@ status of the queried domain.
 
 Example &lt;check&gt; response:
 
-S: &lt;?xml version="1.0" encoding="utf-8" standalone="no"?&gt;  
-S: &lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;  
-S:   &lt;response&gt;  
-S:     &lt;result code="1000"&gt;  
-S:       &lt;msg&gt;Command completed successfully&lt;/msg&gt;  
-S:     &lt;/result&gt;  
-S:     &lt;resData&gt;  
-S:       &lt;domain:chkData  
-S:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0"&gt;  
-S:         &lt;domain:cd&gt;  
-S:           &lt;domain:name avail="1"&gt;examplev1.com&lt;/domain:name&gt;  
-S:         &lt;/domain:cd&gt;  
-S:         &lt;domain:cd&gt;  
-S:           &lt;domain:name avail="0"&gt;examplev1.net&lt;/domain:name&gt;  
-S:         &lt;/domain:cd&gt;  
-S:         &lt;domain:cd&gt;  
-S:           &lt;domain:name avail="0"&gt;examplev1.tel&lt;/domain:name&gt;  
-S:         &lt;/domain:cd&gt;  
-S:         &lt;domain:cd&gt;  
-S:           &lt;domain:name avail="0"&gt;examplev1.swiss&lt;/domain:name&gt;  
-S:         &lt;/domain:cd&gt;  
-S:       &lt;/domain:chkData&gt;  
-S:     &lt;/resData&gt;  
-S:     &lt;extension&gt;  
-S:       &lt;var:chkData  
-S:           xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0"&gt;  
-S:         &lt;var:cd avail="1"&gt;  
-S:           &lt;var:objID&gt;example.com&lt;/var:objID&gt;  
-S:           &lt;var:primary&gt;example.com&lt;/var:primary&gt;  
-S:           &lt;var:status&gt;AllocatableVariant&lt;/var:status&gt;  
-S:         &lt;/var:cd&gt;  
-S:         &lt;var:cd avail="0"&gt;  
-S:           &lt;var:objID&gt;example.net&lt;/var:objID&gt;  
-S:           &lt;var:status&gt;NotSameEntity&lt;/var:status&gt;  
-S:         &lt;/var:cd&gt;  
-S:         &lt;var:cd avail="0"&gt;  
-S:           &lt;var:objID&gt;example.tel&lt;/var:objID&gt;  
-S:           &lt;var:status&gt;Blocked&lt;/var:status&gt;  
-S:         &lt;/var:cd&gt;  
-S:         &lt;var:cd avail="0"&gt;  
-S:           &lt;var:objID&gt;example.swiss&lt;/var:objID&gt;  
-S:           &lt;var:status&gt;PendingTransfer&lt;/var:status&gt;  
-S:         &lt;/var:cd&gt;  
-S:       &lt;/var:chkData&gt;  
-S:     &lt;/extension&gt;  
-S:     &lt;trID&gt;  
-S:       &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;  
-S:       &lt;svTRID&gt;54322-XYZ&lt;/svTRID&gt;  
-S:     &lt;/trID&gt;  
-S:   &lt;/response&gt;  
-S: &lt;/epp&gt;  
+~~~~~~~~~~~
+S: <?xml version="1.0" encoding="utf-8" standalone="no"?>  
+S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">  
+S:   <response>  
+S:     <result code="1000">  
+S:       <msg>Command completed successfully</msg>  
+S:     </result>  
+S:     <resData>  
+S:       <domain:chkData  
+S:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">  
+S:         <domain:cd>  
+S:           <domain:name avail="1">examplev1.com</domain:name>  
+S:         </domain:cd>  
+S:         <domain:cd>  
+S:           <domain:name avail="0">examplev1.net</domain:name>  
+S:         </domain:cd>  
+S:         <domain:cd>  
+S:           <domain:name avail="0">examplev1.tel</domain:name>  
+S:         </domain:cd>  
+S:         <domain:cd>  
+S:           <domain:name avail="0">examplev1.swiss</domain:name>  
+S:         </domain:cd>  
+S:       </domain:chkData>  
+S:     </resData>  
+S:     <extension>  
+S:       <var:chkData  
+S:           xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">  
+S:         <var:cd avail="1">  
+S:           <var:objID>example.com</var:objID>  
+S:           <var:primary>example.com</var:primary>  
+S:           <var:status>AllocatableVariant</var:status>  
+S:         </var:cd>  
+S:         <var:cd avail="0">  
+S:           <var:objID>example.net</var:objID>  
+S:           <var:status>NotSameEntity</var:status>  
+S:         </var:cd>  
+S:         <var:cd avail="0">  
+S:           <var:objID>example.tel</var:objID>  
+S:           <var:status>Blocked</var:status>  
+S:         </var:cd>  
+S:         <var:cd avail="0">  
+S:           <var:objID>example.swiss</var:objID>  
+S:           <var:status>PendingTransfer</var:status>  
+S:         </var:cd>  
+S:       </var:chkData>  
+S:     </extension>  
+S:     <trID>  
+S:       <clTRID>ABC-12345</clTRID>  
+S:       <svTRID>54322-XYZ</svTRID>  
+S:     </trID>  
+S:   </response>  
+S: </epp>  
+~~~~~~~~~~~
 
 
 The EPP &lt;check&gt; command may return five new results:
