@@ -29,8 +29,9 @@ normative:
   RFC5730:
 
 informative:
-  RFC7940
-  https://www.icann.org/en/public-comment/proceeding/phase-2-initial-report-of-the-epdp-on-internationalized-domain-names-11-04-2024
+  RFC7940:
+  EPDP:
+    target: https://www.icann.org/en/public-comment/proceeding/phase-2-initial-report-of-the-epdp-on-internationalized-domain-names-11-04-2024
 
 --- abstract
 
