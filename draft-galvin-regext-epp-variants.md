@@ -49,27 +49,80 @@ single registrant.
 
 # Introduction
 
+EPP is defined in {{RFC5730}}. EPP commands were developed to operate on
+a single object at a time. This document defines an EPP extension allowing
+clients to learn about and manipulate variant groups of objects. 
+
+Similar to EPP, the principal motivation for this extension was to provide a
+standard Internet domain name registration extension for use between domain
+name registrars and domain name registries.  This protocol provides a
+means of interaction between a registrar's applications and registry
+applications.  It is expected that this protocol will have additional
+uses beyond domain name registration.
+
 Spelling is not necessarily uniform. For example, an è and an e may be
 regarded as equivalent in some languages, and as different in others.
 
 Some registries plan to support this explicitly, with groups of
 variant domains that can only be registered by the same registrant.
+This document does not define a variant or a group of variants.
+A registry policy MUST exist that specifies both that a registry supports
+variant groups and that defines what domains are eligible to be a member
+of a variant group. This policy MUST be agreed between a registry and a
+registrar. The policy and the establishment of the agreement is outside
+the scope of this specification.
 
-This document defines an EPP extension allowing clients to learn about
-and manipulate variant groups. (EPP is defined in {{RFC5730}}.)
+A common policy expression among domain registries and registrars is to define
+variants in terms of the script or language in use for an Internalized Domain
+Name (IDN). IDN variants can arise when different characters or sequences of
+characters in an IDN are considered equivalent in a particular language or script.
+Standard Label Generation Rules (LGRs) are used to specify the IDN table that
+establishes the variant relationships. This common policy is presumed and used
+as an example in this specification.
 
-Registering a domain creates a variant group and the first domain in
-the group becomes the group's primary domain. Subsequent domains in
+With this extension, registering a domain creates a variant group and the first
+domain in the group becomes the group's Primary Domain. The creation of the Primary
+Domain MAY establish rules or guidelines regarding the domains that are eligible
+to be a member of the group, e.g., an LGR, an IDN table, and a Primary Domain
+taken together will define a variant group. Subsequent domains in
 the same group can only be registered by the same registrar, which
-asserts that it is acting on behalf of the same registrant. Domains in
-a variant group are transferred or deleted together with the primary
-domain. The remainder of this document describes the specific details.
+asserts that it is acting on behalf of the same registrant. Each Domain in
+a variant group may be the target of any EPP command, with the following
+restrictions.
+
+* A &lt;transfer&gt; always acts on the entire group. This is required to
+ensure that the variant group is always registered by the same registrant.
+
+* The &lt;delete&gt; of the Primary Domain always deletes the entire group. This is
+required to support the option where the Primary Domain establishes the rules or
+guidelines for the creation of other domains in the group.
+
+This extension is backwards compatible with registrars that do not support variant
+groups. Specifically, this extension supports registries that do support variant
+groups interacting with registrars who do not support variant groups. Registrars who do
+not support variants who attempt to act on a member of a variant group inappropriately
+will receive a compatible error response with which they can continue to function.
+The compatible error response may not provide sufficient detail to fully understand
+the problem but will be sufficient to ensure continuation of normal operations.
+
+The remainder of this document describes the specific details.
+
+__TODO__: login exchange of variant-aware
+
+__TODO__: reference to EPP Extensibility and Extension Analysis
+https://docs.google.com/document/d/1WR00oB43XZCDqD0zvRvRajuWAq_9wQ3c0RrFKlGC3So/edit?tab=t.0
+
+__TODO__: explain variant TLDs versus variant SLDs
 
 # Requirements Language
 
 {::boilerplate bcp14-tagged}
 
 # Terms
+
+__TODO__: add same entity principle - be sure to associate with "same registrant"?
+
+__TODO__: add disposition value and IDN table?
 
 Label Generation Rules (LGR): A standard way of defining IDN tables.
 Among others, they define the variant relationships as well as their
@@ -102,8 +155,8 @@ __TODO__: Do we need to differentiate between allocated and activated? Does it
 make any difference, whether a variant has DNS name servers or not?
 
 Exempted domain: A preexisting domain that exists as a stand-alone domain,
-but would be part of a variant group if it were allocated now. The same
-entity principle does not apply to exempted domains. The exemption stops
+but would be part of a variant group if it were allocated now. Exempted domains
+may exist with any registrant at any registrar. The exemption stops
 as soon as at most 1 allocated domain remains within a variant group.
 
 Blocked domain: A domain that cannot be allocated due to its disposition
@@ -241,7 +294,7 @@ The EPP &lt;check&gt; command may return five new results:
 
 
 - The domain cannot be provisioned because it is a variant of a
-primary domain, and the primary domain belongs to a different client  
+Primary Domain, and the Primary Domain belongs to a different client  
 =&gt; NotSameEntity
 
 - The domain cannot be provisioned because its disposition value is blocked.  
@@ -265,17 +318,23 @@ Just like with the &lt;check&gt; there needs to be a distinction between
 variant-aware and variant-agnostic clients. For variant-agnostic clients
 there is no change to the standard behaviour. The response contains the
 actual data of the domain, independent of the fact whether it is a variant
-or not.
+or not, in addition to the following:
+
+* if the variant-agnostic registrar is inquiring about a non-allocated variant,
+the response SHOULD be the same as the registrar inquiring about a reserved name.
+If you don't have a policy, suggest a policy.
+
+__TODO__: XML example of response?
 
 For variant-aware clients, the EPP &lt;info&gt; command is not extended, 
 but its response is extended
 if the &lt;info&gt; command concerns a variant domain, i.e., at least two
-domains within a variant gruop have been activated. The response then always
+domains within a variant group have been activated. The response then always
 MUST include all primary domain names across any variant TLDs. Optionally
 the response may include the list of all activated variants (across
 all variant TLDs).
 
-In case a primary domain name is queried in the &lt;info&gt; command, 
+In case a Primary Domain name is queried in the &lt;info&gt; command, 
 the list of activated variants within the same TLD MUST be returned.
 
 In other words:
@@ -287,51 +346,84 @@ In other words:
 * if you ask about a variant
   * you must return the primary label for that variant
   * you must return all primary labels in all variant TLDs
-  * you may return all activated variants in that TLDs
+  * you may return all activated variants in that TLD
   * you may return all activated variants in all variant TLDs
 
 The main part of the response MUST contain the actual data of the queried 
 domain name
 (contacts, hosts, status values, etc.)`
 
-TODO: check whether EPP spec says anything about the alignment of check and info.
-
-For registrars not supporting variants:
-inquiring about a non-allocated variant should have the similar result as
-inquiring about a reserved name.
-If you don't have a policy, suggest a policy.
-
-
-TODO XML example of response
+__TODO__: check whether EPP spec says anything about the alignment of check and info.
 
 # EPP &lt;transfer&gt; command
 
-In order to have a safeguard for variant-agnostic clients to not 
-accidentally transfer a bundle of domains when initiating a transfer-in,
-the EPP &lt;transfer&gt; command is extended to include a flag 
-"include-all-variants". If the flag is set to true, the server knows that
-the client is aware of variants and willing to include them within the
-requested transfer. In case the flag is set to false (or the extension 
-is missing), the client is expecting to just transfer the single domain.
+If a variant-agnostic client initiates a transfer-in of a variant domain, i.e.,
+at least two domains in a variant group have been activated, the transfer
+request MUST be denied using 2305 "Object status prohibits operation".
 
-The &lt;transfer&gt; is extended to include the full list of activated
-variants accross all TLDs that are transferred together with the main
-domain. This allows the gaining client to prepare those variant domains
-in its local database.
+__TODO__: xml example
 
-It is up to the server policy to define whether a variant group can
-only be transferred in case the (a?) primary domain is used in the
-request.
+If a variant-aware client initiates a transfer-in of a variant domain, i.e.,
+at least two domains in a variant group have been activated, the transfer request
+MUST include an extension specifying the Primary Domain for the indicated variant
+domain, including if the Primary Domain is the variant domain indicated in the
+transfer-in. If the extension is not present the transfer request MUST be denied
+using 2003 "Required parameter missing".
 
+The &lt;transfer&gt; is extended to include the complete group of all activated
+variants formed by combining all variant groups from all variant TLDs.
+
+__TODO__: xml example
 
 # EPP &lt;create&gt; command
 
-The EPP &lt;create&gt; command may have three new errors, as described
-in the &lt;check&gt; section above.
-
 The EPP &lt;create&gt; command's task is to provision a new normal
 domain. The task of converting an allocatable domain into an allocated
-domain is instead performed using the update command.
+domain is instead performed using the &lt;update&gt; command.
+
+If a variant-agnostic client initiates the creation of a domain that
+is a member of the variant group of any variant TLD, independent of the status
+of the domain in that group, the request MUST be rejected. The response SHOULD
+be the same as if the domain to be created is reserved.
+
+If a variant-agnostic client initiates the creation of a domain that does not
+exist and is not a member of any variant group, then the following actions are
+REQUIRED.
+
+* If the create is otherwise permitted and the domain could be a Primary Domain,
+the server MUST ensure that all eligible members of the variant group are
+prevented from creation or allocation until such time as the domain
+is expressly indicated by the client to be a Primary Domain.
+
+* The server MUST act on the create and respond to the client as if the domain is
+a new normal domain.
+
+If a variant-aware client initiates the creation of a domain that is a member
+of the variant group of any variant TLD, independent of the status of the domain
+in that group, the command MUST be rejected with 2002 "Command use error".
+
+If a variant-aware client initiates the creation of a domain that does not exist
+and the client intends for the domain to be the Primary Domain of a variant group, the
+create command MUST include an extension [[ specifying the Primary Domain of the
+variant group ]] asserting that the client will ensure that only the same registrant
+will request allocation of members of the variant group.
+
+If a variant-aware client initiates the creation of a domain that does not exist and
+the client does not include the extension [[ specifying the Primary Domain of the
+variant group ]] then the following actions are REQUIRED.
+
+* If the create is otherwise permitted and the domain could be a Primary Domain,
+the server MUST ensure that all eligible members of the variant group are
+prevented from creation or allocation until such time as the domain
+is expressly indicated by the client to be a Primary Domain.
+
+* The server MUST act on the create and respond to the client as if the domain is
+a new normal domain.
+
+The EPP &lt;create&gt; command may have five new errors, as described
+in the &lt;check&gt; section above.
+
+__TODO__: check alignment of the new error codes
 
 # EPP &lt;update&gt; command
 
