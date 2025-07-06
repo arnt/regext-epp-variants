@@ -86,7 +86,7 @@ Domain MAY establish rules or guidelines regarding the domains that are eligible
 to be a member of the group, e.g., an LGR, an IDN table, and a Primary Domain
 taken together will define a variant group. Subsequent domains in
 the same group can only be registered by the same registrar, which
-asserts that it is acting on behalf of the same registrant. Each Domain in
+asserts that it is acting on behalf of the same registrant. Each domain in
 a variant group may be the target of any EPP command, with the following
 restrictions.
 
@@ -99,11 +99,11 @@ guidelines for the creation of other domains in the group.
 
 This extension is backwards compatible with registrars that do not support variant
 groups. Specifically, this extension supports registries that do support variant
-groups interacting with registrars who do not support variant groups. Registrars who do
-not support variants who attempt to act on a member of a variant group inappropriately
+groups interacting with registrars that do not support variant groups. Registrars that do
+not support variants that attempt to act on a member of a variant group inappropriately
 will receive a compatible error response with which they can continue to function.
 The compatible error response may not provide sufficient detail to fully understand
-the problem but will be sufficient to ensure continuation of normal operations.
+the rejection but will be sufficient to ensure continuation of normal operations.
 
 The remainder of this document describes the specific details.
 
@@ -112,7 +112,9 @@ __TODO__: login exchange of variant-aware
 __TODO__: reference to EPP Extensibility and Extension Analysis
 https://docs.google.com/document/d/1WR00oB43XZCDqD0zvRvRajuWAq_9wQ3c0RrFKlGC3So/edit?tab=t.0
 
-__TODO__: explain variant TLDs versus variant SLDs
+__TODO__: explain requirement for same registrant and the same entity principle
+
+__TODO__: explain variant TLDs versus variant SLDs; define Primary TLD and Variant TLD
 
 # Requirements Language
 
@@ -123,6 +125,8 @@ __TODO__: explain variant TLDs versus variant SLDs
 __TODO__: add same entity principle - be sure to associate with "same registrant"?
 
 __TODO__: add disposition value and IDN table?
+
+__TODO__: add Primary TLD and Variant TLD
 
 Label Generation Rules (LGR): A standard way of defining IDN tables.
 Among others, they define the variant relationships as well as their
@@ -151,6 +155,7 @@ Allocatable variant: A domain that has not been allocated but is allocatable
 primary domain.
 
 Activated variant: An allocated domain that is in the DNS.
+
 __TODO__: Do we need to differentiate between allocated and activated? Does it
 make any difference, whether a variant has DNS name servers or not?
 
@@ -172,9 +177,8 @@ would be difficult to determine the suitable primary domain. Therefore,
 it is better to not ask them to send it, but rather return the appropriate
 primary domain name in the response.
 
-
-`This extension defines a new command called the Variant Check Command
-that defines an additional primary domain name element for the EPP
+This extension defines a new command called the Variant Check Command
+that defines an additional Primary Domain name element for the EPP
 &lt;check&gt; command.
 
 The command MAY contain an &lt;extension&gt; element, which MUST contain a
@@ -330,7 +334,7 @@ For variant-aware clients, the EPP &lt;info&gt; command is not extended,
 but its response is extended
 if the &lt;info&gt; command concerns a variant domain, i.e., at least two
 domains within a variant group have been activated. The response then always
-MUST include all primary domain names across any variant TLDs. Optionally
+MUST include all primary domain names across all activated variant TLDs. Optionally
 the response may include the list of all activated variants (across
 all variant TLDs).
 
@@ -339,7 +343,7 @@ the list of activated variants within the same TLD MUST be returned.
 
 In other words:
 * If you ask about a primary domain name
-  * you must return all existing primaries
+  * you must return all primaries labels in all variant TLDs
   * you must return all activated variants in that TLD
   * you may return all activated variants in all variant TLDs
 
@@ -351,7 +355,7 @@ In other words:
 
 The main part of the response MUST contain the actual data of the queried 
 domain name
-(contacts, hosts, status values, etc.)`
+(contacts, hosts, status values, etc.)
 
 __TODO__: check whether EPP spec says anything about the alignment of check and info.
 
@@ -430,6 +434,17 @@ __TODO__: check alignment of the new error codes
 The EPP &lt;update&gt; command is extended to cover two new major
 tasks:
 
+* Activating a variant domain in an existing variant group
+
+* Converting an Exempted Domain into a Primary Domain and optionally
+converting other Exempted Domains that are eligible to be in the variant
+group of the state Primary Domain to be activated domains of the
+variant group.
+
+This extended &lt;update&gt; is not valid for use by a variant-agnostic
+registrar.  This rest of this section specifies behavior when variant-aware
+registries and registrars are interacting.
+
 When an EPP client wishes to provision a new domain in a variant
 group, it uses the &lt;update&gt; command rather than the
 &lt;create&gt; command. This informs the EPP server that the client
@@ -438,27 +453,49 @@ a new normal domain, and asserts that the two domains belong to the
 same registrant.
 
 Note that depending on registry policy, the variant domain may
-e.g. share name servers with the primary domain. This implies that the
+e.g. share name servers with the Primary Domain. This implies that the
 set of elements required/permitted for a variant domain may differ
-from that of a primary domain or a normal domain.
+from that of a Primary Domain or a normal domain.
 
-TODO update XML that shows the primary domain specified
+__TODO__: update XML that shows the primary domain specified
 
-When an EPP client wishes to turn an exempted domain into a
-primary domain, it issues an &lt;update&gt; command including the list
-of variant domains, which the EPP client thereby asserts belong to the
+__TODO__: specify creating a primary domain from an exempted domain without
+other exempted domains
+
+When an EPP client wishes to convert an exempted domain into a
+Primary Domain and convert other exempted domains eligible to be members
+of its variant group to be allocated domains, it issues an &lt;update&gt;
+command including both the Primary Domain and separately the list
+of exempted domains, which the EPP client thereby asserts belong to the
 same registrant.
 
-TODO update XML that shows the list of variant domains specified
+__TODO__: update XML that shows the list of variant domains specified
 
 # EPP &lt;delete&gt; command
 
-The EPP &lt;delete&gt; command is extended with one new task: Deleting the
-primary domain deletes all allocated variant groups along with the
-primary domain.
+If a variant-agnostic client issues a &lt;delete&gt; command there is no change
+from the standard functionality.
 
-Deleting a variant group other than the primary deletes just that
-domain.
+If a variant-aware client issues a &lt;delete&gt; command, the command is extended
+to REQUIRE the client to include an extension indicating the Primary Domain of
+the domain being deleted, which the client thereby asserts that both domains belong
+to the same registrant.  If a Primary Domain is being deleted then the same
+domain name MUST be specifed in the extension.
+
+If a Primary Domain is to be deleted, the &lt;delete&gt; command is extended
+with the following additional requirements:
+
+* If the Primary Domain is part of variant group in a Variant TLD, then all variant
+domains in the variant group of that Variant TLD MUST be deleted along with the
+Primary Domain.  The response MUST include a list of all the allocated domains in the
+variant group that were deleted.
+
+* If the Primary Domain is part of a variant group in the Primary TLD, then all
+variant domains all variant groups in all Variant TLDs MUST be deleted along with
+the variant group of the Primary Domain in the Primary TLD.  The response MUST include a
+list of all the allocated domains in all variant groups that were deleted.
+
+__TODO__: xml example
 
 # EPP renew command
 
@@ -513,11 +550,13 @@ and the command did not refer to the primary domain.
 # Acknowledgements
 
 The design of this extension is almost completely based on work done
-by and decisions made by the {{EPDP}} committee, chaired by James
-Galvin. This text (in RFC format) was initially written by Arnt
+by and decisions made by the {{EPDP}} committee, which was reviewed by
+a small technical design team chaired by James Galvin. Members of this
+team included Dennis Tan, Rick Wilhelm, Edmon Chung, and Jennifer Chung.
+This text (in RFC format) was initially written by Arnt
 Gulbrandsen based on a conference presentation by James Galvin.
 
-Edmon Chung, [YOUR NAME HERE] have reviewed it, provided helpful
+[YOUR NAME HERE] have reviewed it and provided helpful
 comments or contributed in other ways.
 
 # Security Considerations {#Security}
