@@ -91,7 +91,8 @@ a variant group may be the target of any EPP command, with the following
 restrictions.
 
 * A &lt;transfer&gt; always acts on the entire group. This is required to
-ensure that the variant group is always registered by the same registrant.
+ensure that the variant group is always registered by the same registrant
+and handled via the same registrar.
 
 * The &lt;delete&gt; of the Primary Domain always deletes the entire group. This is
 required to support the option where the Primary Domain establishes the rules or
@@ -122,15 +123,28 @@ __TODO__: explain variant TLDs versus variant SLDs; define Primary TLD and Varia
 
 # Terms
 
-__TODO__: add same entity principle - be sure to associate with "same registrant"?
+Same Entity Principle: A requirement that all domains within a variant group
+either belong to the same entity (i.e., the same registrant via the same
+registrar) or are withheld for that entity. No other entity is allowed to
+activate any domain within the same variant group.
 
-__TODO__: add disposition value and IDN table?
+IDN Table: The combined information about what characters (code points)
+are available for domain registration as well as the variant relationships
+between those code points. IDN tables can be defined via RFC3743 or RFC4290
+or LGRs (RFC7940). The latter one SHOULD be used as it also allows the
+formal definition of context rules, which is lacking in the former ones.
+
+Label Generation Rules (LGR): The preferred way of defining IDN tables.
+Among others, they define the variant relationships as well as their
+disposition values (blocked or allocatable). The formal definition of LGRs
+can be fond in RFC7940.
+
+Disposition Value: While a variant relationship is symmetric it has exactly
+one of two disposition values which are not necessarily symmetric. A variant
+can be "allocatable" (i.e., available for the same entity) or "blocked" 
+(i.e., not available for anybody).
 
 __TODO__: add Primary TLD and Variant TLD
-
-Label Generation Rules (LGR): A standard way of defining IDN tables.
-Among others, they define the variant relationships as well as their
-disposition values (blocked or allocatable).
 
 Variant group: An implicit set of domains defined by the Label
 Generation Rule (LGR) of the registry. The variant relationship is
@@ -377,6 +391,10 @@ using 2003 "Required parameter missing".
 The &lt;transfer&gt; is extended to include the complete group of all activated
 variants formed by combining all variant groups from all variant TLDs.
 
+__TODO__: It must be ensured that the poll message to the losing registrar
+also contains the full list of domains that will be transferred together with
+the primary domain.
+
 __TODO__: xml example
 
 # EPP &lt;create&gt; command
@@ -389,6 +407,9 @@ If a variant-agnostic client initiates the creation of a domain that
 is a member of the variant group of any variant TLD, independent of the status
 of the domain in that group, the request MUST be rejected. The response SHOULD
 be the same as if the domain to be created is reserved.
+__ TODO__: make clear that registering the first domain within any variant 
+group must not be rejected. The rejection only happens if at least one other
+domain of that variant group already exists.
 
 If a variant-agnostic client initiates the creation of a domain that does not
 exist and is not a member of any variant group, then the following actions are
@@ -428,6 +449,10 @@ The EPP &lt;create&gt; command may have five new errors, as described
 in the &lt;check&gt; section above.
 
 __TODO__: check alignment of the new error codes
+
+__TODO__: do we want to allow variant activation also via the create command?
+At least in the IDN EPDP we left this decision open to the registry policy.
+
 
 # EPP &lt;update&gt; command
 
@@ -471,6 +496,9 @@ same registrant.
 
 __TODO__: update XML that shows the list of variant domains specified
 
+__TODO__: if variants are activated via the update command, shouldn't they
+also be removed via the update command?
+
 # EPP &lt;delete&gt; command
 
 If a variant-agnostic client issues a &lt;delete&gt; command there is no change
@@ -481,6 +509,11 @@ to REQUIRE the client to include an extension indicating the Primary Domain of
 the domain being deleted, which the client thereby asserts that both domains belong
 to the same registrant.  If a Primary Domain is being deleted then the same
 domain name MUST be specifed in the extension.
+
+__TODO__: It should be left to server policy whether they want to delete the
+whole variant set together with the primary domain or whether they require
+all variants to be deleted individually first and only allow deletion of the
+primary if no variant exists any more.
 
 If a Primary Domain is to be deleted, the &lt;delete&gt; command is extended
 with the following additional requirements:
