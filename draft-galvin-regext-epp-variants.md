@@ -330,7 +330,7 @@ that is currently being transferred to a different registrar.
 =&gt; Custom
 
 
-# EPP &lt;info&gt; command
+## EPP &lt;info&gt; command
 
 For variant-agnostic clients
 there is no change to the standard behaviour. The response contains the
@@ -371,7 +371,7 @@ domain name (contacts, hosts, status values, etc.)
 
 __TODO__: check whether EPP spec says anything about the alignment of check and info.
 
-# EPP &lt;transfer&gt; command
+## EPP &lt;transfer&gt; command
 
 If a variant-agnostic client initiates a transfer-in of a variant domain, i.e.,
 at least two domains in a variant group have been activated, the transfer
@@ -395,7 +395,7 @@ the primary domain.
 
 __TODO__: xml example
 
-# EPP &lt;create&gt; command
+## EPP &lt;create&gt; command
 
 The EPP &lt;create&gt; command's standard task is to provision a new
 domain. If the domain to be created is part of a variant group, the command
@@ -432,7 +432,7 @@ in the &lt;check&gt; section above.
 
 __TODO__: check alignment of the new error codes
 
-# EPP &lt;update&gt; command
+## EPP &lt;update&gt; command
 
 The EPP &lt;update&gt; command is extended to cover two new tasks:
 
@@ -479,7 +479,7 @@ the complete list of exempted domains for the client.
 
 __TODO__: xml example
 
-# EPP &lt;delete&gt; command
+## EPP &lt;delete&gt; command
 
 If a variant-agnostic client issues a &lt;delete&gt; command there is no change
 from the standard functionality.
@@ -497,14 +497,14 @@ list of all the allocated domains in all variant groups that were deleted.
 
 __TODO__: xml example
 
-# EPP renew command
+## EPP renew command
 
 The EPP renew command is not extended.
 
 The server MAY reject renewals while a variant group is being
 transferred.
 
-# EPP &lt;transfer&gt; query command
+## EPP &lt;transfer&gt; query command
 
 The EPP &lt;transfer&gt; query command is not extended.
 
