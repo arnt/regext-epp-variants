@@ -6,7 +6,7 @@ submissiontype: IETF
 area: Applications
 wg: regext
 
-docname: draft-galvin-regext-epp-variants
+docname: draft-galvin-regext-epp-variants-latest
 
 title: Domain variant support for EPP
 abbrev: EPP Variants
