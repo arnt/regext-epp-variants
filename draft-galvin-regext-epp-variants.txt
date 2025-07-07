@@ -68,20 +68,20 @@ Table of Contents
    3.  Terms
    4.  EPP Commands
      4.1.  EPP <check> command
-   5.  EPP <info> command
-   6.  EPP <transfer> command
-   7.  EPP <create> command
-   8.  EPP <update> command
-   9.  EPP <delete> command
-   10. EPP renew command
-   11. EPP <transfer> query command
-   12. Result codes
-   13. Acknowledgements
-   14. Security Considerations
-   15. IANA Considerations
-   16. References
-     16.1.  Normative References
-     16.2.  Informative References
+     4.2.  EPP <info> command
+     4.3.  EPP <transfer> command
+     4.4.  EPP <create> command
+     4.5.  EPP <update> command
+     4.6.  EPP <delete> command
+     4.7.  EPP renew command
+     4.8.  EPP <transfer> query command
+   5.  Result codes
+   6.  Acknowledgements
+   7.  Security Considerations
+   8.  IANA Considerations
+   9.  References
+     9.1.  Normative References
+     9.2.  Informative References
    Appendix A.  Open issues
    Authors' Addresses
 
@@ -384,7 +384,7 @@ C: </epp>
    *  Additional custom value that may be used for server peculiarities.
       => Custom
 
-5.  EPP <info> command
+4.2.  EPP <info> command
 
    For variant-agnostic clients there is no change to the standard
    behaviour.  The response contains the actual data of the domain,
@@ -429,7 +429,7 @@ C: </epp>
    *TODO*: check whether EPP spec says anything about the alignment of
    check and info.
 
-6.  EPP <transfer> command
+4.3.  EPP <transfer> command
 
    If a variant-agnostic client initiates a transfer-in of a variant
    domain, i.e., at least two domains in a variant group have been
@@ -456,7 +456,7 @@ C: </epp>
 
    *TODO*: xml example
 
-7.  EPP <create> command
+4.4.  EPP <create> command
 
    The EPP <create> command's standard task is to provision a new
    domain.  If the domain to be created is part of a variant group, the
@@ -494,7 +494,7 @@ C: </epp>
 
    *TODO*: check alignment of the new error codes
 
-8.  EPP <update> command
+4.5.  EPP <update> command
 
    The EPP <update> command is extended to cover two new tasks:
 
@@ -540,7 +540,7 @@ C: </epp>
 
    *TODO*: xml example
 
-9.  EPP <delete> command
+4.6.  EPP <delete> command
 
    If a variant-agnostic client issues a <delete> command there is no
    change from the standard functionality.
@@ -559,14 +559,14 @@ C: </epp>
 
    *TODO*: xml example
 
-10.  EPP renew command
+4.7.  EPP renew command
 
    The EPP renew command is not extended.
 
    The server MAY reject renewals while a variant group is being
    transferred.
 
-11.  EPP <transfer> query command
+4.8.  EPP <transfer> query command
 
    The EPP <transfer> query command is not extended.
 
@@ -576,7 +576,7 @@ C: </epp>
    command for any domain in a variant group applies to all domains in
    the group.
 
-12.  Result codes
+5.  Result codes
 
    The following additional result codes are defined:
 
@@ -609,7 +609,7 @@ C: </epp>
    This result code is used when a domain is a member of a variant set,
    and the command did not refer to the primary domain.
 
-13.  Acknowledgements
+6.  Acknowledgements
 
    The design of this extension is almost completely based on work done
    by and decisions made by the [EPDP] committee, which was reviewed by
@@ -621,7 +621,7 @@ C: </epp>
    [YOUR NAME HERE] have reviewed it and provided helpful comments or
    contributed in other ways.
 
-14.  Security Considerations
+7.  Security Considerations
 
    If two domains are different according to the DNS rules and identical
    in the eyes of the intended audience, then the audience may be
@@ -631,11 +631,11 @@ C: </epp>
    making it a little more difficult for a would-be impersonator to
    register a variant of another registrant's existing domain.
 
-15.  IANA Considerations
+8.  IANA Considerations
 
-16.  References
+9.  References
 
-16.1.  Normative References
+9.1.  Normative References
 
    [RFC5730]  Hollenbeck, S., "Extensible Provisioning Protocol (EPP)",
               STD 69, RFC 5730, DOI 10.17487/RFC5730, August 2009,
@@ -650,7 +650,7 @@ C: </epp>
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
-16.2.  Informative References
+9.2.  Informative References
 
    [RFC7940]  Davies, K. and A. Freytag, "Representing Label Generation
               Rulesets Using XML", RFC 7940, DOI 10.17487/RFC7940,
