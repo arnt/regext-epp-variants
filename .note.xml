@@ -1,0 +1,7 @@
+<note title="Discussion Venues" removeInRFC="true">
+<t>Discussion of this document takes place on the
+    Registration Protocols Extensions Working Group mailing list (regext@ietf.org),
+    which is archived at <eref target="https://mailarchive.ietf.org/arch/browse/regext/"/>.</t>
+<t>Source for this draft and an issue tracker can be found at
+    <eref target="https://github.com/arnt/regext-epp-variants"/>.</t>
+</note>
