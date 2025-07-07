@@ -16,8 +16,7 @@ kw:
 author:
 - name: James Galvin
   org: Identity Digital
-  city: Bellevue
-  state: Washington
+  city: Bellevue, Washington
   country: US
   email: jgalvin@identity.digital
 - name: Michael Bauland
