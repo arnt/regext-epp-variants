@@ -3,7 +3,7 @@ stand_alone: true
 ipr: trust200902
 cat: std
 submissiontype: IETF
-area: Applications
+area: "Applications and Real-Time"
 wg: regext
 
 docname: draft-galvin-regext-epp-variants-latest
@@ -144,7 +144,7 @@ value in relation to the primary domain name.
 
 Disposition Value: While a variant relationship is symmetric it has exactly
 one of two disposition values which are not necessarily symmetric. A variant
-can be "allocatable" (i.e., available for the same entity) or "blocked" 
+can be "allocatable" (i.e., available for the same entity) or "blocked"
 (i.e., not available for anybody).
 
 Exempted domain: A preexisting domain that exists as a stand-alone domain,
@@ -255,57 +255,57 @@ status of the queried domain.
 Example &lt;check&gt; response:
 
 ~~~~~~~~~~~
-S: <?xml version="1.0" encoding="utf-8" standalone="no"?>  
-S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">  
-S:   <response>  
-S:     <result code="1000">  
-S:       <msg>Command completed successfully</msg>  
-S:     </result>  
-S:     <resData>  
-S:       <domain:chkData  
-S:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">  
-S:         <domain:cd>  
-S:           <domain:name avail="1">examplev1.com</domain:name>  
-S:         </domain:cd>  
-S:         <domain:cd>  
-S:           <domain:name avail="0">examplev1.net</domain:name>  
-S:         </domain:cd>  
-S:         <domain:cd>  
-S:           <domain:name avail="0">examplev1.tel</domain:name>  
-S:         </domain:cd>  
-S:         <domain:cd>  
-S:           <domain:name avail="0">examplev1.swiss</domain:name>  
-S:         </domain:cd>  
-S:       </domain:chkData>  
-S:     </resData>  
-S:     <extension>  
-S:       <var:chkData  
-S:           xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">  
-S:         <var:cd avail="1">  
-S:           <var:objID>example.com</var:objID>  
-S:           <var:primary>example.com</var:primary>  
-S:           <var:status>AllocatableVariant</var:status>  
-S:         </var:cd>  
-S:         <var:cd avail="0">  
-S:           <var:objID>example.net</var:objID>  
-S:           <var:status>NotSameEntity</var:status>  
-S:         </var:cd>  
-S:         <var:cd avail="0">  
-S:           <var:objID>example.tel</var:objID>  
-S:           <var:status>Blocked</var:status>  
-S:         </var:cd>  
-S:         <var:cd avail="0">  
-S:           <var:objID>example.swiss</var:objID>  
-S:           <var:status>PendingTransfer</var:status>  
-S:         </var:cd>  
-S:       </var:chkData>  
-S:     </extension>  
-S:     <trID>  
-S:       <clTRID>ABC-12345</clTRID>  
-S:       <svTRID>54322-XYZ</svTRID>  
-S:     </trID>  
-S:   </response>  
-S: </epp>  
+S: <?xml version="1.0" encoding="utf-8" standalone="no"?>
+S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+S:   <response>
+S:     <result code="1000">
+S:       <msg>Command completed successfully</msg>
+S:     </result>
+S:     <resData>
+S:       <domain:chkData
+S:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+S:         <domain:cd>
+S:           <domain:name avail="1">examplev1.com</domain:name>
+S:         </domain:cd>
+S:         <domain:cd>
+S:           <domain:name avail="0">examplev1.net</domain:name>
+S:         </domain:cd>
+S:         <domain:cd>
+S:           <domain:name avail="0">examplev1.tel</domain:name>
+S:         </domain:cd>
+S:         <domain:cd>
+S:           <domain:name avail="0">examplev1.swiss</domain:name>
+S:         </domain:cd>
+S:       </domain:chkData>
+S:     </resData>
+S:     <extension>
+S:       <var:chkData
+S:           xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
+S:         <var:cd avail="1">
+S:           <var:objID>example.com</var:objID>
+S:           <var:primary>example.com</var:primary>
+S:           <var:status>AllocatableVariant</var:status>
+S:         </var:cd>
+S:         <var:cd avail="0">
+S:           <var:objID>example.net</var:objID>
+S:           <var:status>NotSameEntity</var:status>
+S:         </var:cd>
+S:         <var:cd avail="0">
+S:           <var:objID>example.tel</var:objID>
+S:           <var:status>Blocked</var:status>
+S:         </var:cd>
+S:         <var:cd avail="0">
+S:           <var:objID>example.swiss</var:objID>
+S:           <var:status>PendingTransfer</var:status>
+S:         </var:cd>
+S:       </var:chkData>
+S:     </extension>
+S:     <trID>
+S:       <clTRID>ABC-12345</clTRID>
+S:       <svTRID>54322-XYZ</svTRID>
+S:     </trID>
+S:   </response>
+S: </epp>
 ~~~~~~~~~~~
 
 
@@ -313,21 +313,21 @@ The EPP &lt;check&gt; command may return five new results:
 
 
 - The domain cannot be provisioned because it is a variant of a
-Primary Domain, and the Primary Domain belongs to a different client  
+Primary Domain, and the Primary Domain belongs to a different client
 =&gt; NotSameEntity
 
-- The domain cannot be provisioned because its disposition value is blocked.  
+- The domain cannot be provisioned because its disposition value is blocked.
 =&gt; Blocked
 
 - The domain cannot be provisioned because it is a variant of at
-least one exempted domain.  
+least one exempted domain.
 =&gt; Exempted
 
 - The domain cannot be provisioned because it is a variant in a group
-that is currently being transferred to a different registrar.  
+that is currently being transferred to a different registrar.
 =&gt; PendingTransfer
 
-- Additional custom value that may be used for server peculiarities.  
+- Additional custom value that may be used for server peculiarities.
 =&gt; Custom
 
 
@@ -344,7 +344,7 @@ If you don't have a policy, suggest a policy.
 
 __TODO__: XML example of response?
 
-For variant-aware clients, the EPP &lt;info&gt; command is not extended, 
+For variant-aware clients, the EPP &lt;info&gt; command is not extended,
 but its response is extended
 if the &lt;info&gt; command concerns a variant domain, i.e., at least two
 domains within a variant group have been activated. The response then always
@@ -352,7 +352,7 @@ MUST include all primary domain names across all activated variant TLDs. Optiona
 the response may include the list of all activated variants (across
 all variant TLDs).
 
-In case a Primary Domain name is queried in the &lt;info&gt; command, 
+In case a Primary Domain name is queried in the &lt;info&gt; command,
 the list of activated variants within the same TLD MUST be returned.
 
 In other words:
@@ -367,7 +367,7 @@ In other words:
   * you MAY return all activated variants in that TLD
   * you MAY return all activated variants in all variant TLDs
 
-The main part of the response MUST contain the actual data of the queried 
+The main part of the response MUST contain the actual data of the queried
 domain name (contacts, hosts, status values, etc.)
 
 __TODO__: check whether EPP spec says anything about the alignment of check and info.
@@ -398,7 +398,7 @@ __TODO__: xml example
 
 # EPP &lt;create&gt; command
 
-The EPP &lt;create&gt; command's standard task is to provision a new 
+The EPP &lt;create&gt; command's standard task is to provision a new
 domain. If the domain to be created is part of a variant group, the command
 MUST be rejected as follows.
 
@@ -424,7 +424,7 @@ is expressly indicated by the client to be a Primary Domain.
 * The server MUST act on the create and respond to the client as if the domain is
 a new domain.
 
-__ TODO__: make clear that registering the first domain within any variant 
+__ TODO__: make clear that registering the first domain within any variant
 group must not be rejected. The rejection only happens if at least one other
 domain of that variant group already exists.
 
