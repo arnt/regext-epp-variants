@@ -190,7 +190,7 @@ __TODO__: Does it make any difference, whether a variant has DNS name servers or
 
 ## EPP &lt;check&gt; command
 
-__TODO__: probably better not to have a command extension. For Registrars, it
+__NOTE__: probably better not to have a command extension. For Registrars, it
 would be difficult to determine the suitable primary domain. Therefore,
 it is better to not ask them to send it, but rather return the appropriate
 primary domain name in the response.
@@ -368,6 +368,54 @@ In other words:
 
 The main part of the response MUST contain the actual data of the queried
 domain name (contacts, hosts, status values, etc.)
+
+Example &lt;info&gt; response when querying a primary domain name:
+~~~~~~~~~~~
+S: <?xml version="1.0" encoding="UTF-8"?>
+S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+S:   <response>
+S:     <result code="1000">
+S:       <msg lang="en-US">Command completed successfully</msg>
+S:     </result>
+S:     <resData>
+S:       <infData xmlns="urn:ietf:params:xml:ns:domain-1.0">
+S:         <name>example.com</name>
+S:         <roid>D123456789</roid>
+S:         <status s="active"/>
+S:         <registrant>abc123</registrant>
+S:         <contact type="tech">ghi789</contact>
+S:         <ns>
+S:           <hostObj>ns1.example.net</hostObj>
+S:           <hostObj>ns2.example.net</hostObj>
+S:         </ns>
+S:         <clID>registrar</clID>
+S:         <crID>registrar</crID>
+S:         <crDate>2010-09-08T07:06:05.0Z</crDate>
+S:         <exDate>2012-09-08T23:59:59.0Z</exDate>
+S:         <authInfo>
+S:           <pw>secret</pw>
+S:         </authInfo>
+S:       </infData>
+S:     </resData>
+S:     <extension>
+S:       <var:infData xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
+S:         <var:primary>
+S:           <var:name>example.com</var:name>
+S:           <var:name>example.comv1</var:name>
+S:           <var:name>example.comv2</var:name>
+S:         </var:primary>
+S:         <var:variant>
+S:           <var:name>examplev1.com</var:name>
+S:           <var:name>examplev2.com</var:name>
+S:         </var:variant>
+S:       </var:infData>
+S:     </extension>
+S:     <trID>
+S:       <svTRID>ZYX-99958</svTRID>
+S:     </trID>
+S:   </response>
+S: </epp>
+~~~~~~~~~~~
 
 __TODO__: check whether EPP spec says anything about the alignment of check and info.
 
