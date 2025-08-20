@@ -311,23 +311,14 @@ S: </epp>
 The EPP &lt;check&gt; command may return five new results:
 
 
-- The domain cannot be provisioned because it is a variant of a
+- NotSameEntity: The domain cannot be provisioned because it is a variant of a
 Primary Domain, and the Primary Domain belongs to a different client
-=&gt; NotSameEntity
-
-- The domain cannot be provisioned because its disposition value is blocked.
-=&gt; Blocked
-
-- The domain cannot be provisioned because it is a variant of at
+- Blocked: The domain cannot be provisioned because its disposition value is blocked.
+- Exempted: The domain cannot be provisioned because it is a variant of at
 least one exempted domain.
-=&gt; Exempted
-
-- The domain cannot be provisioned because it is a variant in a group
+- PendingTransfer: The domain cannot be provisioned because it is a variant in a group
 that is currently being transferred to a different registrar.
-=&gt; PendingTransfer
-
-- Additional custom value that may be used for server peculiarities.
-=&gt; Custom
+- Custom: Additional custom value that may be used for server peculiarities.
 
 
 ## EPP &lt;info&gt; command
