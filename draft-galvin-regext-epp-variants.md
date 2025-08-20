@@ -217,7 +217,7 @@ C:       </domain:check>
 C:     </check>
 C:     <extension>
 C:       <var:check xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
-C:         <var:primary>example.com<var:primary>
+C:         <var:primary>example.com</var:primary>
 C:       </var:check>
 C:     </extension>
 C:     <clTRID>ABC-12345</clTRID>
@@ -473,10 +473,12 @@ __TODO__: check alignment of the new error codes
 
 ## EPP &lt;update&gt; command
 
-The EPP &lt;update&gt; command is extended to cover two new tasks:
+The EPP <update> command provides a transform operation that allows a
+client to change the state of a variant domain object. It is extended
+to cover three new tasks:
 
-* Activating a variant domain in an existing variant group
-
+* Activating an allocatable variant domain in an existing variant group
+* Deactivating an activated variant domain name in an existing variant group
 * Converting an Exempted Domain into a Primary Domain and optionally
 converting other Exempted Domains that are eligible to be in the variant
 group of the stated Primary Domain to be activated domains of the
@@ -488,7 +490,7 @@ client. Any use by a variant-agnostic client MUST be rejected.
 This rest of this section specifies behavior when variant-aware
 servers and clients are interacting.
 
-When a client wishes to provision a new domain in a variant
+When a client wishes to provision (activate) a new domain in a variant
 group, it uses the &lt;update&gt; command rather than the
 &lt;create&gt; command. This informs the server that the client
 understands that the task is to provision a variant domain rather than
@@ -505,7 +507,91 @@ A registry policy MAY specify rules or guidelines for the
 set of elements required or permitted for a variant domain according to the
 Primary Domain.
 
-__TODO__: xml example
+Note that the use of lt;rem&gt; in the lt;update&gt; command is not
+allowed, because the object does not yet exist and therefore nothing
+can be removed. To set data the lt;add&gt; or lt;chg&gt; tags need
+to be used.
+
+The command MUST contain an &lt;extension&gt; element, which MUST contain a
+&lt;var:update&gt; element. The &lt;var:update&gt; element MUST contain one
+&lt;var:primary&gt; element containing the primary domain to which the
+variant should be added.
+
+Example &lt;update&gt; command activating a new variant:
+~~~~~~~~~~~
+C: <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+C: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+C:   <command>
+C:     <update>
+C:       <domain:update xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+C:         <domain:name>examplev1.com</domain:name>
+C:         <domain:add>
+C:           <domain:ns>
+C:             <domain:hostObj>ns1.example.com</domain:hostObj>
+C:             <domain:hostObj>ns2.example.com</domain:hostObj>
+C:           </domain:ns>
+C:           <domain:contact type="tech">mak21</domain:contact>
+C:         </domain:add>
+C:         <domain:chg>
+C:           <domain:registrant>sh8013</domain:registrant>
+C:           <domain:authInfo>
+C:             <domain:pw>2BARfoo</domain:pw>
+C:           </domain:authInfo>
+C:         </domain:chg>
+C:       </domain:update>
+C:     </update>
+C:     <extension>
+C:       <var:update xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
+C:         <var:primary>example.com</var:primary>
+C:       </var:update>
+C:     </extension>
+C:     <clTRID>ABC-12345</clTRID>
+C:   </command>
+C: </epp>
+~~~~~~~~~~~
+
+The response is not extended and returns the standard success result in case
+the variant was successfullly activated.
+
+If a client wishes to deactivate a previously activated variant (except the
+primary domain) it also uses the  &lt;update&gt; command.  
+
+The EPP domain mapping from RFC3915 describes the elements that
+have to be specified within an <update> command.  The requirement to
+provide at least one <domain:add>, <domain:rem>, or <domain:chg>
+element is updated by this extension such that at least one empty
+<domain:add>, <domain:rem>, or <domain:chg> element MUST be present
+if this extension is specified within an <update> command.  This
+requirement is updated to disallow the possibility of modifying a
+domain object as part of the deactivation.
+
+The command MUST contain an &lt;extension&gt; element, which MUST contain a
+&lt;var:update&gt; element. The &lt;var:update&gt; element MUST contain one
+&lt;var:deactivate&gt; element set to true. This confirms to the server 
+that the client is not trying to update the content of the variant domain,
+but rather deactivate it.
+
+
+Example &lt;update&gt; command deactivating an existing variant:
+~~~~~~~~~~~
+C: <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+C: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+C:   <command>
+C:     <update>
+C:       <domain:update xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+C:         <domain:name>examplev1.com</domain:name>
+C:         <domain:chg/>
+C:       </domain:update>
+C:     </update>
+C:     <extension>
+C:       <var:update xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
+C:         <var:deactivate>true</var:deactivate>
+C:       </var:update>
+C:     </extension>
+C:     <clTRID>ABC-12345</clTRID>
+C:   </command>
+C: </epp>
+~~~~~~~~~~~
 
 If a client wishes to convert an exempted domain into a member
 of a variant group as an allocated variant,
