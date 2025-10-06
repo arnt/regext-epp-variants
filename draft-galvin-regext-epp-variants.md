@@ -420,7 +420,27 @@ If a variant-agnostic client initiates a transfer-in of a variant domain, i.e.,
 at least two domains in a variant group have been activated, the transfer
 request MUST be denied using 2305 "Object status prohibits operation".
 
-__TODO__: xml example
+Example &lt;transfer&gt; response for variant-agnostic clients:
+~~~~~~~~~~~
+S: <?xml version="1.0" encoding="UTF-8"?>
+S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+S:   <response>
+S:     <result code="2305">
+S:       <msg>Object status prohibits operation</msg>
+S:       <extValue>
+S:         <value xmlns:epp="urn:ietf:params:xml:ns:epp-1.0">
+S:           <epp:undef/>
+S:         </value>
+S:         <reason>Domain is part of a related group. Use extension.</reason>
+S:       </extValue>
+S:     </result>
+S:     <trID>
+S:       <clTRID>O733952948_1759741733997</clTRID>
+S:       <svTRID>14847241225-1759741733979</svTRID>
+S:     </trID>
+S:   </response>
+S: </epp>
+~~~~~~~~~~~
 
 If a variant-aware client initiates a transfer-in of a variant domain, i.e.,
 at least two domains in a variant group have been activated, the transfer request
@@ -429,14 +449,77 @@ domain, including if the Primary Domain is the domain indicated in the
 transfer-in. If the extension is not present the transfer request MUST be denied
 using 2003 "Required parameter missing".
 
-The &lt;transfer&gt; response is extended MUST include the complete group of all activated
-variants formed by combining all variant groups from all variant TLDs.
+The &lt;transfer&gt; response is extended and MUST include the complete group of
+all activated variants formed by combining all variant groups from all variant TLDs.
+
+Example &lt;transfer&gt; request for a domain within a related group:
+~~~~~~~~~~~
+C: <?xml version="1.0" encoding="UTF-8"?>
+C: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+C:   <command>
+C:     <transfer op="request">
+C:       <transfer xmlns="urn:ietf:params:xml:ns:domain-1.0">
+C:         <name>example.com</name>
+C:         <authInfo>
+C:           <pw>secret</pw>
+C:         </authInfo>
+C:       </transfer>
+C:     </transfer>
+C:     <extension>
+C:       <var:primary xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
+C:         <var:name>example.com</var:name>
+C:       </var:primary>
+C:     </extension>
+C:     <clTRID>tr-1759740608479</clTRID>
+C:   </command>
+C: </epp>
+~~~~~~~~~~~
+
+Example &lt;transfer&gt; response:
+~~~~~~~~~~~
+S: <?xml version="1.0" encoding="UTF-8"?>
+S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+S:   <response>
+S:     <result code="1001">
+S:       <msg>Command completed successfully; action pending</msg>
+S:     </result>
+S:     <resData>
+S:       <domain:trnData xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+S:         <domain:name>example.com</domain:name>
+S:         <domain:trStatus>pending</domain:trStatus>
+S:         <domain:reID>4148</domain:reID>
+S:         <domain:reDate>2025-10-06T08:50:08Z</domain:reDate>
+S:         <domain:acID>106</domain:acID>
+S:         <domain:acDate>2025-10-11T08:50:08Z</domain:acDate>
+S:         <domain:exDate>2027-05-11T09:01:33Z</domain:exDate>
+S:       </domain:trnData>
+S:     </resData>
+S:     <extension>
+S:       <var:infData xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
+S:         <var:primary>
+S:           <var:name>example.com</var:name>
+S:           <var:name>example.comv1</var:name>
+S:           <var:name>example.comv2</var:name>
+S:         </var:primary>
+S:         <var:variant>
+S:           <var:name>examplev1.com</var:name>
+S:           <var:name>examplev2.com</var:name>
+S:           <var:name>examplev1.comv1</var:name>
+S:           <var:name>examplev1.comv2</var:name>
+S:         </var:variant>
+S:       </var:infData>
+S:     </extension>
+S:     <trID>
+S:       <clTRID>tr-1759740608479</clTRID>
+S:       <svTRID>14847187000-1759740608529-33232260892</svTRID>
+S:     </trID>
+S:   </response>
+S: </epp>
+~~~~~~~~~~~
 
 __TODO__: It must be ensured that the poll message to the losing registrar
 also contains the full list of domains that will be transferred together with
 the primary domain.
-
-__TODO__: xml example
 
 ## EPP &lt;create&gt; command
 
