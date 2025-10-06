@@ -284,20 +284,20 @@ S:     <extension>
 S:       <var:chkData
 S:           xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
 S:         <var:cd avail="1">
-S:           <var:objID>example.com</var:objID>
+S:           <var:objID>examplev1.com</var:objID>
 S:           <var:primary>example.com</var:primary>
 S:           <var:status>AllocatableVariant</var:status>
 S:         </var:cd>
 S:         <var:cd avail="0">
-S:           <var:objID>example.net</var:objID>
+S:           <var:objID>examplev1.net</var:objID>
 S:           <var:status>NotSameEntity</var:status>
 S:         </var:cd>
 S:         <var:cd avail="0">
-S:           <var:objID>example.tel</var:objID>
+S:           <var:objID>examplev1.tel</var:objID>
 S:           <var:status>Blocked</var:status>
 S:         </var:cd>
 S:         <var:cd avail="0">
-S:           <var:objID>example.swiss</var:objID>
+S:           <var:objID>examplev1.swiss</var:objID>
 S:           <var:status>PendingTransfer</var:status>
 S:         </var:cd>
 S:       </var:chkData>
@@ -311,9 +311,10 @@ S: </epp>
 ~~~~~~~~~~~
 
 
-The EPP &lt;check&gt; command may return five new results:
+The EPP &lt;check&gt; command may return six new results:
 
-
+- AllocatableVariant: A variant of the domain is already active. Provisioning of this 
+domain must be to the same registrant via the same registrar.
 - NotSameEntity: The domain cannot be provisioned because it is a variant of a
 Primary Domain, and the Primary Domain belongs to a different client
 - Blocked: The domain cannot be provisioned because its disposition value is blocked.
@@ -510,9 +511,9 @@ A registry policy MAY specify rules or guidelines for the
 set of elements required or permitted for a variant domain according to the
 Primary Domain.
 
-Note that the use of lt;rem&gt; in the lt;update&gt; command is not
+Note that the use of &lt;rem&gt; in the &lt;update&gt; command is not
 allowed, because the object does not yet exist and therefore nothing
-can be removed. To set data the lt;add&gt; or lt;chg&gt; tags need
+can be removed. To set data the &lt;add&gt; or &lt;chg&gt; tags need
 to be used.
 
 The command MUST contain an &lt;extension&gt; element, which MUST contain a
