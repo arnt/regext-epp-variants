@@ -123,6 +123,9 @@ __TODO__: login exchange of variant-aware
 __TODO__: discussion of reference to EPP Extensibility and Extension Analysis
 https://docs.google.com/document/d/1WR00oB43XZCDqD0zvRvRajuWAq_9wQ3c0RrFKlGC3So/edit?tab=t.0
 
+__TODO__: map variant to related group
+
+
 # Requirements Language
 
 {::boilerplate bcp14-tagged}
