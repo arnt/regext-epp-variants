@@ -106,7 +106,7 @@ EPP command, with the following restrictions.
 * A &lt;transfer&gt; of any domain in any related group always acts on
 the entire group.  This is required to ensure that the related group
 is always registered by the same registrant and managed via the same
-registrar. Registry policy MAY be impose additional restrictions.
+registrar. Registry policy MAY impose additional restrictions.
 
 * The &lt;delete&gt; of a Primary Domain in any variant group always
 acts on the entire group. This is required to support the option where
@@ -157,7 +157,7 @@ domain prior to the introduction of support for related groups and
 would be part of a related group if it were allocated now. Exempted
 domains may exist with any registrant at any registrar. The exemption
 stops as soon as at most 1 allocated domain remains within a related
-group.
+group or all allocated domain names belong to the same entity.
 
 IDN Table: The combined information about what characters (code
 points) are available for domain registration as well as the variant
@@ -175,7 +175,7 @@ assigned.
 
 Primary Domain: The chronologically first domain in a related group.
 While the related group relationship is symmetric, the status
-value of its members not.  It can either be blocked or
+value of its members is not.  It can either be blocked or
 allocatable. The Primary Domain name therefore partitions the related
 group into allocatable members and blocked members.  In the case of a
 related group of TLDs, there can be a primary domain per TLD.
@@ -257,8 +257,8 @@ the parties agree is outside the scope of this specification.
     The first iteration of this work focused on IDN variants, which
     have the advantage that there is a relatively formal process for
     defining the eligible elements of a group. However, Latin
-    characters with diacritic marks are not considered variants of
-    Latin characters without diacritic marks and there are
+    characters with diacritic marks are not always considered variants
+    of Latin characters without diacritic marks and there are
     circumstances when it is desirable for them to be considerated
     equivalent. As a result this extension presumes the existence of a
     group and sets outside its scope the actual definition of the
