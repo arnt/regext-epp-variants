@@ -8,8 +8,8 @@ wg: regext
 
 docname: draft-galvin-regext-epp-variants-latest
 
-title: Domain variant support for EPP
-abbrev: EPP Variants
+title: Domain Related Group Support for EPP
+abbrev: Domain Group
 lang: en
 kw:
   - EPP
@@ -40,7 +40,7 @@ informative:
 --- abstract
 
 This document defines an EPP extension allowing clients to learn about
-and manipulate variant groups of domains, ie. groups of domains whose
+and manipulate related groups of domains, ie. groups of domains whose
 names are equivalent in a registry-defined way and are tied to a
 single registrant.
 
@@ -50,7 +50,7 @@ single registrant.
 
 EPP is defined in {{RFC5730}}. EPP commands were developed to operate on
 a single object at a time. This document defines an EPP extension allowing
-clients to learn about and manipulate variant groups of objects that have
+clients to learn about and manipulate related groups of objects that have
 a characteristic that makes them equivalent.
 
 Similar to EPP, the principal motivation for this extension was to provide a
@@ -60,61 +60,68 @@ means of interaction between a registrar's applications and registry
 applications.  It is expected that this protocol will have additional
 uses beyond domain name registration.
 
-As an example, the problem being considered is that spelling is not necessarily
-uniform. For example, an è and an e may be regarded as equivalent in some languages,
-and as different in others.
+As an example, the problem being considered is that spelling is not
+necessarily uniform. For example, an è and an e may be regarded as
+equivalent in some languages, and as different in others.
 
 Some registries plan to support this explicitly, with groups of
-variant domains that can only be registered by the same registrant. Having the same
-registrant is most commonly considered essential for equivalence, since if the domains
-are intended to be equivalent then the responsibility of maintaining that equivalence
-must be present. This is a specific example of the more general "Same Entity Principle",
-which in this specification is defined to mean that a variant group MUST be created, managed,
-and deleted by the same entity. From a registry perspective the same entity would be
-registrar; from the registrar's perspective the same entity would be the registrant.
+domains that can only be registered by the same registrant. Having the
+same registrant is most commonly considered essential for equivalence,
+since if the domains are intended to be equivalent then the
+responsibility of maintaining that equivalence must be present. This
+is a specific example of the more general "Same Entity Principle",
+which in this specification is defined to mean that a related group
+MUST be created, managed, and deleted by the same entity. From a
+registry perspective the same entity would be a registrar; from the
+registrar's perspective the same entity would be the registrant.
 
-This document does not define a variant or a group of variants, i.e., this document does
-define what makes the domains in the variant group equivalent.
-A registry policy MUST exist that specifies both that a registry supports
-variant groups and that defines what domains are eligible to be a member
-of a variant group. This policy MUST be agreed between a registry and a
-registrar. The policy and the establishment of the agreement is outside
-the scope of this specification.
+This document does define what makes the domains in a related group
+equivalent.  A registry policy MUST exist that specifies both that a
+registry supports related groups and that defines what domains are
+eligible to be a member of a related group. This policy MUST be agreed
+between a registry and a registrar. The policy and the establishment
+of the agreement is outside the scope of this specification.
 
-A common policy expression among domain registries and registrars is to define
-variants in terms of the script or language in use for an Internalized Domain
-Name (IDN). IDN variants can arise when different characters or sequences of
-characters in an IDN are considered equivalent in a particular language or script.
-Standard Label Generation Rules (LGRs) are used to specify the IDN table that
-establishes the variant relationships. This common policy is presumed and used
-as an example in this specification.
+A common policy expression among domain registries and registrars is
+to define a related group in terms of the script or language in use
+for an Internalized Domain Name (IDN). IDN variants can arise when
+different characters or sequences of characters in an IDN are
+considered equivalent in a particular language or script.  Standard
+Label Generation Rules (LGRs) are used to specify the IDN table that
+establishes the variant relationships. This common policy expression
+is presumed and used as an example in this specification.
 
-With this extension, registering a domain creates a variant group and the first
-domain registered in the group becomes the group's Primary Domain. The creation of the Primary
-Domain MAY establish rules or guidelines regarding the domains that are eligible
-to be a member of the group, e.g., an LGR, an IDN table, and a Primary Domain
-taken together will define a variant group.
+With this extension, registering a domain creates a related group and
+the first domain registered in the group becomes the group's Primary
+Domain. The creation of the Primary Domain MAY establish rules or
+guidelines regarding the domains that are eligible to be a member of
+the group, e.g., an LGR, an IDN table, and a Primary Domain taken
+together will define a variant group.
 
-Subsequent domains in the same group can only be registered by the same registrar, which
-asserts that it is acting on behalf of the same registrant. Each domain in
-a variant group may be the target of any EPP command, with the following
-restrictions.
+Subsequent domains in the same group can only be registered by the
+same registrar, which asserts that it is acting on behalf of the same
+registrant. Each domain in a related group may be the target of any
+EPP command, with the following restrictions.
 
-* A &lt;transfer&gt; of any domain in any variant group always acts on the entire group.
-This is required to ensure that the variant group is always registered by the same registrant
-and managed via the same registrar. Registry policy MAY be impose additional restrictions.
+* A &lt;transfer&gt; of any domain in any related group always acts on
+the entire group.  This is required to ensure that the related group
+is always registered by the same registrant and managed via the same
+registrar. Registry policy MAY be impose additional restrictions.
 
-* The &lt;delete&gt; of a Primary Domain in any variant group always acts on the entire group. This is
-required to support the option where the Primary Domain establishes the rules or
-guidelines for the creation of other domains in the group.
+* The &lt;delete&gt; of a Primary Domain in any variant group always
+acts on the entire group. This is required to support the option where
+the Primary Domain establishes the rules or guidelines for the
+creation of other domains in the group.
 
-This extension is backwards compatible with registrars that do not support variant
-groups. Specifically, this extension supports registries that do support variant
-groups interacting with registrars that do not support variant groups. Registrars that do
-not support variants that attempt to act on a member of a variant group inappropriately
-will receive a compatible error response with which they can continue to function.
-The compatible error response may not provide sufficient detail to fully understand
-the rejection but will be sufficient to ensure continuation of normal operations.
+This extension is backwards compatible with registrars that do not
+support related groups. Specifically, this extension supports
+registries that do support related groups interacting with registrars
+that do not support related groups. Registrars that do not support
+related group that attempt to act on a member of a related group
+inappropriately will receive a compatible error response with which
+they can continue to function.  The compatible error response may not
+provide sufficient detail to fully understand the rejection but will
+be sufficient to ensure continuation of normal operations.
 
 The remainder of this document describes the specific details.
 
@@ -123,193 +130,199 @@ __TODO__: login exchange of variant-aware
 __TODO__: discussion of reference to EPP Extensibility and Extension Analysis
 https://docs.google.com/document/d/1WR00oB43XZCDqD0zvRvRajuWAq_9wQ3c0RrFKlGC3So/edit?tab=t.0
 
-__TODO__: map variant to related group
 
 
 # Requirements Language
 
 {::boilerplate bcp14-tagged}
 
+
+
 # Terms
 
-Allocated variant: A domain that has been created in the registry, and
-which is tied to an existing primary domain.
+Allocated Member: A domain that has been created in the registry, and
+which is related to an existing Primary Domain.
 
-Allocatable variant: A domain that has not been allocated but is allocatable
-(according to the LGR), and which is conceptually tied to an existing
-primary domain.
+Allocatable Member: A domain that has not been allocated but is
+allocatable (e.g., according to a LGR in the case of an IDN variant),
+and which is conceptually related to an existing Primary Domain.
 
-Activated variant: An allocated domain that is in the DNS.
+Activated Member: An Allocated Member domain that is in the DNS.
 
-Blocked domain: A domain that cannot be allocated due to its disposition
-value in relation to the primary domain name.
+Blocked domain: A domain that cannot be allocated due to its status
+value in relation to the Primary Domain name.
 
-Disposition Value: While a variant relationship is symmetric it has exactly
-one of two disposition values which are not necessarily symmetric. A variant
-can be "allocatable" (i.e., available for the same entity) or "blocked"
-(i.e., not available for anybody).
+Exempted domain: A preexisting domain that exists as a stand-alone
+domain prior to the introduction of support for related groups and
+would be part of a related group if it were allocated now. Exempted
+domains may exist with any registrant at any registrar. The exemption
+stops as soon as at most 1 allocated domain remains within a related
+group.
 
-Exempted domain: A preexisting domain that exists as a stand-alone domain,
-but would be part of a variant group if it were allocated now. Exempted domains
-may exist with any registrant at any registrar. The exemption stops
-as soon as at most 1 allocated domain remains within a variant group.
+IDN Table: The combined information about what characters (code
+points) are available for domain registration as well as the variant
+relationships between those code points. IDN tables can be defined via
+RFC3743 or RFC4290 or LGRs (RFC7940). The latter one SHOULD be used as
+it also allows the formal definition of context rules, which is
+lacking in the former ones.
 
-IDN Table: The combined information about what characters (code points)
-are available for domain registration as well as the variant relationships
-between those code points. IDN tables can be defined via RFC3743 or RFC4290
-or LGRs (RFC7940). The latter one SHOULD be used as it also allows the
-formal definition of context rules, which is lacking in the former ones.
+Label Generation Rules (LGR): The preferred way of defining IDN
+tables.  Among others, they define the variant relationships as well
+as their disposition values (blocked or allocatable). The formal
+definition of LGRs can be fond in RFC7940. Status Value is the generic
+term in this specification to which the IDN disposition value would be
+assigned.
 
-Label Generation Rules (LGR): The preferred way of defining IDN tables.
-Among others, they define the variant relationships as well as their
-disposition values (blocked or allocatable). The formal definition of LGRs
-can be fond in RFC7940.
+Primary Domain: The chronologically first domain in a related group.
+While the related group relationship is symmetric, the status
+value of its members not.  It can either be blocked or
+allocatable. The Primary Domain name therefore partitions the related
+group into allocatable members and blocked members.  In the case of a
+related group of TLDs, there can be a primary domain per TLD.
 
-Primary domain: The chronologically first domain in a variant group.
-While the variant relationship is symmetric, its disposition value is not.
-It can either be blocked or allocatable. The primary domain name therefore
-partitions the variant group into allocatable variants and blocked variants.
-In case of variant TLDs, there can be a primary domain per TLD.
+Related Domain: A domain in a related group which is not a Primary Domain.
 
-Same Entity Principle: A requirement that all domains within a variant group
-either belong to the same entity (i.e., the same registrant via the same
-registrar) or are withheld for that entity. No other entity is allowed to
-activate any domain within the same variant group.
+Related Group: An implicit set of domains defined by a policy set by a
+registry. The related domain relationship is symmetric and
+transitive. Hence, an arbitrary element of a related group defines the
+whole group. The group is not expressed explicitly in EPP, because it
+can be impractically large. At the time of writing, an IDN domain is
+registered whose variant set would contain 10¹⁵ variants.
 
-Variant domain: A domain in a variant group which is not a primary domain.
+Same Entity Principle: A requirement that all domains within a related
+group either belong to the same entity (i.e., the same registrant via
+the same registrar) or are withheld for that entity. No other entity
+is allowed to activate any domain within the same related group.
 
-Variant group: An implicit set of domains defined by the Label
-Generation Rule (LGR) of the registry. The variant relationship is
-symmetric and transitive. Hence, an arbitrary element of a variant set
-defines the whole set. This set is not expressed explicitly in EPP,
-because it can be impractically large. At the time of writing, a domain
-is registered whose variant set would contain 10¹⁵ variants.
+Status Value: While a related group relationship is symmetric, a
+group member has exactly one of two status values which are not
+necessarily symmetric. A member can be "allocatable" (i.e., available
+for the same entity) or "blocked" (i.e., not available for anybody).
 
-__TODO__: Do we need to differentiate between allocated and activated?
 
-__TODO__: Does it make any difference, whether a variant has DNS name servers or not?
+
+# Architectural Principles
+
+There are three principles REQUIRED to be true at all times when this
+extension is in use.  There MUST NOT be any exceptions at any time.
+
+## Backwards Compatibility
+
+Support for Related Groups is optional and therefore it is REQUIRED
+that a registry supporting Related Groups MUST be backwards compatible
+with a registrar that does not support Related Groups.  Backwards
+compatibility is defined to mean that a registrar will receive a
+response that is fail-safe but the registrar may not be able to fully
+understand the reason for the rejection.
+
+A registry that does not support related groups will behave normally
+when interacting with a registrar that supports related groups.
+
+## Same-Entity Management
+
+Domains defined to be eligible to be in a related group MUST be
+managed by the same entity.  This has three requirements.
+
+1. Registrars MUST ensure that domains in a related group are managed
+by the same registrant.
+
+2. Registries MUST ensure that domains in a related group are managed
+by the same registrar.
+
+3. A registry that is a member of a related group MUST manage all
+registries in the group.
+
+## Related Groups as a Set
+
+Most EPP commands may be executed independently on any member of the
+related group.  However, commands that change the membership or status
+of members in a related group, or change the Same-Entity Management
+requirement, MUST operate on the related group as a set.
+
+As explained in detail in later sections, there are currently two
+commands with explicit requirements as of the time of publication of
+this document.
+
+
+# Technical Principles
+
+The following technical principles have guided the developed of this
+extension and established operational requirements.
+
+* The members of a related group are defined by registry policy and
+that policy must be agreed by both the registry and the
+registrar. The establishment of this policy and the method by which
+the parties agree is outside the scope of this specification.
+
+    The first iteration of this work focused on IDN variants, which
+    have the advantage that there is a relatively formal process for
+    defining the eligible elements of a group. However, Latin
+    characters with diacritic marks are not considered variants of
+    Latin characters without diacritic marks and there are
+    circumstances when it is desirable for them to be considerated
+    equivalent. As a result this extension presumes the existence of a
+    group and sets outside its scope the actual definition of the
+    group.
+
+* The registry policy MUST define the properties of a Related Group,
+which MUST include at least the following properties.
+
+  * If the related group exists in a registry that itself is a member of a related group, then all related groups in any registry in the registry's related group MUST have the same members in all registries in the registry related group.
+
+    This principle derives directly from the Same-Entity requirement.
+
+    In the case of IDNs, the LGR tables may be different in each registry but the tables MUST be harmonized.
+
+  * The first domain created in a related group is designated the Primary Domain.
+
+    If the registry of the related group is itself a member of a related group, the Primary Domain in a related group MAY be different in each registry.
+
+
+  * The Primary Domain has at least two REQUIRED functions.  First, it defines the members of the Related Group.  Second, it defines the status values of the members of the Related Group.
+
+* EPP today implicitly defines two status values for any domain: registered and available. This related group extensions adds the following status values.
+
+  The Allocated status means that the member of the group is active in the registry. It may or may not be delegated in the DNS.
+
+  The Allocatable status means that the member of the group is available to be allocated by the same-entity.
+
+  The Blocked status means that the member of the group is not available to be allocated by anyone.
+
+* The creation of a Primary Domain establishes the implicit existence of all members of the Related Group. If the registry of the related group is itself a member of a related group, the related group is implicitly created in all registries in the related group of the registry.
+
+
 
 # EPP Commands
 
+In this section, the behavior of each EPP command when Related Groups
+are supported is specified.
+
+
 ## EPP &lt;check&gt; command
 
-__NOTE__: probably better not to have a command extension. For Registrars, it
-would be difficult to determine the suitable primary domain. Therefore,
-it is better to not ask them to send it, but rather return the appropriate
-primary domain name in the response.
-
-This extension defines a new command called the Variant Check Command
-that defines an additional Primary Domain name element for the EPP
+The &lt;check&gt; command always acts on the target domain in the
+command.  There is no change on the client side when using the
 &lt;check&gt; command.
 
-The command MAY contain an &lt;extension&gt; element, which MUST contain a
-&lt;var:check&gt; element. The &lt;var:check&gt; element MUST contain one
-&lt;var:primary&gt; element containing the intended primary domain.
+When the server receives a &lt;check&gt; command from a group-agnostic
+client and the target domain is or could be a member of a related
+group, if that related group has at least one Allocated or Exempted
+member, the server's response:
 
-~~~~~~~~~~~
-C: <?xml version="1.0" encoding="utf-8" standalone="no"?>
-C: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
-C:   <command>
-C:     <check>
-C:       <domain:check
-C:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
-C:         <domain:name>examplev1.com</domain:name>
-C:         <domain:name>examplev1.net</domain:name>
-C:         <domain:name>examplev1.xyz</domain:name>
-C:       </domain:check>
-C:     </check>
-C:     <extension>
-C:       <var:check xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
-C:         <var:primary>example.com</var:primary>
-C:       </var:check>
-C:     </extension>
-C:     <clTRID>ABC-12345</clTRID>
-C:   </command>
-C: </epp>
-~~~~~~~~~~~
+* MUST NOT include the &lt;extension&gt; element.
+* MUST indicate 'availabe = "false"'.
+* MAY indicate a reason of "Unavailable (except as member of group)".
 
-When the server receives a &lt;check&gt; command from a
-variant-agnostic client and any domain within the checked domain's
-variant group is allocated (or at least one exempted
-domain within the variant group exists) the server MUST NOT include
-an &lt;extension&gt; element. Instead, its response MUST
-be available = "false". The optional reason MAY be
-"Unavailable (except as variant)" to tell the registrar it
-might be available as a variant.
+What the server receive a &lt;check&gt; command from a group-aware
+client and the target domain is or could be a member of a related
+group, if that related group has at least one Allocated or Exempted
+member, the server's response MUST contain an &lt;extension&gt;
+element with the following child elements:
 
-When the server receives a &lt;check&gt; command from a variant-aware
-client and the checked domain is part of a variant group with at least one
-allocated variant (or exempted domain),
-its response MUST contain an &lt;extension&gt; element, which MUST
-contain a child &lt;var:chkData&gt; element. The &lt;fee:chkData&gt;
-element MUST contain a &lt;var:cd&gt; element for each object referenced in
-the client &lt;check&gt; command.
-
-Each &lt;var:cd&gt; (check data) element MUST contain the following child
-elements:
-
-*  A &lt;var:objID&gt; element, which MUST match an element referenced in
-the client &lt;check&gt; command.
-*  An OPTIONAL &lt;var:primary&gt; element.
-*  A &lt;var:status&gt; element, which explains in more detail the availability
+* A &lt;var:primary&gt; element matching the Primary Domain for the
+related group.
+* A &lt;var:status&gt; element, which explains in more detail the availability
 status of the queried domain.
-
-Example &lt;check&gt; response:
-
-~~~~~~~~~~~
-S: <?xml version="1.0" encoding="utf-8" standalone="no"?>
-S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
-S:   <response>
-S:     <result code="1000">
-S:       <msg>Command completed successfully</msg>
-S:     </result>
-S:     <resData>
-S:       <domain:chkData
-S:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
-S:         <domain:cd>
-S:           <domain:name avail="1">examplev1.com</domain:name>
-S:         </domain:cd>
-S:         <domain:cd>
-S:           <domain:name avail="0">examplev1.net</domain:name>
-S:         </domain:cd>
-S:         <domain:cd>
-S:           <domain:name avail="0">examplev1.tel</domain:name>
-S:         </domain:cd>
-S:         <domain:cd>
-S:           <domain:name avail="0">examplev1.swiss</domain:name>
-S:         </domain:cd>
-S:       </domain:chkData>
-S:     </resData>
-S:     <extension>
-S:       <var:chkData
-S:           xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
-S:         <var:cd avail="1">
-S:           <var:objID>examplev1.com</var:objID>
-S:           <var:primary>example.com</var:primary>
-S:           <var:status>AllocatableVariant</var:status>
-S:         </var:cd>
-S:         <var:cd avail="0">
-S:           <var:objID>examplev1.net</var:objID>
-S:           <var:status>NotSameEntity</var:status>
-S:         </var:cd>
-S:         <var:cd avail="0">
-S:           <var:objID>examplev1.tel</var:objID>
-S:           <var:status>Blocked</var:status>
-S:         </var:cd>
-S:         <var:cd avail="0">
-S:           <var:objID>examplev1.swiss</var:objID>
-S:           <var:status>PendingTransfer</var:status>
-S:         </var:cd>
-S:       </var:chkData>
-S:     </extension>
-S:     <trID>
-S:       <clTRID>ABC-12345</clTRID>
-S:       <svTRID>54322-XYZ</svTRID>
-S:     </trID>
-S:   </response>
-S: </epp>
-~~~~~~~~~~~
-
 
 The EPP &lt;check&gt; command may return six new results:
 
@@ -327,321 +340,233 @@ that is currently being transferred to a different registrar.
 
 ## EPP &lt;info&gt; command
 
-For variant-agnostic clients
-there is no change to the standard behaviour. The response contains the
-actual data of the domain, independent of the fact whether it is a variant
-or not, in addition to the following:
+The &lt;info&gt; command always acts on the target domain in the
+command.  There is no change on the client side when using the
+&lt;info&gt; command.
 
-* if the variant-agnostic registrar is inquiring about a non-allocated variant,
-the response SHOULD be the same as the registrar inquiring about a reserved name.
-If you don't have a policy, suggest a policy.
+The main part of the response MUST contain the actual data of the target
+domain name (contacts, hosts, status values, etc.).
 
-__TODO__: XML example of response?
+When the server receives an &lt;info&gt; command from a group-agnostic
+client the response MUST contain the actual data of the domain,
+independent of whether it is a member of a related group. In addition,
+if the group-agnostic registrar is inquiring about a domain with a
+status of Allocatable, the response SHOULD be the same as if the
+client were inquiring about a reserved name.
 
-For variant-aware clients, the EPP &lt;info&gt; command is not extended,
-but its response is extended
-if the &lt;info&gt; command concerns a variant domain, i.e., at least two
-domains within a variant group have been activated. The response then always
-MUST include all primary domain names across all activated variant TLDs. Optionally
-the response may include the list of all activated variants (across
-all variant TLDs).
+When the server receives an &lt;info&gt; command from a group-aware
+client and the target domain is or could be a member of a related
+group, if that related group has at least one Allocated or Exempted
+member, the server's response MUST contain an &lt;extension&gt;
+element with the following child elements:
 
-In case a Primary Domain name is queried in the &lt;info&gt; command,
-the list of activated variants within the same TLD MUST be returned.
+* A &lt;var:primary&gt; element matching the Primary Domain for the
+related group of the target domain, which MAY match the target domain.
+* A list of all the Allocated and Exempted members of the related group.
 
-In other words:
-* If you ask about a primary domain name
-  * you MUST return all primary labels in all variant TLDs
-  * you MUST return all activated variants in that TLD
-  * you MAY return all activated variants in all variant TLDs
+If the registry of the target domain is itself a member of a related
+group and the target domain is or could be a member of a related group
+in any registry in that registry's related group, if any one of those
+target domain related groups has at least one Allocated or Exempted
+member, the server's response MUST contain an &lt;extension&gt;
+element with the following child elements:
 
-* if you ask about a variant domain
-  * you MUST return the primary label for that variant
-  * you MUST return all primary labels in all variant TLDs
-  * you MAY return all activated variants in that TLD
-  * you MAY return all activated variants in all variant TLDs
+* A &lt;var:primary&gt; element matching the Primary Domain for the
+related group of the target domain, which MAY match the target domain.
 
-The main part of the response MUST contain the actual data of the queried
-domain name (contacts, hosts, status values, etc.)
+* A list of all the related groups of the target domain with Allocated
+or Exempted members such that each related group list has its
+Primary Domain listed first.
 
-Example &lt;info&gt; response when querying a primary domain name:
-~~~~~~~~~~~
-S: <?xml version="1.0" encoding="UTF-8"?>
-S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
-S:   <response>
-S:     <result code="1000">
-S:       <msg lang="en-US">Command completed successfully</msg>
-S:     </result>
-S:     <resData>
-S:       <infData xmlns="urn:ietf:params:xml:ns:domain-1.0">
-S:         <name>example.com</name>
-S:         <roid>D123456789</roid>
-S:         <status s="active"/>
-S:         <registrant>abc123</registrant>
-S:         <contact type="tech">ghi789</contact>
-S:         <ns>
-S:           <hostObj>ns1.example.net</hostObj>
-S:           <hostObj>ns2.example.net</hostObj>
-S:         </ns>
-S:         <clID>registrar</clID>
-S:         <crID>registrar</crID>
-S:         <crDate>2010-09-08T07:06:05.0Z</crDate>
-S:         <exDate>2012-09-08T23:59:59.0Z</exDate>
-S:         <authInfo>
-S:           <pw>secret</pw>
-S:         </authInfo>
-S:       </infData>
-S:     </resData>
-S:     <extension>
-S:       <var:infData xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
-S:         <var:primary>
-S:           <var:name>example.com</var:name>
-S:           <var:name>example.comv1</var:name>
-S:           <var:name>example.comv2</var:name>
-S:         </var:primary>
-S:         <var:variant>
-S:           <var:name>examplev1.com</var:name>
-S:           <var:name>examplev2.com</var:name>
-S:         </var:variant>
-S:       </var:infData>
-S:     </extension>
-S:     <trID>
-S:       <svTRID>ZYX-99958</svTRID>
-S:     </trID>
-S:   </response>
-S: </epp>
-~~~~~~~~~~~
 
-__TODO__: check whether EPP spec says anything about the alignment of check and info.
 
 ## EPP &lt;transfer&gt; command
 
-If a variant-agnostic client initiates a transfer-in of a variant domain, i.e.,
-at least two domains in a variant group have been activated, the transfer
-request MUST be denied using 2305 "Object status prohibits operation".
+The &lt;transfer&gt; command always acts on the target domain in the
+command.  The use of the &lt;transfer&gt; command is extended if both
+the server and the client support related groups.
 
-Example &lt;transfer&gt; response for variant-agnostic clients:
-~~~~~~~~~~~
-S: <?xml version="1.0" encoding="UTF-8"?>
-S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
-S:   <response>
-S:     <result code="2305">
-S:       <msg>Object status prohibits operation</msg>
-S:       <extValue>
-S:         <value xmlns:epp="urn:ietf:params:xml:ns:epp-1.0">
-S:           <epp:undef/>
-S:         </value>
-S:         <reason>Domain is part of a related group. Use extension.</reason>
-S:       </extValue>
-S:     </result>
-S:     <trID>
-S:       <clTRID>O733952948_1759741733997</clTRID>
-S:       <svTRID>14847241225-1759741733979</svTRID>
-S:     </trID>
-S:   </response>
-S: </epp>
-~~~~~~~~~~~
+When the server receives a &lt;transfer&gt; command from a
+group-agnostic client and the target domain is or could be a member of
+a related group, if that related group has at least one Allocated or
+Exempted member the transfer request MUST be denied using 2305 "Object
+status prohibits operation".
 
-If a variant-aware client initiates a transfer-in of a variant domain, i.e.,
-at least two domains in a variant group have been activated, the transfer request
-MUST include an extension specifying the Primary Domain for the indicated variant
-domain, including if the Primary Domain is the domain indicated in the
-transfer-in. If the extension is not present the transfer request MUST be denied
-using 2003 "Required parameter missing".
+When the server receives a &lt;transfer&gt; command from a group-aware
+client and the target domain is or could be a member of a related
+group, the request must include an &lt;extension&gt; element with a
+&lt;var:primary&gt; element matching the Primary Domain, including if
+the Primary Domain is the target domain.  If the extension is not
+present the transfer request MUST be denied using '2003 "Required
+parameter missing"'. Note that the &lt;check&gt; or &lt;info&gt;
+command MAY be used to identify the Primary Domain.
 
-The &lt;transfer&gt; response is extended and MUST include the complete group of
-all activated variants formed by combining all variant groups from all variant TLDs.
+A valid transfer request MUST apply to all members of a related group.
+If the registry of the target domain is itself a member of a related
+group, then the transfer request MUST apply to all related groups in
+all registries of the registry's related group.
 
-Example &lt;transfer&gt; request for a domain within a related group:
-~~~~~~~~~~~
-C: <?xml version="1.0" encoding="UTF-8"?>
-C: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
-C:   <command>
-C:     <transfer op="request">
-C:       <transfer xmlns="urn:ietf:params:xml:ns:domain-1.0">
-C:         <name>example.com</name>
-C:         <authInfo>
-C:           <pw>secret</pw>
-C:         </authInfo>
-C:       </transfer>
-C:     </transfer>
-C:     <extension>
-C:       <var:primary xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
-C:         <var:name>example.com</var:name>
-C:       </var:primary>
-C:     </extension>
-C:     <clTRID>tr-1759740608479</clTRID>
-C:   </command>
-C: </epp>
-~~~~~~~~~~~
+The server's response to the transfer request MUST contain an
+&lt;extension&gt; element with the following child elements;
 
-Example &lt;transfer&gt; response:
-~~~~~~~~~~~
-S: <?xml version="1.0" encoding="UTF-8"?>
-S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
-S:   <response>
-S:     <result code="1001">
-S:       <msg>Command completed successfully; action pending</msg>
-S:     </result>
-S:     <resData>
-S:       <domain:trnData xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
-S:         <domain:name>example.com</domain:name>
-S:         <domain:trStatus>pending</domain:trStatus>
-S:         <domain:reID>4148</domain:reID>
-S:         <domain:reDate>2025-10-06T08:50:08Z</domain:reDate>
-S:         <domain:acID>106</domain:acID>
-S:         <domain:acDate>2025-10-11T08:50:08Z</domain:acDate>
-S:         <domain:exDate>2027-05-11T09:01:33Z</domain:exDate>
-S:       </domain:trnData>
-S:     </resData>
-S:     <extension>
-S:       <var:infData xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
-S:         <var:primary>
-S:           <var:name>example.com</var:name>
-S:           <var:name>example.comv1</var:name>
-S:           <var:name>example.comv2</var:name>
-S:         </var:primary>
-S:         <var:variant>
-S:           <var:name>examplev1.com</var:name>
-S:           <var:name>examplev2.com</var:name>
-S:           <var:name>examplev1.comv1</var:name>
-S:           <var:name>examplev1.comv2</var:name>
-S:         </var:variant>
-S:       </var:infData>
-S:     </extension>
-S:     <trID>
-S:       <clTRID>tr-1759740608479</clTRID>
-S:       <svTRID>14847187000-1759740608529-33232260892</svTRID>
-S:     </trID>
-S:   </response>
-S: </epp>
-~~~~~~~~~~~
+* A &lt;var:primary&gt; element matching the Primary Domain for the
+related group of the target domain, which MAY match the target domain.
+* A list of all the Allocated and Exempted members of the related group.
+
+If the registry of the target domain is itself a member of a related
+group and the target domain is or could be a member of a related group
+in any registry in that registry's related group, if any one of those
+target domain related groups has at least one Allocated or Exempted
+member, the server's response MUST contain an &lt;extension&gt;
+element with the following child elements:
+
+* A &lt;var:primary&gt; element matching the Primary Domain for the
+related group of the target domain, which MAY match the target domain.
+
+* A list of all the related groups of the target domain with Allocated
+or Exempted members such that each related group list has its
+Primary Domain listed first.
 
 __TODO__: It must be ensured that the poll message to the losing registrar
 also contains the full list of domains that will be transferred together with
 the primary domain.
 
+
+
 ## EPP &lt;create&gt; command
 
 The EPP &lt;create&gt; command's standard task is to provision a new
-domain. If the domain to be created is part of a variant group, the command
-MUST be rejected as follows.
+domain. When related groups are supported, the &lt;create&gt; command
+MUST be used to create the Primary Domain and MUST NOT be used to
+provision any other member of the Primary Domain's related group. The
+task of converting an allocatable domain into an allocated domain MUST
+be performed using the &lt;update&gt; command.
 
-* If the client is variant-agnostic, the response SHOULD be the same as if
-the domain to be created is reserved.
+When the server receives a &lt;create&gt; command from a
+group-agnostic client and the target domain is or could be a member of
+a related group, one of the following actions MUST be completed as
+appropriate.
 
-* If the client is variant-aware, the response MUST indicate that it is an
-inappropriate use of the command.
+* If any member of the related group is currently Allocated or
+Exempted, the command MUST be rejected and the response should be the
+same as if the domain to be created is reserved.
 
-The &lt;create&gt; MUST only be used to create the Primary Domain. The task of
-converting an allocatable domain into an allocated
-domain MUST be performed using the &lt;update&gt; command.
+* If there are no members of the related group either Allocated or
+Exempted, the &lt;create&gt; MUST proceed according to the standard
+with the server implicitly reserving all other members of the related
+group such that they MUST NOT be allocated until such time as the
+client is group-aware and the client MUST indicate that the target
+domain is to be extended to be a Primary Domain as described in the
+&lt;update&gt; command.
 
-If a client initiates the creation of a domain that does not
-exist and is not a member of any variant group, then the following actions are
-REQUIRED.
+When the server receives a &lt;create&gt; command from a group-aware
+client and the target domain is or could be a member of a related
+group, the command MUST include an &lt;extension&gt; element with the
+&lt;var:primary&gt; child element that must match the target
+domain. If not, the command MUST be rejected using '2003 "Required
+parameter missing"'.
 
-* If the create is otherwise permitted and the domain could be a Primary Domain,
-the server MUST ensure that all eligible members of the variant group are
-prevented from creation or allocation until such time as the domain
-is expressly indicated by the client to be a Primary Domain.
+Upon receiving a &lt;create&gt; command from a group-aware client with
+a valid &lt;extension&gt; element, one of the following actions MUST
+be completed as appropriate.
 
-* The server MUST act on the create and respond to the client as if the domain is
-a new domain.
+* If the target domain does not exist and any other member of the
+related group is Allocated or Exempted, the command MUST be rejected
+and indicate that it is an inappropriate use of the command.
 
-__ TODO__: make clear that registering the first domain within any variant
-group must not be rejected. The rejection only happens if at least one other
-domain of that variant group already exists.
+* If the target domain does not exist and no other member of the
+related group is Allocated or Exempted, the &lt;create&gt; command
+MUST proceed according to the standard with the server implicitly
+noting to itself the existence of all other members of the related
+group and setting their status value as prescribed by registry
+policy. The response MUST include the &lt;extension&gt; element with
+the &lt;var:primary&gt; child element indicating the Primary Domain,
+which must match the target domain.
+
+* If the target domain does exist, the &lt;create&gt; command MUST be
+rejected according to the standard. The response MUST include the
+&lt;extension&gt; element with the &lt;var:primary&gt; child element
+indicating the Primary Domain, which must match the target domain.
 
 The EPP &lt;create&gt; command may have five new errors, as described
 in the &lt;check&gt; section above.
 
 __TODO__: check alignment of the new error codes
 
+
+
 ## EPP &lt;update&gt; command
 
 The EPP <update> command provides a transform operation that allows a
-client to change the state of a variant domain object. It is extended
+client to change the state of a related domain object. It is extended
 to cover three new tasks:
 
-* Activating an allocatable variant domain in an existing variant group
-* Deactivating an activated variant domain name in an existing variant group
-* Converting an Exempted Domain into a Primary Domain and optionally
-converting other Exempted Domains that are eligible to be in the variant
-group of the stated Primary Domain to be activated domains of the
-variant group.
+* Activating an allocatable related domain in an existing related group.
+* Deactivating an activated related domain name in an existing related group.
+* Converting an Allocated or Exempted Domain into a Primary Domain and
+optionally converting other Exempted Domains that are eligible to be
+in the related group of the stated Primary Domain to be activated
+domains of the related group.
 
-This extended &lt;update&gt; is not valid for use by a variant-agnostic
-client. Any use by a variant-agnostic client MUST be rejected.
+This extended &lt;update&gt; command is not valid for use by a
+group-agnostic client. Any use by a group-agnostic client MUST be
+rejected and indicate it is an inappropriate use of the command.
 
-This rest of this section specifies behavior when variant-aware
-servers and clients are interacting.
+A group-agnostic client MUST only use the standard-defined
+&lt;update&gt; command and the server MUST only respond as defined by
+the standard.
 
-When a client wishes to provision (activate) a new domain in a variant
-group, it uses the &lt;update&gt; command rather than the
-&lt;create&gt; command. This informs the server that the client
-understands that the task is to provision a variant domain rather than
-a new domain, and asserts that the two domains belong to the
-same registrant.
+The rest of this section specifies behavior when group-aware servers
+and group-aware clients are interacting and describes the three new
+tasks.
 
-The &lt;update&gt; command MUST specify the domain to be activated and
-include an element specifying the Primary Domain that identifies the
-correct variant group for the domain.
+When the target domain of the update command is any member of the
+related group, including the Primary Domain of the related group, the
+client MUST include an &lt;extension&gt; element that MUST include at
+least the &lt;var:primary&gt; child element indicating the Primary
+Domain of the corresponding related group. The extension MAY include
+additional elements as indicated below to provision a new task. If the
+extension is not present the command MUST be rejected and indicate
+that a required parameter is missing.
 
-Note that depending on registry policy, the variant domain may share
-attributes with the Primary Domain, e.g., nameservers.
-A registry policy MAY specify rules or guidelines for the
-set of elements required or permitted for a variant domain according to the
-Primary Domain.
+If the Primary Domain and the target domain match, all other elements
+in the extension MUST be ignored and the update command MUST be
+processed as a standard defined update command acting on the Primary
+Domain.
 
-Note that the use of &lt;rem&gt; in the &lt;update&gt; command is not
-allowed, because the object does not yet exist and therefore nothing
-can be removed. To set data the &lt;add&gt; or &lt;chg&gt; tags need
-to be used.
+The rest of this section specifies behavior when the target domain and
+the Primary Domain indicated in the extension do not match.
 
-The command MUST contain an &lt;extension&gt; element, which MUST contain a
-&lt;var:update&gt; element. The &lt;var:update&gt; element MUST contain one
-&lt;var:primary&gt; element containing the primary domain to which the
-variant should be added.
+If the &lt;var:status&gt; child element is present in the extension,
+one of the following actions MUST be completed as appropriate.
 
-Example &lt;update&gt; command activating a new variant:
-~~~~~~~~~~~
-C: <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-C: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
-C:   <command>
-C:     <update>
-C:       <domain:update xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
-C:         <domain:name>examplev1.com</domain:name>
-C:         <domain:add>
-C:           <domain:ns>
-C:             <domain:hostObj>ns1.example.com</domain:hostObj>
-C:             <domain:hostObj>ns2.example.com</domain:hostObj>
-C:           </domain:ns>
-C:           <domain:contact type="tech">mak21</domain:contact>
-C:         </domain:add>
-C:         <domain:chg>
-C:           <domain:registrant>sh8013</domain:registrant>
-C:           <domain:authInfo>
-C:             <domain:pw>2BARfoo</domain:pw>
-C:           </domain:authInfo>
-C:         </domain:chg>
-C:       </domain:update>
-C:     </update>
-C:     <extension>
-C:       <var:update xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
-C:         <var:primary>example.com</var:primary>
-C:       </var:update>
-C:     </extension>
-C:     <clTRID>ABC-12345</clTRID>
-C:   </command>
-C: </epp>
-~~~~~~~~~~~
+* In order to Activate an Allocatable domain, the target domain MUST
+have a status of Allocatable and the extension MUST include the
+&lt;var:status&gt; child element with a value of "allocated". The
+server MUST update the status of the target domain and the response
+MUST include the extension element with both the Primary Domain
+indicated and the revised status indicated.
 
-The response is not extended and returns the standard success result in case
-the variant was successfullly activated.
+* In order to deactivate an Allocated domain, the target domain MUST
+have a status of Allocated and the extension MUST include the
+&lt;var:status&gt; child element with a value of "allocatable". The
+server MUST update the status of the target domain and the response
+MUST include the extension element with both the Primary Domain
+indicated and the revised status indicated.
 
-If a client wishes to deactivate a previously activated variant (except the
-primary domain) it also uses the  &lt;update&gt; command.  
+* In all other cases, if the status element is present the command
+MUST be rejected and indicate an invalid parameter is present.
+
+If the &lt;var:status&gt; child element is not present in the
+extension, then all elements other than the Primary Domain indication
+MUST be ignored and the update command MUST be processed as a standard
+defined update command acting on the target domain.
+
+Note that depending on registry policy, the related domain may share
+attributes with the Primary Domain, e.g., nameservers.  A registry
+policy MAY specify rules or guidelines for the set of elements
+required or permitted for a related domain according to the Primary
+Domain.
 
 The EPP domain mapping from RFC3915 describes the elements that
 have to be specified within an <update> command.  The requirement to
@@ -652,79 +577,99 @@ if this extension is specified within an <update> command.  This
 requirement is updated to disallow the possibility of modifying a
 domain object as part of the deactivation.
 
-The command MUST contain an &lt;extension&gt; element, which MUST contain a
-&lt;var:update&gt; element. The &lt;var:update&gt; element MUST contain one
-&lt;var:deactivate&gt; element set to true. This confirms to the server 
-that the client is not trying to update the content of the variant domain,
-but rather deactivate it.
+If a client wishes to convert an Exempted domain into the Primary
+Domain of a related group, the update command from the client MUST be
+provided as follows.
+
+* The target domain of the update command and the Primary Domain in
+the extension MUST match.
+* The target domain MUST have the status of Exempted.
+* If there exists multiple Exempted domains that would ordinarily be
+members of the related group, they MUST all have the same Registrar of
+Record and it MUST match the update requesting registrar, and the extension
+MUST include a list of all Exempted domains, including the
+Primary Domain, that MUST match the list maintained by the registry.
+
+If the update command is valid as indicated above, the server MUST
+change the status of the indicated domains from Exempted to Allocated,
+and MUST indicate the Primary Domain. The response MUST include an
+extension indicating the Primary Domain and the list of domains whose
+status changed from Exempte to Allocated.
+
+If a previously group-agnostic client becomes group-aware and wishes
+to convert a registered domain to be a Primary Domain of related
+group, the update command from the client MUST be provided as follows.
+
+* The target domain of the update command and the Primary Domain in
+the extension MUST match.
+* The target domain MUST have the status of registered and MUST have
+the same Registrar of Record as the update requesting registrar.
+
+If the update command is valid as indicated above, the server MUST
+change the status of the indicated domains to Allocated, and MUST
+indicate it as the Primary Domain. The response MUST include an
+extension indicating the Primary Domain.
 
 
-Example &lt;update&gt; command deactivating an existing variant:
-~~~~~~~~~~~
-C: <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-C: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
-C:   <command>
-C:     <update>
-C:       <domain:update xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
-C:         <domain:name>examplev1.com</domain:name>
-C:         <domain:chg/>
-C:       </domain:update>
-C:     </update>
-C:     <extension>
-C:       <var:update xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
-C:         <var:deactivate>true</var:deactivate>
-C:       </var:update>
-C:     </extension>
-C:     <clTRID>ABC-12345</clTRID>
-C:   </command>
-C: </epp>
-~~~~~~~~~~~
-
-If a client wishes to convert an exempted domain into a member
-of a variant group as an allocated variant,
-it issues an &lt;update&gt;
-command including and element with both the Primary Domain and separately the list
-of exempted domains, which the client thereby asserts belong to the
-same registrant. Note that the client MUST include all related exempted domains
-in the list or the server MUST reject the command. The response MUST include
-the complete list of exempted domains for the client.
-
-__TODO__: xml example
 
 ## EPP &lt;delete&gt; command
 
-If a variant-agnostic client issues a &lt;delete&gt; command there is no change
-from the standard functionality.
+The &lt;delete&gt; command is extended to REQUIRE the deletion of all
+members of a related group if the Primary Domain is deleted.
 
-If a variant-aware client issues a &lt;delete&gt; command, the command is extended
-to REQUIRE the client to include an extension indicating the Primary Domain of
-the domain being deleted, which the client thereby asserts that both domains belong
-to the same registrant.  If a Primary Domain is being deleted then the same
-domain name MUST be specified in the extension.
+This extended &lt;delete&gt; command is not valid for use by a
+group-agnostic client. Any use by a group-agnostic client MUST be
+rejected and indicate it is an inappropriate use of the command.
 
-If a Primary Domain is to be deleted, the &lt;delete&gt; command is extended
-to include the deletion of all
-variant domains in all variant groups in all Variant TLDs. The response MUST include a
-list of all the allocated domains in all variant groups that were deleted.
+A group-agnostic client MUST only use the standard-defined
+&lt;update&gt; command and the server MUST only respond as defined by
+the standard.
 
-__TODO__: xml example
+The rest of this section specifies behavior when group-aware servers
+and group-aware clients are interacting.
+
+A group-aware client MUST NOT use the &lt;delete&gt; command to delete
+any member of a related group except the Primary Domain. Any other use
+MUST be rejected and indicate it is an inappropriate use of the
+command. Note that &lt;update&gt; command is used for this purpose.
+
+When the server receives a &lt;delete&gt; command from a group-aware
+client, the command MUST include the &lt;extension&gt; element which
+MUST include the &lt;var:primary&gt; child element which MUST match
+the target domain name.
+
+The delete command is extended such that all Allocated members of the
+related group defined by the Primary Domain MUST all be deleted at
+once. If it is not possible for any member of the related group to be
+deleted for any reason, the delete command MUST fail leaving all
+members of the related group intact.
+
+If the delete command is successful, the response MUST include the
+extension element which MUST include both an indication of the Primary
+Domain and the list of all members of the related group that were
+deleted, including the Primary Domain.
+
+
 
 ## EPP renew command
 
 The EPP renew command is not extended.
 
-The server MAY reject renewals while a variant group is being
+The server MAY reject renewals while a related group is being
 transferred.
+
 
 ## EPP &lt;transfer&gt; query command
 
 The EPP &lt;transfer&gt; query command is not extended.
 
-Note that because variant groups are transferred as a group, the
+Note that because related groups are transferred as a group, the
 result of the a &lt;transfer&gt; query command is necessarily the same
-for all domains in a group. Therefore, the result of &lt;transfer&gt;
-query command for any domain in a variant group applies to all domains
-in the group.
+for all domains in a group. Therefore, the result of a
+&lt;transfer&gt; query command for any domain in a related group
+applies to all domains in the group.
+
+
 
 # Result codes
 
@@ -759,6 +704,8 @@ instead.
 This result code is used when a domain is a member of a variant set,
 and the command did not refer to the primary domain.
 
+
+
 # Acknowledgements
 
 The design of this extension is almost completely based on work done
@@ -771,6 +718,7 @@ Gulbrandsen based on a conference presentation by James Galvin.
 [YOUR NAME HERE] have reviewed it and provided helpful
 comments or contributed in other ways.
 
+
 # Security Considerations {#Security}
 
 If two domains are different according to the DNS rules and identical
@@ -781,9 +729,11 @@ This extension expresses the relationships between variants clearly,
 making it a little more difficult for a would-be impersonator to
 register a variant of another registrant's existing domain.
 
+
 # IANA Considerations {#IANA}
 
 --- back
+
 
 # Open issues
 
@@ -802,20 +752,5 @@ exempted?  Yes, I think, and the terminology covers it, but as of
 now, it's difficult for the EPP client to understand the situation.
 Extending the &lt;info&gt; command would help here, perhaps.
 
-Open issue: Creating a primary domain now consists of a two-step
-process, &lt;create&gt; and then &lt;update&gt;. The first step turns
-all variants into blocked domains, the second makes them
-allocatable. It's not clear to me why the two-step process is
-desirable, compared to a one-step process where a &lt;create&gt;
-command creates a primary domain if the variant group contains other
-domains than that one. That needs a couple of sentences of
-explanation, or else a change.
-
 Open issue: &lt;Delete&gt; now cascades and deletes many domains.
 Should it instead turn any variant domains into exempted domains?
-
-Open issue: Should the &lt;info&gt; of the primary domain also return
-the list of allocated variants? Probably not — at the moment, this
-extension has the client send a set that the server checks, and the
-server may need to generate a set for checking, but the server does
-not need to generate a list for returning.
