@@ -326,7 +326,7 @@ status of the queried domain.
 
 The EPP &lt;check&gt; command may return six new results:
 
-- AllocatableVariant: A variant of the domain is already active. Provisioning of this 
+- AllocatableVariant: A variant of the domain is already active. Provisioning of this
 domain must be to the same registrant via the same registrar.
 - NotSameEntity: The domain cannot be provisioned because it is a variant of a
 Primary Domain, and the Primary Domain belongs to a different client
