@@ -156,8 +156,14 @@ Exempted domain: A preexisting domain that exists as a stand-alone
 domain prior to the introduction of support for related groups and
 would be part of a related group if it were allocated now. Exempted
 domains may exist with any registrant at any registrar. The exemption
-stops as soon as at most 1 allocated domain remains within a related
-group or all allocated domain names belong to the same entity.
+ends in one of two ways.
+
+* When there is at most 1 allocated domain remaining at which time the
+registry MUST block all other labels of the related group until the
+registrar asserts knowledge of the related group.
+
+* When the registrar asserts knowledge of the related group and, if
+present brings all labels in the related group together.
 
 IDN Table: The combined information about what characters (code
 points) are available for domain registration as well as the variant
@@ -267,28 +273,46 @@ the parties agree is outside the scope of this specification.
 * The registry policy MUST define the properties of a Related Group,
 which MUST include at least the following properties.
 
-  * If the related group exists in a registry that itself is a member of a related group, then all related groups in any registry in the registry's related group MUST have the same members in all registries in the registry related group.
+  * If the related group exists in a registry that itself is a member
+    of a related group, then all related groups in any registry in the
+    registry's related group MUST have the same members in all
+    registries in the registry related group.
 
     This principle derives directly from the Same-Entity requirement.
 
-    In the case of IDNs, the LGR tables may be different in each registry but the tables MUST be harmonized.
+    In the case of IDNs, the LGR tables may be different in each
+    registry but the tables MUST be harmonized.
 
-  * The first domain created in a related group is designated the Primary Domain.
+  * The first domain created in a related group is designated the
+    Primary Domain.
 
-    If the registry of the related group is itself a member of a related group, the Primary Domain in a related group MAY be different in each registry.
+    If the registry of the related group is itself a member of a
+    related group, the Primary Domain in a related group MAY be
+    different in each registry.
 
 
-  * The Primary Domain has at least two REQUIRED functions.  First, it defines the members of the Related Group.  Second, it defines the status values of the members of the Related Group.
+  * The Primary Domain has at least two REQUIRED functions.  First, it
+    defines the members of the Related Group.  Second, it defines the
+    status values of the members of the Related Group.
 
-* EPP today implicitly defines two status values for any domain: registered and available. This related group extensions adds the following status values.
+* EPP today implicitly defines two status values for any domain:
+  registered and available. This related group extensions adds the
+  following status values.
 
-  The Allocated status means that the member of the group is active in the registry. It may or may not be delegated in the DNS.
+  The Allocated status means that the member of the group is active in
+  the registry. It may or may not be delegated in the DNS.
 
-  The Allocatable status means that the member of the group is available to be allocated by the same-entity.
+  The Allocatable status means that the member of the group is
+  available to be allocated by the same-entity.
 
-  The Blocked status means that the member of the group is not available to be allocated by anyone.
+  The Blocked status means that the member of the group is not
+  available to be allocated by anyone.
 
-* The creation of a Primary Domain establishes the implicit existence of all members of the Related Group. If the registry of the related group is itself a member of a related group, the related group is implicitly created in all registries in the related group of the registry.
+* The creation of a Primary Domain establishes the implicit existence
+  of all members of the Related Group. If the registry of the related
+  group is itself a member of a related group, the related group is
+  implicitly created in all registries in the related group of the
+  registry.
 
 
 
