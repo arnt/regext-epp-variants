@@ -5,8 +5,8 @@
 regext                                                         J. Galvin
 Internet-Draft                                          Identity Digital
 Intended status: Standards Track                              M. Bauland
-Expires: 7 May 2026                  Knipp Medien und Kommunikation GmbH
-                                                         3 November 2025
+Expires: 8 May 2026                  Knipp Medien und Kommunikation GmbH
+                                                         4 November 2025
 
 
                   Domain Related Group Support for EPP
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 May 2026.
+   This Internet-Draft will expire on 8 May 2026.
 
 Copyright Notice
 
@@ -204,9 +204,14 @@ Table of Contents
    domain prior to the introduction of support for related groups and
    would be part of a related group if it were allocated now.  Exempted
    domains may exist with any registrant at any registrar.  The
-   exemption stops as soon as at most 1 allocated domain remains within
-   a related group or all allocated domain names belong to the same
-   entity.
+   exemption ends in one of two ways.
+
+   *  When there is at most 1 allocated domain remaining at which time
+      the registry MUST block all other labels of the related group
+      until the registrar asserts knowledge of the related group.
+
+   *  When the registrar asserts knowledge of the related group and, if
+      present brings all labels in the related group together.
 
    IDN Table: The combined information about what characters (code
    points) are available for domain registration as well as the variant
