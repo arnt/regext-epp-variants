@@ -8,8 +8,8 @@ wg: regext
 
 docname: draft-galvin-regext-epp-variants-latest
 
-title: Domain Related Group Support for EPP
-abbrev: Domain Group
+title: Same Entity Set Support for EPP
+abbrev: Same Entity Set
 lang: en
 kw:
   - EPP
@@ -40,92 +40,81 @@ informative:
 --- abstract
 
 This document defines an EPP extension allowing clients to learn about
-and manipulate related groups of domains, ie. groups of domains whose
+and manipulate a set of objects in a shared central repository that are
+necessarily tied to the same entity (typically domain objects whose
 names are equivalent in a registry-defined way and are tied to a
-single registrant.
+single registrant).  The extension supports multiple registries with a
+shared definition of equivalence using a single service
+provider with a shared central repository.
 
 --- middle
 
 # Introduction
 
-EPP is defined in {{RFC5730}}. EPP commands were developed to operate on
-a single object at a time. This document defines an EPP extension allowing
-clients to learn about and manipulate related groups of objects that have
-a characteristic that makes them equivalent.
+EPP is defined in {{RFC5730}}. EPP commands were developed to operate
+on a single object at a time. This document defines an EPP extension
+allowing clients to learn about and manipulate a set of objects that
+have a registry-defined characteristic that makes them equivalent
+members of that set. As equivalent objects they MUST be tied to the
+same entity, which this document calls the "Same Entity Principle".
+When the Same Entity Principle (SEP) is active, the &lt;create&gt;,
+&lt;delete&gt; and &lt;transfer&gt; transforms operate on "Same Entity
+Sets".
 
-Similar to EPP, the principal motivation for this extension was to provide a
-standard Internet domain name registration extension for use between domain
-name registrars and domain name registries.  This protocol provides a
-means of interaction between a registrar's applications and registry
-applications.  It is expected that this protocol will have additional
-uses beyond domain name registration.
+Similar to EPP, the original motivation for this protocol was to
+provide a standard Internet domain name registration protocol for use
+between domain name registrars and domain name registries.  This
+protocol provides a means of interaction between a registrar's
+applications and registry applications.  It is expected that this
+protocol will have additional uses beyond domain name registration.
 
-As an example, the problem being considered is that spelling is not
-necessarily uniform. For example, an è and an e may be regarded as
-equivalent in some languages, and as different in others.
+With this extension, registering a domain creates a same entity set
+and the first domain registered in the set becomes the set's Primary
+Domain. (Domains are expected to be the most common kind of objects
+involved, and word "domain" is generally used below.) If the Same
+Entity Set's members share any options in a particular EPP server, as
+defined by the registry, then these options are set using the
+Primary. (Having the same name servers has been mentioned as an
+example of this.)
 
-Some registries plan to support this explicitly, with groups of
-domains that can only be registered by the same registrant. Having the
-same registrant is most commonly considered essential for equivalence,
-since if the domains are intended to be equivalent then the
-responsibility of maintaining that equivalence must be present. This
-is a specific example of the more general "Same Entity Principle",
-which in this specification is defined to mean that a related group
-MUST be created, managed, and deleted by the same entity. From a
-registry perspective the same entity would be a registrar; from the
-registrar's perspective the same entity would be the registrant.
+Subsequent domains in the same set can only be registered in the
+central repository by the same registrar. (In many cases, there will
+be a contractual obligation to do so only on behalf of the same
+registrant, but that is not within the area of EPP.) Each domain in a
+same entity set may be the target of any EPP command, with the
+following restrictions.
 
-This document does define what makes the domains in a related group
-equivalent.  A registry policy MUST exist that specifies both that a
-registry supports related groups and that defines what domains are
-eligible to be a member of a related group. This policy MUST be agreed
-between a registry and a registrar. The policy and the establishment
-of the agreement is outside the scope of this specification.
+* A &lt;transfer&gt; of any domain in any same entite set always acts
+on the entire set.  This is required to ensure that the same entity
+set is always managed via the same registrar.
 
-A common policy expression among domain registries and registrars is
-to define a related group in terms of the script or language in use
-for an Internalized Domain Name (IDN). IDN variants can arise when
-different characters or sequences of characters in an IDN are
-considered equivalent in a particular language or script.  Standard
-Label Generation Rules (LGRs) are used to specify the IDN table that
-establishes the variant relationships. This common policy expression
-is presumed and used as an example in this specification.
+* The &lt;delete&gt; of a Primary Domain in any same entity set always
+acts on the entire set. This is required to support the option where
+the Primary Domain governs options as defined by the registry.
 
-With this extension, registering a domain creates a related group and
-the first domain registered in the group becomes the group's Primary
-Domain. The creation of the Primary Domain MAY establish rules or
-guidelines regarding the domains that are eligible to be a member of
-the group, e.g., an LGR, an IDN table, and a Primary Domain taken
-together will define a variant group.
+Note that a domain (or other object) is a member of a set by virtue of
+a rule, not by virtue of having been created. Creating a Primary
+Domain creates a set. The other members of the set thereby begin to
+exist in a conceptual sense, and the set may be extremely large (a set
+containing 10¹⁵ domains has been described in a realistic use case).
+Therefore, this extension offers no way to enumerate the set's
+members. The EPP client may need to list the allocated members of the
+set, but the EPP server never lists the complete set. This leads to
+the third restriction:
 
-Subsequent domains in the same group can only be registered by the
-same registrar, which asserts that it is acting on behalf of the same
-registrant. Each domain in a related group may be the target of any
-EPP command, with the following restrictions.
-
-* A &lt;transfer&gt; of any domain in any related group always acts on
-the entire group.  This is required to ensure that the related group
-is always registered by the same registrant and managed via the same
-registrar. Registry policy MAY impose additional restrictions.
-
-* The &lt;delete&gt; of a Primary Domain in any variant group always
-acts on the entire group. This is required to support the option where
-the Primary Domain establishes the rules or guidelines for the
-creation of other domains in the group.
+* A &lt;create&gt; of a later member of a Same Entity Set is not
+possible; &lt;create&gt; creates a same entity set with at least one
+allocated member.  Instead, &lt;update&gt; allocates an object in a
+set, and makes it exist in the central repository.
 
 This extension is backwards compatible with registrars that do not
-support related groups. Specifically, this extension supports
-registries that do support related groups interacting with registrars
-that do not support related groups. Registrars that do not support
-related group that attempt to act on a member of a related group
-inappropriately will receive a compatible error response with which
-they can continue to function.  The compatible error response may not
-provide sufficient detail to fully understand the rejection but will
-be sufficient to ensure continuation of normal operations.
+support same entity sets. Registrars that attempt to act on a member
+of a set inappropriately will receive a compatible error response with
+which they can continue to function.  The compatible error response
+may not provide sufficient detail to fully understand the rejection
+but will be sufficient to ensure continuation of normal operations.
 
 The remainder of this document describes the specific details.
-
-__TODO__: login exchange of variant-aware
 
 __TODO__: discussion of reference to EPP Extensibility and Extension Analysis
 https://docs.google.com/document/d/1WR00oB43XZCDqD0zvRvRajuWAq_9wQ3c0RrFKlGC3So/edit?tab=t.0
@@ -143,9 +132,9 @@ https://docs.google.com/document/d/1WR00oB43XZCDqD0zvRvRajuWAq_9wQ3c0RrFKlGC3So/
 Allocated Member: A domain that has been created in the registry, and
 which is related to an existing Primary Domain.
 
-Allocatable Member: A domain that has not been allocated but is
-allocatable (e.g., according to a LGR in the case of an IDN variant),
-and which is conceptually related to an existing Primary Domain.
+Allocatable Member: A domain that has not been allocated and exists
+only conceptually in a Same Entity Set because it is related to the
+aforementioned set's Primary Domain.
 
 Activated Member: An Allocated Member domain that is in the DNS.
 
@@ -153,52 +142,37 @@ Blocked domain: A domain that cannot be allocated due to its status
 value in relation to the Primary Domain name.
 
 Exempted domain: A preexisting domain that exists as a stand-alone
-domain prior to the introduction of support for related groups and
-would be part of a related group if it were allocated now. Exempted
-domains may exist with any registrant at any registrar. The exemption
-ends in one of two ways.
+domain prior to the introduction of support for this extension and
+would be part of a set if it were allocated now. Exempted domains may
+exist with any registrant at any registrar. The exemption ends in one
+of two ways.
 
-* When there is at most 1 allocated domain remaining at which time the
-registry MUST block all other labels of the related group until the
-registrar asserts knowledge of the related group.
+* When there is at most 1 allocated domain remaining, at which time
+the EPP server MUST make the single allocated domain into a Primary
+Domain of a Same Entity Set.
 
-* When the registrar asserts knowledge of the related group and, if
-present brings all labels in the related group together.
+* When the registrar asserts knowledge of the Same Entity Set and, if
+present, brings all domains in the Same Entity Set together.
 
-IDN Table: The combined information about what characters (code
-points) are available for domain registration as well as the variant
-relationships between those code points. IDN tables can be defined via
-RFC3743 or RFC4290 or LGRs (RFC7940). The latter one SHOULD be used as
-it also allows the formal definition of context rules, which is
-lacking in the former ones.
+Primary Domain: The chronologically first domain in a Same Entity Set.
+While the member relationship in a Same Entity Set is symmetric, the
+status value and other options of its members are not. For example, it
+can either be blocked or allocatable. The Primary Domain name
+therefore partitions the members of the Same Entity Set into
+allocatable members and blocked members.  In the case of a Same Entity
+Set of registries, there can be a Same Entity Set with a distinct
+Primary Domain per Registry.
 
-Label Generation Rules (LGR): The preferred way of defining IDN
-tables.  Among others, they define the variant relationships as well
-as their disposition values (blocked or allocatable). The formal
-definition of LGRs can be fond in RFC7940. Status Value is the generic
-term in this specification to which the IDN disposition value would be
-assigned.
+Same Entity Set: An implicit set of domains defined by a policy set by
+a registry. The relationship between the members of the set is
+symmetric. Hence, an arbitrary member of a same entity set defines the
+whole set. The set is not expressed explicitly in EPP, because it can
+be impractically large.
 
-Primary Domain: The chronologically first domain in a related group.
-While the related group relationship is symmetric, the status
-value of its members is not.  It can either be blocked or
-allocatable. The Primary Domain name therefore partitions the related
-group into allocatable members and blocked members.  In the case of a
-related group of TLDs, there can be a primary domain per TLD.
-
-Related Domain: A domain in a related group which is not a Primary Domain.
-
-Related Group: An implicit set of domains defined by a policy set by a
-registry. The related domain relationship is symmetric and
-transitive. Hence, an arbitrary element of a related group defines the
-whole group. The group is not expressed explicitly in EPP, because it
-can be impractically large. At the time of writing, an IDN domain is
-registered whose variant set would contain 10¹⁵ variants.
-
-Same Entity Principle: A requirement that all domains within a related
-group either belong to the same entity (i.e., the same registrant via
-the same registrar) or are withheld for that entity. No other entity
-is allowed to activate any domain within the same related group.
+Same Entity Principle: A requirement that all domains within a set
+either belong to the same EPP client or are withheld for that
+client. No other client is allowed to allocate any domain within the
+same set.
 
 Status Value: While a related group relationship is symmetric, a
 group member has exactly one of two status values which are not
@@ -214,36 +188,37 @@ extension is in use.  There MUST NOT be any exceptions at any time.
 
 ## Backwards Compatibility
 
-Support for Related Groups is optional and therefore it is REQUIRED
-that a registry supporting Related Groups MUST be backwards compatible
-with a registrar that does not support Related Groups.  Backwards
-compatibility is defined to mean that a registrar will receive a
-response that is fail-safe but the registrar may not be able to fully
-understand the reason for the rejection.
+Support for Same Entity Sets is optional and therefore it is REQUIRED
+that a registry supporting Same Entity Sets MUST be backwards
+compatible with a registrar that does not support Same Entity Sets.
+Backwards compatibility is defined to mean that a registrar will
+receive a response that is fail-safe including when the registrar may
+not be able to fully understand the reason for the rejection.
 
-A registry that does not support related groups will behave normally
+A registry that does not support same entity sets will behave normally
 when interacting with a registrar that supports related groups.
 
 ## Same-Entity Management
 
-Domains defined to be eligible to be in a related group MUST be
+Domains defined to be eligible to be in a same entity set MUST be
 managed by the same entity.  This has three requirements.
 
-1. Registrars MUST ensure that domains in a related group are managed
-by the same registrant.
+1. Registrars MUST ensure that domains in a same entity set are
+managed by the same registrant.
 
-2. Registries MUST ensure that domains in a related group are managed
-by the same registrar.
+2. Registries MUST ensure that domains in a same entity set are
+managed by the same registrar.
 
-3. A registry that is a member of a related group MUST manage all
-registries in the group.
+3. Registries that are a member of a same entity set MUST be managed
+by the same service provider.
 
 ## Related Groups as a Set
 
 Most EPP commands may be executed independently on any member of the
-related group.  However, commands that change the membership or status
-of members in a related group, or change the Same-Entity Management
-requirement, MUST operate on the related group as a set.
+same entity set.  However, commands that change the membership or
+status of members in a same entity set, or change the Same-Entity
+Management requirements, MUST operate on the members of the set as a
+set.
 
 As explained in detail in later sections, there are currently two
 commands with explicit requirements as of the time of publication of
@@ -255,64 +230,64 @@ this document.
 The following technical principles have guided the developed of this
 extension and established operational requirements.
 
-* The members of a related group are defined by registry policy and
+* The members of a same entity set are defined by registry policy and
 that policy must be agreed by both the registry and the
 registrar. The establishment of this policy and the method by which
 the parties agree is outside the scope of this specification.
 
-    The first iteration of this work focused on IDN variants, which
+  * The first iteration of this work focused on IDN variants, which
     have the advantage that there is a relatively formal process for
-    defining the eligible elements of a group. However, Latin
+    defining the eligible elements of a set. However, Latin
     characters with diacritic marks are not always considered variants
     of Latin characters without diacritic marks and there are
     circumstances when it is desirable for them to be considerated
     equivalent. As a result this extension presumes the existence of a
-    group and sets outside its scope the actual definition of the
-    group.
+    set and sets outside its scope the actual definition of the
+    members of the set.
 
-* The registry policy MUST define the properties of a Related Group,
+* The registry policy MUST define the properties of a Same Entity Set,
 which MUST include at least the following properties.
 
-  * If the related group exists in a registry that itself is a member
-    of a related group, then all related groups in any registry in the
-    registry's related group MUST have the same members in all
-    registries in the registry related group.
+  * If the same entity set exists in a registry that itself is a
+    member of a same entity set, then all same entity sets in any
+    registry in the registry's same entity set MUST have the same
+    members in all registries in the registry same entity set.
 
     This principle derives directly from the Same-Entity requirement.
 
     In the case of IDNs, the LGR tables may be different in each
     registry but the tables MUST be harmonized.
 
-  * The first domain created in a related group is designated the
+  * The first domain created in a same entity set is designated the
     Primary Domain.
 
-    If the registry of the related group is itself a member of a
-    related group, the Primary Domain in a related group MAY be
+    If the registry of the same entity set is itself a member of a
+    same entity set, the Primary Domain in a same entity set MAY be
     different in each registry.
 
 
   * The Primary Domain has at least two REQUIRED functions.  First, it
-    defines the members of the Related Group.  Second, it defines the
+    defines the members of the Same Entity Set.  Second, it defines the
     status values of the members of the Related Group.
 
 * EPP today implicitly defines two status values for any domain:
-  registered and available. This related group extensions adds the
+  registered and available. This same entity set extension adds the
   following status values.
 
-  The Allocated status means that the member of the group is active in
+  The Allocated status means that the member of the set is active in
   the registry. It may or may not be delegated in the DNS.
 
-  The Allocatable status means that the member of the group is
-  available to be allocated by the same-entity.
+  The Allocatable status means that the member of the set is
+  available to be allocated by the same entity.
 
-  The Blocked status means that the member of the group is not
+  The Blocked status means that the member of the set is not
   available to be allocated by anyone.
 
 * The creation of a Primary Domain establishes the implicit existence
-  of all members of the Related Group. If the registry of the related
-  group is itself a member of a related group, the related group is
-  implicitly created in all registries in the related group of the
-  registry.
+  of all members of the Same Entity Set. If the registry of the Same
+  Entity Set is itself a member of a Same Entity Set, the Same Entity
+  Set is implicitly created in all registries in the Same Entity Set
+  of the registry.
 
 
 
