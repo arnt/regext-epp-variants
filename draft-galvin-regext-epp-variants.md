@@ -358,13 +358,81 @@ When the server receive a &lt;check&gt; command from a same entity
 aware client and the target domain is or could be a member of a same
 entity set, if that same entity set has at least one Allocated or
 Exempted member, the server's response MUST contain an
-&lt;extension&gt; element with the following child elements:
+&lt;extension&gt, which MUST contain a child &lt;var:chkData&gt; element.
+The &lt;fee:chkData&gt; element MUST contain a &lt;var:cd&gt; element 
+for each object referenced in the client &lt;check&gt; command.
 
-* A &lt;var:primary&gt; element matching the Primary Domain for the
-related group.
+Each &lt;var:cd&gt; (check data) element MUST contain the following child
+elements:
+
+*  A &lt;var:objID&gt; element, which MUST match an element referenced in
+the client &lt;check&gt; command.
+
+* An OPTIONAL &lt;var:primary&gt; element matching the Primary Domain
+for the related group. This is not possible for sets with exempted
+domains, as no (unique) Primary Domain exists.
 
 * A &lt;var:status&gt; element, which explains in more detail the
 availability status of the queried domain.
+
+
+Example &lt;check&gt; response:
+
+~~~~~~~~~~~
+S: <?xml version="1.0" encoding="utf-8" standalone="no"?>
+S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+S:   <response>
+S:     <result code="1000">
+S:       <msg>Command completed successfully</msg>
+S:     </result>
+S:     <resData>
+S:       <domain:chkData
+S:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+S:         <domain:cd>
+S:           <domain:name avail="1">examplev1.com</domain:name>
+S:         </domain:cd>
+S:         <domain:cd>
+S:           <domain:name avail="0">examplev1.net</domain:name>
+S:         </domain:cd>
+S:         <domain:cd>
+S:           <domain:name avail="0">examplev1.tel</domain:name>
+S:         </domain:cd>
+S:         <domain:cd>
+S:           <domain:name avail="0">examplev1.swiss</domain:name>
+S:         </domain:cd>
+S:       </domain:chkData>
+S:     </resData>
+S:     <extension>
+S:       <var:chkData
+S:           xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
+S:         <var:cd avail="1">
+S:           <var:objID>examplev1.com</var:objID>
+S:           <var:primary>example.com</var:primary>
+S:           <var:status>AllocatableMember</var:status>
+S:         </var:cd>
+S:         <var:cd avail="0">
+S:           <var:objID>examplev1.net</var:objID>
+S:           <var:primary>example.net</var:primary>
+S:           <var:status>NotSameEntity</var:status>
+S:         </var:cd>
+S:         <var:cd avail="0">
+S:           <var:objID>examplev1.tel</var:objID>
+S:           <var:status>Exempted</var:status>
+S:         </var:cd>
+S:         <var:cd avail="0">
+S:           <var:objID>examplev1.swiss</var:objID>
+S:           <var:primary>example.swiss</var:primary>
+S:           <var:status>PendingTransfer</var:status>
+S:         </var:cd>
+S:       </var:chkData>
+S:     </extension>
+S:     <trID>
+S:       <clTRID>ABC-12345</clTRID>
+S:       <svTRID>54322-XYZ</svTRID>
+S:     </trID>
+S:   </response>
+S: </epp>
+~~~~~~~~~~~
 
 The EPP &lt;check&gt; command may return six new results:
 
@@ -379,8 +447,7 @@ member of a Same Entity Set, and the set belongs to a different client
 value is blocked.
 
 - Exempted: The domain cannot be provisioned because it should be a
-member of a same entity set but the Primary Domain of that set is
-itself Exempt
+member of a same entity set but the the set contains Exempted members.
 
 - PendingTransfer: The domain cannot be provisioned because it is a
 member of a same entity set that is currently being transferred to a
@@ -432,6 +499,53 @@ Allocated or Exempted members such that each same entity set list has
 its Primary Domain listed first.
 
 
+Example &lt;info&gt; response when querying a primary domain name:
+~~~~~~~~~~~
+S: <?xml version="1.0" encoding="UTF-8"?>
+S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+S:   <response>
+S:     <result code="1000">
+S:       <msg lang="en-US">Command completed successfully</msg>
+S:     </result>
+S:     <resData>
+S:       <infData xmlns="urn:ietf:params:xml:ns:domain-1.0">
+S:         <name>example.com</name>
+S:         <roid>D123456789</roid>
+S:         <status s="active"/>
+S:         <registrant>abc123</registrant>
+S:         <contact type="tech">ghi789</contact>
+S:         <ns>
+S:           <hostObj>ns1.example.net</hostObj>
+S:           <hostObj>ns2.example.net</hostObj>
+S:         </ns>
+S:         <clID>registrar</clID>
+S:         <crID>registrar</crID>
+S:         <crDate>2010-09-08T07:06:05.0Z</crDate>
+S:         <exDate>2012-09-08T23:59:59.0Z</exDate>
+S:         <authInfo>
+S:           <pw>secret</pw>
+S:         </authInfo>
+S:       </infData>
+S:     </resData>
+S:     <extension>
+S:       <var:infData xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
+S:         <var:primary>
+S:           <var:name>example.com</var:name>
+S:           <var:name>example.comv1</var:name>
+S:           <var:name>example.comv2</var:name>
+S:         </var:primary>
+S:         <var:related>
+S:           <var:name>examplev1.com</var:name>
+S:           <var:name>examplev2.com</var:name>
+S:         </var:related>
+S:       </var:infData>
+S:     </extension>
+S:     <trID>
+S:       <svTRID>ZYX-99958</svTRID>
+S:     </trID>
+S:   </response>
+S: </epp>
+~~~~~~~~~~~
 
 ## EPP &lt;transfer&gt; command
 
