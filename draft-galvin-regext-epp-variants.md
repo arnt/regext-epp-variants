@@ -63,14 +63,15 @@ operate on all elements of a "Same Entity Set".
 
 Similar to EPP, the original motivation for this protocol was to
 provide a standard Internet domain name registration protocol for use
-between domain name registrars and domain name registries.  This
+between domain name registrars and domain name registries. This
 protocol provides a means of interaction between a registrar's
-applications and registry applications.  It is expected that this
+applications and registry applications. It is expected that this
 protocol will have additional uses beyond domain name registration.
 
 With this extension, registering a domain creates a Same Entity Set
 and the first domain registered in the set becomes the set's Primary
-Domain. (Domains are expected to be the most common kind of objects
+Domain for that registry. (Domains are expected to be the most common
+kind of objects
 involved, and the word "domain" is generally used throughout this
 document.) A registry specifies a policy that is shared with
 registrars that defines both the characteristic(s) that make the
@@ -91,18 +92,19 @@ the Primary Domain, is ordinarily expected to be known when the
 Primary Domain is created. As another example, when IDNs and their
 variants are eligible to be registered, the Label Generation Rules for
 determining the variants may prescribe if a label may be registered at
-all, i.e., the label may be blocked.
+all, i.e., the disposition value of the label, which can be
+either allocatable or blocked.
 
 An option is Settable if its value may be managed by the
 registrar. For example, single domains ordinarily may have various
 attributes set or unset according to the use of the &lt;update&gt;
-transform.  The same is true for members of the Same Entity Set.
+transform. The same is true for members of the Same Entity Set.
 
 An option is Linked if the setting or unsetting of the option for any
-member of the Same Entity Set applies to all members of the set.  For
-example, Registry Policy will describe if the setting or unsetting of
-an attribute applies to all members of the Same Entity Set or just the
-member being acted upon.
+member of the Same Entity Set applies to all members of the set. For
+example, Registry Policy can describe if the setting or unsetting of
+registrant contact handles applies to all members of the Same Entity
+Set or just the member being acted upon.
 
 After the creation of the Primary Domain, subsequent domains in the
 same set can only be registered in the central repository by the same
@@ -184,9 +186,10 @@ would be part of a set if it were allocated now. Exempted domains may
 exist with any registrant at any registrar. The exemption ends in one
 of two ways.
 
-* When there is at most 1 allocated domain remaining, at which time
+* When there is at most 1 allocated domain remaining in a given
+Same Entity Set, at which time
 the EPP server MUST make the single allocated domain into a Primary
-Domain of a Same Entity Set.
+Domain of that set.
 
 * When the registrar asserts knowledge of the Same Entity Set and, if
 present, brings all domains in the Same Entity Set together.
@@ -195,7 +198,8 @@ Primary Domain: The chronologically first domain in a Same Entity Set.
 While the member relationship in a Same Entity Set is symmetric, the
 option values of its members are not. For example, when an IDN and its
 equivalent variants are members of a Same Entity Set, the members
-other than the Primary Domain can either be blocked or
+other than the Primary Domain can have a disposition value of either
+blocked or
 allocatable. The Primary Domain name therefore partitions the members
 of the Same Entity Set into allocatable members and blocked members.
 In the case of a Same Entity Set of registries, there can be a Same
@@ -222,7 +226,7 @@ member can be "allocatable" (i.e., available for the same entity) or
 # Architectural Principles
 
 There are three principles REQUIRED to be true at all times when this
-extension is in use.  There MUST NOT be any exceptions at any time.
+extension is in use. There MUST NOT be any exceptions at any time.
 
 ## Backwards Compatibility
 
@@ -253,7 +257,7 @@ by the same service provider and share a central repository.
 ## Same Entity Set Management
 
 Most EPP commands may be executed independently on any member of the
-same entity set.  However, commands that change the membership or an
+same entity set. However, commands that change the membership or an
 option value of one or more members in a same entity set, or change
 the Same-Entity Management requirements, MUST operate on the members
 of the set as a set.
