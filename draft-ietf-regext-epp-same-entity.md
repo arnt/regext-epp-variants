@@ -83,7 +83,7 @@ be specified in the registry policy. These types are neither required
 nor limiting. They are described to exemplify how a Same Entity Set
 may be used. What is REQUIRED is that the Primary Domain determines
 how each option is applied to the remaining members of the set and
-this(ese) actions are agreed between the registry and the registrar.
+this(ese) action(s) are agreed between the registry and the registrar.
 
 An option is Prescribed if its value is determined immediately upon
 creation of the Primary Domain. For example, whether or not another
@@ -143,8 +143,8 @@ conceptually.
 
 * Since all members of a Same Entity Set exist, at least conceptually,
 upon creation of a Primary Domain, the &lt;update&gt; transform is
-used to allocate an object in a set, thus making it exist in the
-central repository.
+used to allocate or de-allocate an object in a set, thus making it 
+exist in the central repository.
 
 This extension is backwards compatible with registrars that do not
 support same entity sets. Registrars that attempt to act on a member
@@ -200,13 +200,13 @@ brings all domains in the Same Entity Set together. See the
 &lt;update&gt; command for details.
 
 Primary Domain: The chronologically first domain allocated in a Same
-Entity Set.  While the member relationship in a Same Entity Set is
+Entity Set. While the member relationship in a Same Entity Set is
 symmetric, the option values of its members are not. For example, when
 an IDN and its equivalent variants are members of a Same Entity Set,
 the members other than the Primary Domain can have a disposition value
 of either blocked or allocatable. The Primary Domain name therefore
 partitions the members of the Same Entity Set into allocatable members
-and blocked members.  In the case of a Same Entity Set of registries,
+and blocked members. In the case of a Same Entity Set of registries,
 there can be a Same Entity Set with a distinct Primary Domain per
 Registry, and thus members may have different disposition values in
 different sets.
@@ -289,11 +289,11 @@ that policy must be agreed by both the registry and the registrar. The
 establishment of this policy and the method by which the parties agree
 is outside the scope of this specification. Multiple registries may
 share a policy and a shared central repository, and thus may
-themselves members of a Same Entity Set.
+themselves be members of a Same Entity Set.
 
   * The first iteration of this work focused on IDN variants, which
     have the advantage that there is a relatively formal process for
-    defining the eligible members of a set. However, Latin characters
+    defining the eligible members of a set. However, some Latin characters
     with diacritic marks are not considered variants of Latin
     characters without diacritic marks and yet there are circumstances
     when it is desirable for them to be considerated equivalent. As a
@@ -306,8 +306,8 @@ which MUST include at least the following properties.
 
   * If the same entity set exists in a registry that itself is a
     member of a same entity set, then all the same entity sets in any
-    registry in the registry's same entity set MUST have the same
-    members, i.e., membership in a same entity set is symmetric.
+    registry in the registry's same entity set MUST be consistent
+    to each other, i.e., membership in a same entity set is consistent.
 
     This principle derives directly from the Same Entity Principle.
 
@@ -326,8 +326,8 @@ which MUST include at least the following properties.
     defines the members of the Same Entity Set. Second, it defines the
     options of the members of the set.
 
-    In the case of IDNs, one of those options is the disposition value
-    of the label.  If a registry is itself a member of a same entity
+    In the case of IDN variants, one of those options is the disposition 
+    value of the label. If a registry is itself a member of a same entity
     set, the Primary Domain MAY indicate different values for an
     option of a domain in the same entity set of different registries.
 
