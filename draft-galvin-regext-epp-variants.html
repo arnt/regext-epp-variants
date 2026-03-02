@@ -13,8 +13,7 @@ and manipulate a set of objects in a shared central repository that
 are necessarily tied to the same entity (typically domain objects
 whose names are equivalent in a registry-defined way and are tied to a
 single registrant).  The extension supports multiple registries with a
-shared definition of equivalence using a single service provider with
-a shared central repository. 
+shared definition of equivalence using a shared central repository. 
     " name="description">
 <meta content="xml2rfc 3.31.0" name="generator">
 <meta content="EPP" name="keyword">
@@ -1052,11 +1051,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Same Entity Set</td>
-<td class="right">February 2026</td>
+<td class="right">March 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Galvin &amp; Bauland</td>
-<td class="center">Expires 22 August 2026</td>
+<td class="center">Expires 3 September 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1069,12 +1068,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-galvin-regext-epp-variants-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-02-18" class="published">18 February 2026</time>
+<time datetime="2026-03-02" class="published">2 March 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-08-22">22 August 2026</time></dd>
+<dd class="expires"><time datetime="2026-09-03">3 September 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1096,8 +1095,7 @@ and manipulate a set of objects in a shared central repository that
 are necessarily tied to the same entity (typically domain objects
 whose names are equivalent in a registry-defined way and are tied to a
 single registrant).  The extension supports multiple registries with a
-shared definition of equivalence using a single service provider with
-a shared central repository.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+shared definition of equivalence using a shared central repository.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-discussion-venues">
@@ -1129,7 +1127,7 @@ a shared central repository.<a href="#section-abstract-1" class="pilcrow">¶</a>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 22 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 3 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1174,7 +1172,7 @@ a shared central repository.<a href="#section-abstract-1" class="pilcrow">¶</a>
                 <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-backwards-compatibility" class="internal xref">Backwards Compatibility</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
-                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-same-entity-management" class="internal xref">Same-Entity Management</a></p>
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-same-entity-management" class="internal xref">Same Entity Management</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
                 <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-same-entity-set-management" class="internal xref">Same Entity Set Management</a></p>
@@ -1256,30 +1254,32 @@ on a single object at a time. This document defines an EPP extension
 allowing clients to learn about and manipulate a set of objects that
 have a registry-defined characteristic that makes them equivalent
 members of that set. As equivalent objects they <span class="bcp14">MUST</span> be tied to the
-same entity, which this document calls the "Same Entity Principle".
-When the Same Entity Principle (SEP) is active, the &lt;create&gt;,
-&lt;delete&gt;, &lt;transfer&gt;, and &lt;update&gt; transforms
-operate on all elements of a "Same Entity Set".<a href="#section-1-1" class="pilcrow">¶</a></p>
+same entity, which this document defines as the "Same Entity
+Principle".  When the Same Entity Principle (SEP) is active, the
+&lt;create&gt;, &lt;delete&gt;, &lt;transfer&gt;, and &lt;update&gt;
+transforms operate on all elements of a "Same Entity Set".<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">Similar to EPP, the original motivation for this protocol was to
 provide a standard Internet domain name registration protocol for use
-between domain name registrars and domain name registries.  This
+between domain name registrars and domain name registries. This
 protocol provides a means of interaction between a registrar's
-applications and registry applications.  It is expected that this
+applications and registry applications. It is expected that this
 protocol will have additional uses beyond domain name registration.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">With this extension, registering a domain creates a Same Entity Set
-and the first domain registered in the set becomes the set's Primary
-Domain. (Domains are expected to be the most common kind of objects
-involved, and the word "domain" is generally used throughout this
-document.) A registry specifies a policy that is shared with
-registrars that defines both the characteristic(s) that make the
-members of the set equivalent and the options that are relevant to the
-members of the set. This policy and the method by which it is shared
-is outside the scope of this specification.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">This document describes three types of options that may be specified
-in the registry policy. These types are neither required nor
-limiting. They are described to exemplify how a Same Entity Set may be
-used. What is <span class="bcp14">REQUIRED</span> is that the Primary Domain determines how each
-option is applied to the remaining members of the set.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-3">With this extension, registering (creating) a domain creates a Same
+Entity Set and the first domain registered in the set becomes the
+set's Primary Domain for that registry. (Domains are expected to be
+the most common kind of objects involved, and thus the word "domain"
+is generally used throughout this document.) A registry specifies a
+policy that is shared with registrars that defines the
+characteristic(s) that make the members of the set equivalent and the
+options that are relevant to the members of the set. This policy and
+the method by which it is shared is outside the scope of this
+specification.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">This document exemplifies the use of three types of options that may
+be specified in the registry policy. These types are neither required
+nor limiting. They are described to exemplify how a Same Entity Set
+may be used. What is <span class="bcp14">REQUIRED</span> is that the Primary Domain determines
+how each option is applied to the remaining members of the set and
+this(ese) action(s) are agreed between the registry and the registrar.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">An option is Prescribed if its value is determined immediately upon
 creation of the Primary Domain. For example, whether or not another
 domain name is a member of the set, i.e., is considered equivalent to
@@ -1287,42 +1287,44 @@ the Primary Domain, is ordinarily expected to be known when the
 Primary Domain is created. As another example, when IDNs and their
 variants are eligible to be registered, the Label Generation Rules for
 determining the variants may prescribe if a label may be registered at
-all, i.e., the label may be blocked.<a href="#section-1-5" class="pilcrow">¶</a></p>
+all, i.e., the disposition value of the label, which can be either
+allocatable or blocked.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <p id="section-1-6">An option is Settable if its value may be managed by the
 registrar. For example, single domains ordinarily may have various
 attributes set or unset according to the use of the &lt;update&gt;
-transform.  The same is true for members of the Same Entity Set.<a href="#section-1-6" class="pilcrow">¶</a></p>
+transform, such as the nameserver for a domain. The same is true for
+members of the Same Entity Set.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <p id="section-1-7">An option is Linked if the setting or unsetting of the option for any
-member of the Same Entity Set applies to all members of the set.  For
-example, Registry Policy will describe if the setting or unsetting of
-an attribute applies to all members of the Same Entity Set or just the
-member being acted upon.<a href="#section-1-7" class="pilcrow">¶</a></p>
+member of the Same Entity Set applies to all members of the set. For
+example, Registry Policy can prescribe if the setting or unsetting of
+an attribute such as the nameserver applies to all members of the Same
+Entity Set or just the member being acted upon.<a href="#section-1-7" class="pilcrow">¶</a></p>
 <p id="section-1-8">After the creation of the Primary Domain, subsequent domains in the
 same set can only be registered in the central repository by the same
-registrar. Each domain in a same entity set may be the target of any
-EPP command, with the following restrictions.<a href="#section-1-8" class="pilcrow">¶</a></p>
+registrar. The registrar is responsible for ensuring that each domain
+in the set is assigned to the same registrant. Each domain in a same
+entity set may be the target of any EPP command, with the following
+restrictions.<a href="#section-1-8" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-9.1">
           <p id="section-1-9.1.1">A &lt;transfer&gt; of any domain in any Same Entity Set always acts
-on the entire set. This is required to ensure that the same entity set
-is always managed via the same entity, i.e., the same registrar. If
-multiple registries share a common policy using a single service
-provider with a shared central repository, then the transfer always
-acts on all sets in all registries.<a href="#section-1-9.1.1" class="pilcrow">¶</a></p>
+on the entire set. This is required to ensure that the set is always
+managed via the same entity, i.e., the same registrant at the same
+registrar. If multiple registries share a common policy using a shared
+central repository, then the transfer always acts on all sets in all
+registries.<a href="#section-1-9.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-1-9.2">
           <p id="section-1-9.2.1">The &lt;delete&gt; of a Primary Domain in any same entity set always
-acts on the entire set. This is required to support the option where
-the Primary Domain governs options as defined by the registry. If
-multiple registries share a common policy using a single service
-provider with a shared central repository, then the delete always acts
-on all sets in all registries.<a href="#section-1-9.2.1" class="pilcrow">¶</a></p>
+acts on the entire set in the relevant registry. This is required to
+support the option where the Primary Domain governs options as defined
+by the registry.<a href="#section-1-9.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-1-10">Note that a domain (or other object) is a member of a set by virtue of
 a rule, not by virtue of having been created. Creating a Primary
 Domain creates a set. The other members of the set thereby begin to
-exist in a conceptual sense, and the set may be extremely large (a set
+exist in a conceptual sense, as the set may be extremely large (a set
 containing 10¹⁵ domains has been described in a realistic use case).
 Therefore, this extension offers no way to enumerate the set's
 members. The EPP client may list the allocated members of the set, but
@@ -1338,14 +1340,14 @@ conceptually.<a href="#section-1-11.1.1" class="pilcrow">¶</a></p>
         <li class="normal" id="section-1-11.2">
           <p id="section-1-11.2.1">Since all members of a Same Entity Set exist, at least conceptually,
 upon creation of a Primary Domain, the &lt;update&gt; transform is
-used to allocate an object in a set, and makes it exist in the central
-repository.<a href="#section-1-11.2.1" class="pilcrow">¶</a></p>
+used to allocate or de-allocate an object in a set, thus making it
+exist in the central repository.<a href="#section-1-11.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-1-12">This extension is backwards compatible with registrars that do not
 support same entity sets. Registrars that attempt to act on a member
 of a set inappropriately will receive a compatible error response with
-which they can continue to function.  The compatible error response
+which they can continue to function. The compatible error response
 may not provide sufficient detail to fully understand the rejection
 but will be sufficient to ensure continuation of normal operations.<a href="#section-1-12" class="pilcrow">¶</a></p>
 <p id="section-1-13">The remainder of this document describes the specific details.<a href="#section-1-13" class="pilcrow">¶</a></p>
@@ -1370,51 +1372,59 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-terms" class="section-name selfRef">Terms</a>
       </h2>
 <p id="section-3-1">Allocated Member: A domain that has been created in the registry, and
-which is related to an existing Primary Domain.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">Allocatable Member: A domain that has not been allocated and exists
-only conceptually in a Same Entity Set because it is related to the
-aforementioned set's Primary Domain.<a href="#section-3-2" class="pilcrow">¶</a></p>
+which is related to an existing Primary Domain according to a registry
+defined policy.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">Allocatable Member: A domain that has not been allocated and exists at
+least conceptually in a Same Entity Set because it is related to the
+aforementioned set's Primary Domain according to a registry defined
+policy.<a href="#section-3-2" class="pilcrow">¶</a></p>
 <p id="section-3-3">Activated Member: An Allocated Member domain that is in the DNS. For
-objects other than domains Activated <span class="bcp14">MAY</span> or <span class="bcp14">MAY</span> NOT be relevant.<a href="#section-3-3" class="pilcrow">¶</a></p>
-<p id="section-3-4">Blocked domain: A domain that cannot be allocated due to its option
-value in relation to the Primary Domain name.<a href="#section-3-4" class="pilcrow">¶</a></p>
+objects other than domains Activated <span class="bcp14">MAY</span> NOT be relevant.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-4">Blocked domain: A domain that cannot be allocated due to its
+disposition value option in relation to the Primary Domain name. This
+is common when a domain is an IDN and the members of a set are created
+according to Label Generation Rules.<a href="#section-3-4" class="pilcrow">¶</a></p>
 <p id="section-3-5">Exempted domain: A preexisting domain that exists as a stand-alone
 domain prior to the introduction of support for this extension and
-would be part of a set if it were allocated now. Exempted domains may
-exist with any registrant at any registrar. The exemption ends in one
-of two ways.<a href="#section-3-5" class="pilcrow">¶</a></p>
+would be part of a set if it were created or allocated now. Exempted
+domains may exist with any registrant at any registrar. The exemption
+ends in one of two ways.<a href="#section-3-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3-6.1">
-          <p id="section-3-6.1.1">When there is at most 1 allocated domain remaining, at which time
-the EPP server <span class="bcp14">MUST</span> make the single allocated domain into a Primary
-Domain of a Same Entity Set.<a href="#section-3-6.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-6.1.1">When there is at most 1 allocated domain remaining in a given Same
+Entity Set, at which time the registry <span class="bcp14">MUST</span> make the single allocated
+domain into a Primary Domain of that set.<a href="#section-3-6.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-3-6.2">
-          <p id="section-3-6.2.1">When the registrar asserts knowledge of the Same Entity Set and, if
-present, brings all domains in the Same Entity Set together.<a href="#section-3-6.2.1" class="pilcrow">¶</a></p>
+          <p id="section-3-6.2.1">When the registrar asserts knowledge of the Same Entity Set and
+brings all domains in the Same Entity Set together. See the
+&lt;update&gt; command for details.<a href="#section-3-6.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-3-7">Primary Domain: The chronologically first domain in a Same Entity Set.
-While the member relationship in a Same Entity Set is symmetric, the
-option values of its members are not. For example, when an IDN and its
-equivalent variants are members of a Same Entity Set, the members
-other than the Primary Domain can either be blocked or
-allocatable. The Primary Domain name therefore partitions the members
-of the Same Entity Set into allocatable members and blocked members.
-In the case of a Same Entity Set of registries, there can be a Same
-Entity Set with a distinct Primary Domain per Registry.<a href="#section-3-7" class="pilcrow">¶</a></p>
+<p id="section-3-7">Primary Domain: The chronologically first domain allocated in a Same
+Entity Set. While the member relationship in a Same Entity Set is
+symmetric, the option values of its members are not. For example, when
+an IDN and its equivalent variants are members of a Same Entity Set,
+the members other than the Primary Domain can have a disposition value
+of either blocked or allocatable. The Primary Domain name therefore
+partitions the members of the Same Entity Set into allocatable members
+and blocked members. In the case of a Same Entity Set of registries,
+there can be a Same Entity Set with a distinct Primary Domain per
+Registry, and thus members may have different disposition values in
+different sets.<a href="#section-3-7" class="pilcrow">¶</a></p>
 <p id="section-3-8">Same Entity Principle: A requirement that all domains within a set
-either belong to the same EPP client or are withheld for that
-client. No other client is allowed to allocate any domain within the
-same set.<a href="#section-3-8" class="pilcrow">¶</a></p>
-<p id="section-3-9">Same Entity Set: An implicit set of domains defined by a policy set by
-a registry. The relationship between the members of the set is
+either belong to the same registrar or are withheld for that
+registrar. No other registrar is allowed to allocate any domain within
+the same set.<a href="#section-3-8" class="pilcrow">¶</a></p>
+<p id="section-3-9">Same Entity Set: An implicit set of domains defined by a registry
+policy. The relationship between the members of the set is
 symmetric. Hence, an arbitrary member of a same entity set defines the
 whole set. The set is not expressed explicitly in EPP, because it can
 be impractically large.<a href="#section-3-9" class="pilcrow">¶</a></p>
-<p id="section-3-10">Status Value: While a related group relationship is symmetric, a group
-member has its own option values that are not necessarily symmetric. A
-member can be "allocatable" (i.e., available for the same entity) or
+<p id="section-3-10">Status Value: While a same entity set relationship is symmetric, a set
+member has its own option values that are not necessarily
+symmetric. The Status Value is one option that a member may have that
+can be "allocatable" (i.e., available for the same entity) or
 "blocked" (i.e., not available for anybody).<a href="#section-3-10" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1423,8 +1433,9 @@ member can be "allocatable" (i.e., available for the same entity) or
       <h2 id="name-architectural-principles">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-architectural-principles" class="section-name selfRef">Architectural Principles</a>
       </h2>
-<p id="section-4-1">There are three principles <span class="bcp14">REQUIRED</span> to be true at all times when this
-extension is in use.  There <span class="bcp14">MUST NOT</span> be any exceptions at any time.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">There are three architectural principles <span class="bcp14">REQUIRED</span> to be true at all
+times when this extension is in use. There <span class="bcp14">MUST NOT</span> be any exceptions
+at any time.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <div id="backwards-compatibility">
 <section id="section-4.1">
         <h3 id="name-backwards-compatibility">
@@ -1436,17 +1447,20 @@ compatible with a registrar that does not support Same Entity Sets.
 Backwards compatibility is <span class="bcp14">REQUIRED</span> to mean that a registrar will
 receive a response that is fail-safe including when the registrar may
 not be able to fully understand the reason for the rejection.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1-2">A registry that does not support same entity sets will behave normally
-when interacting with a registrar that supports same entity sets.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.1-2">A registry that does not support same entity sets will behave
+according to the sstandard when interacting with a registrar that
+supports same entity sets.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="same-entity-management">
 <section id="section-4.2">
         <h3 id="name-same-entity-management">
-<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-same-entity-management" class="section-name selfRef">Same-Entity Management</a>
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-same-entity-management" class="section-name selfRef">Same Entity Management</a>
         </h3>
-<p id="section-4.2-1">Domains defined to be eligible to be in a same entity set <span class="bcp14">MUST</span> be
-managed by the same entity.  This has three requirements.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">When a registry supports this extensions, all domains created are
+eligible to be in a same entity set <span class="bcp14">MUST</span> be managed by the same
+entity, including if the set has only one member, i.e., the domain
+being created. This has three requirements.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-4.2-2">
 <li id="section-4.2-2.1">
             <p id="section-4.2-2.1.1">Registrars <span class="bcp14">MUST</span> ensure that domains in a same entity set are
@@ -1458,7 +1472,8 @@ managed by the same registrar.<a href="#section-4.2-2.2.1" class="pilcrow">¶</a
 </li>
           <li id="section-4.2-2.3">
             <p id="section-4.2-2.3.1">Registries that are a member of a same entity set <span class="bcp14">MUST</span> be managed
-by the same service provider and share a central repository.<a href="#section-4.2-2.3.1" class="pilcrow">¶</a></p>
+such that they share a central repository, which ordinarily is
+expected to mean they share a single service provider.<a href="#section-4.2-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 </section>
@@ -1469,13 +1484,13 @@ by the same service provider and share a central repository.<a href="#section-4.
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-same-entity-set-management" class="section-name selfRef">Same Entity Set Management</a>
         </h3>
 <p id="section-4.3-1">Most EPP commands may be executed independently on any member of the
-same entity set.  However, commands that change the membership or an
+same entity set. However, commands that change the membership or an
 option value of one or more members in a same entity set, or change
-the Same-Entity Management requirements, <span class="bcp14">MUST</span> operate on the members
+the Same Entity Management requirements, <span class="bcp14">MUST</span> operate on the members
 of the set as a set.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <p id="section-4.3-2">As explained in detail in later sections, there are currently two
-commands with explicit requirements as of the time of publication of
-this document.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
+commands with explicit requirements: &lt;transfer&gt; and
+&lt;delete&gt;.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1485,7 +1500,7 @@ this document.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
       <h2 id="name-technical-principles">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-technical-principles" class="section-name selfRef">Technical Principles</a>
       </h2>
-<p id="section-5-1">The following technical principles have guided the developed of this
+<p id="section-5-1">The following technical principles have guided the development of this
 extension and established operational requirements.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5-2.1">
@@ -1493,35 +1508,36 @@ extension and established operational requirements.<a href="#section-5-1" class=
 that policy must be agreed by both the registry and the registrar. The
 establishment of this policy and the method by which the parties agree
 is outside the scope of this specification. Multiple registries may
-share a policy and a single service provider with a shared central
-repository, and thus are themselves members of a Same Entity Set.<a href="#section-5-2.1.1" class="pilcrow">¶</a></p>
+share a policy and a shared central repository, and thus may
+themselves be members of a Same Entity Set.<a href="#section-5-2.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5-2.1.2.1">
               <p id="section-5-2.1.2.1.1">The first iteration of this work focused on IDN variants, which
 have the advantage that there is a relatively formal process for
-defining the eligible elements of a set. However, Latin characters
+defining the eligible members of a set. However, some Latin characters
 with diacritic marks are not considered variants of Latin
 characters without diacritic marks and yet there are circumstances
 when it is desirable for them to be considerated equivalent. As a
 result this extension presumes the existence of a set and sets
-outside its scope the actual definition of the members of the set.<a href="#section-5-2.1.2.1.1" class="pilcrow">¶</a></p>
+outside its scope the actual definition of the equivalence of the
+members of the set.<a href="#section-5-2.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="section-5-2.2">
-          <p id="section-5-2.2.1">The registry policy <span class="bcp14">MUST</span> define the properties of a Same Entity Set,
+          <p id="section-5-2.2.1">The registry policy <span class="bcp14">MUST</span> define the options of a Same Entity Set,
 which <span class="bcp14">MUST</span> include at least the following properties.<a href="#section-5-2.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5-2.2.2.1">
               <p id="section-5-2.2.2.1.1">If the same entity set exists in a registry that itself is a
-member of a same entity set, then all same entity sets in any
-registry in the registry's same entity set <span class="bcp14">MUST</span> have the same
-members in all registries in the registry same entity set.<a href="#section-5-2.2.2.1.1" class="pilcrow">¶</a></p>
+member of a same entity set, then all the same entity sets in any
+registry in the registry's same entity set <span class="bcp14">MUST</span> be consistent
+to each other, i.e., membership in a same entity set is consistent.<a href="#section-5-2.2.2.1.1" class="pilcrow">¶</a></p>
 <p id="section-5-2.2.2.1.2">
-This principle derives directly from the Same-Entity requirement.<a href="#section-5-2.2.2.1.2" class="pilcrow">¶</a></p>
+This principle derives directly from the Same Entity Principle.<a href="#section-5-2.2.2.1.2" class="pilcrow">¶</a></p>
 <p id="section-5-2.2.2.1.3">
 In the case of IDNs, the LGR tables may be different in each
-registry but the tables <span class="bcp14">MUST</span> be harmonized.<a href="#section-5-2.2.2.1.3" class="pilcrow">¶</a></p>
+registry but the tables <span class="bcp14">MUST</span> be harmonized to ensure symmetry.<a href="#section-5-2.2.2.1.3" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5-2.2.2.2">
               <p id="section-5-2.2.2.2.1">The first domain created in a same entity set is designated the
@@ -1532,9 +1548,14 @@ same entity set, the Primary Domain in a same entity set <span class="bcp14">MAY
 different in each registry.<a href="#section-5-2.2.2.2.2" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5-2.2.2.3">
-              <p id="section-5-2.2.2.3.1">The Primary Domain has at least two <span class="bcp14">REQUIRED</span> functions.  First, it
-defines the members of the Same Entity Set.  Second, it defines the
-status values of the members of the Related Group.<a href="#section-5-2.2.2.3.1" class="pilcrow">¶</a></p>
+              <p id="section-5-2.2.2.3.1">The Primary Domain has at least two <span class="bcp14">REQUIRED</span> functions. First, it
+defines the members of the Same Entity Set. Second, it defines the
+options of the members of the set.<a href="#section-5-2.2.2.3.1" class="pilcrow">¶</a></p>
+<p id="section-5-2.2.2.3.2">
+In the case of IDN variants, one of those options is the disposition
+value of the label. If a registry is itself a member of a same entity
+set, the Primary Domain <span class="bcp14">MAY</span> indicate different values for an
+option of a domain in the same entity set of different registries.<a href="#section-5-2.2.2.3.2" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
@@ -1544,7 +1565,8 @@ registered and available. This same entity set extension adds the
 following status values.<a href="#section-5-2.3.1" class="pilcrow">¶</a></p>
 <p id="section-5-2.3.2">
 The Allocated status means that the member of the set is active in
-the registry. It may or may not be delegated in the DNS.<a href="#section-5-2.3.2" class="pilcrow">¶</a></p>
+the registry. It may or may not be delegated in the DNS. It may or
+may not be registered in the registry.<a href="#section-5-2.3.2" class="pilcrow">¶</a></p>
 <p id="section-5-2.3.3">
 The Allocatable status means that the member of the set is
 available to be allocated by the same entity.<a href="#section-5-2.3.3" class="pilcrow">¶</a></p>
@@ -1554,10 +1576,13 @@ available to be allocated by anyone.<a href="#section-5-2.3.4" class="pilcrow">�
 </li>
         <li class="normal" id="section-5-2.4">
           <p id="section-5-2.4.1">The creation of a Primary Domain establishes the implicit existence
-of all members of the Same Entity Set. If the registry of the Same
-Entity Set is itself a member of a Same Entity Set, the Same Entity
-Set is implicitly created in all registries in the Same Entity Set
-of the registry.<a href="#section-5-2.4.1" class="pilcrow">¶</a></p>
+of all members of the Same Entity Set.<a href="#section-5-2.4.1" class="pilcrow">¶</a></p>
+<p id="section-5-2.4.2">
+If the registry of the Same Entity Set is itself a member of a Same
+Entity Set, the Same Entity Set is implicitly created in all
+registries in the Same Entity Set of the registry. This ensures that
+only the same registrar is permitted to register or allocate any
+member of the set in any registry.<a href="#section-5-2.4.2" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
@@ -1567,15 +1592,15 @@ of the registry.<a href="#section-5-2.4.1" class="pilcrow">¶</a></p>
       <h2 id="name-epp-commands">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-epp-commands" class="section-name selfRef">EPP Commands</a>
       </h2>
-<p id="section-6-1">In this section, the behavior of each EPP command when Related Groups
-are supported is specified.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">In this section, the behavior of each EPP command when Same Entity
+Sets are supported is specified.<a href="#section-6-1" class="pilcrow">¶</a></p>
 <div id="epp-ltcheckgt-command">
 <section id="section-6.1">
         <h3 id="name-epp-check-command">
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-epp-check-command" class="section-name selfRef">EPP &lt;check&gt; command</a>
         </h3>
 <p id="section-6.1-1">The &lt;check&gt; command always acts on the target domain in the
-command.  There is no change on the client side when using the
+command. There is no change on the client side when using the
 &lt;check&gt; command.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <p id="section-6.1-2">When the server receives a &lt;check&gt; command from a same entity
 agnostic client and the target domain is or could be a member of a
@@ -1596,45 +1621,123 @@ entity set)".<a href="#section-6.1-3.3.1" class="pilcrow">¶</a></p>
 <p id="section-6.1-4">When the server receive a &lt;check&gt; command from a same entity
 aware client and the target domain is or could be a member of a same
 entity set, if that same entity set has at least one Allocated or
-Exempted member, the server's response <span class="bcp14">MUST</span> contain an
-&lt;extension&gt; element with the following child elements:<a href="#section-6.1-4" class="pilcrow">¶</a></p>
+Exempted member, the server's response:<a href="#section-6.1-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.1-5.1">
-            <p id="section-6.1-5.1.1">A &lt;var:primary&gt; element matching the Primary Domain for the
-related group.<a href="#section-6.1-5.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-5.1.1"><span class="bcp14">MUST</span> contain an &lt;extension&amp;gt, which <span class="bcp14">MUST</span> contain a child
+&lt;var:chkData&gt; element.<a href="#section-6.1-5.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.1-5.2">
-            <p id="section-6.1-5.2.1">A &lt;var:status&gt; element, which explains in more detail the
-availability status of the queried domain.<a href="#section-6.1-5.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-5.2.1">The &lt;fee:chkData&gt; element <span class="bcp14">MUST</span> contain a &lt;var:cd&gt;
+element for each object referenced in the client &lt;check&gt;
+command.<a href="#section-6.1-5.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-6.1-5.3">
+            <p id="section-6.1-5.3.1">Each &lt;var:cd&gt; (check data) element <span class="bcp14">MUST</span> contain the following child
+elements:<a href="#section-6.1-5.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.1-5.3.2.1">
+                <p id="section-6.1-5.3.2.1.1">A &lt;var:objID&gt; element, which <span class="bcp14">MUST</span> match an element
+referenced in the client &lt;check&gt; command.<a href="#section-6.1-5.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-6.1-5.3.2.2">
+                <p id="section-6.1-5.3.2.2.1">A &lt;var:primary&gt; element matching the Primary Domain for the
+same entity set if it is known. This is not possible for sets with
+exempted domains as no (unique) Primary Domain exists, in which
+case the &lt;var:primary&gt; element <span class="bcp14">MUST NOT</span> be included.<a href="#section-6.1-5.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-6.1-5.4">
+            <p id="section-6.1-5.4.1">A &lt;var:status&gt; element, which explains in more detail the
+availability status of the queried domain.<a href="#section-6.1-5.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-6.1-6">The EPP &lt;check&gt; command may return six new results:<a href="#section-6.1-6" class="pilcrow">¶</a></p>
+<p id="section-6.1-6">Example &lt;check&gt; response:<a href="#section-6.1-6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.1-7">
+<pre>
+S: &lt;?xml version="1.0" encoding="utf-8" standalone="no"?&amp;gt;
+S: &lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&amp;gt;
+S:   &lt;response&amp;gt;
+S:     &lt;result code="1000"&amp;gt;
+S:       &lt;msg&amp;gt;Command completed successfully&lt;/msg&amp;gt;
+S:     &lt;/result&amp;gt;
+S:     &lt;resData&amp;gt;
+S:       &lt;domain:chkData
+S:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0"&amp;gt;
+S:         &lt;domain:cd&amp;gt;
+S:           &lt;domain:name avail="1"&amp;gt;examplev1.com&lt;/domain:name&amp;gt;
+S:         &lt;/domain:cd&amp;gt;
+S:         &lt;domain:cd&amp;gt;
+S:           &lt;domain:name avail="0"&amp;gt;examplev1.net&lt;/domain:name&amp;gt;
+S:         &lt;/domain:cd&amp;gt;
+S:         &lt;domain:cd&amp;gt;
+S:           &lt;domain:name avail="0"&amp;gt;examplev1.tel&lt;/domain:name&amp;gt;
+S:         &lt;/domain:cd&amp;gt;
+S:         &lt;domain:cd&amp;gt;
+S:           &lt;domain:name avail="0"&amp;gt;examplev1.swiss&lt;/domain:name&amp;gt;
+S:         &lt;/domain:cd&amp;gt;
+S:       &lt;/domain:chkData&amp;gt;
+S:     &lt;/resData&amp;gt;
+S:     &lt;extension&amp;gt;
+S:       &lt;var:chkData
+S:           xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0"&amp;gt;
+S:         &lt;var:cd avail="1"&amp;gt;
+S:           &lt;var:objID&amp;gt;examplev1.com&lt;/var:objID&amp;gt;
+S:           &lt;var:primary&amp;gt;example.com&lt;/var:primary&amp;gt;
+S:           &lt;var:status&amp;gt;AllocatableMember&lt;/var:status&amp;gt;
+S:         &lt;/var:cd&amp;gt;
+S:         &lt;var:cd avail="0"&amp;gt;
+S:           &lt;var:objID&amp;gt;examplev1.net&lt;/var:objID&amp;gt;
+S:           &lt;var:primary&amp;gt;example.net&lt;/var:primary&amp;gt;
+S:           &lt;var:status&amp;gt;NotSameEntity&lt;/var:status&amp;gt;
+S:         &lt;/var:cd&amp;gt;
+S:         &lt;var:cd avail="0"&amp;gt;
+S:           &lt;var:objID&amp;gt;examplev1.tel&lt;/var:objID&amp;gt;
+S:           &lt;var:status&amp;gt;Exempted&lt;/var:status&amp;gt;
+S:         &lt;/var:cd&amp;gt;
+S:         &lt;var:cd avail="0"&amp;gt;
+S:           &lt;var:objID&amp;gt;examplev1.swiss&lt;/var:objID&amp;gt;
+S:           &lt;var:primary&amp;gt;example.swiss&lt;/var:primary&amp;gt;
+S:           &lt;var:status&amp;gt;PendingTransfer&lt;/var:status&amp;gt;
+S:         &lt;/var:cd&amp;gt;
+S:       &lt;/var:chkData&amp;gt;
+S:     &lt;/extension&amp;gt;
+S:     &lt;trID&amp;gt;
+S:       &lt;clTRID&amp;gt;ABC-12345&lt;/clTRID&amp;gt;
+S:       &lt;svTRID&amp;gt;54322-XYZ&lt;/svTRID&amp;gt;
+S:     &lt;/trID&amp;gt;
+S:   &lt;/response&amp;gt;
+S: &lt;/epp&amp;gt;
+</pre><a href="#section-6.1-7" class="pilcrow">¶</a>
+</div>
+<p id="section-6.1-8">The EPP &lt;check&gt; command may return six new results:<a href="#section-6.1-8" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.1-7.1">
-            <p id="section-6.1-7.1.1">AllocatableMember: A member of the same entity set is already
+<li class="normal" id="section-6.1-9.1">
+            <p id="section-6.1-9.1.1">AllocatableMember: A member of the same entity set is already
 active. Provisioning of this domain must be to the same registrant via
-the same registrar.<a href="#section-6.1-7.1.1" class="pilcrow">¶</a></p>
+the same registrar.<a href="#section-6.1-9.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.1-7.2">
-            <p id="section-6.1-7.2.1">NotSameEntity: The domain cannot be provisioned because it is a
-member of a Same Entity Set, and the set belongs to a different client<a href="#section-6.1-7.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-6.1-9.2">
+            <p id="section-6.1-9.2.1">NotSameEntity: The domain cannot be provisioned because it is a
+member of a Same Entity Set, and the set belongs to a different client<a href="#section-6.1-9.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.1-7.3">
-            <p id="section-6.1-7.3.1">Blocked: The domain cannot be provisioned because its disposition
-value is blocked.<a href="#section-6.1-7.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-6.1-9.3">
+            <p id="section-6.1-9.3.1">Blocked: The domain cannot be provisioned because its disposition
+value is blocked.<a href="#section-6.1-9.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.1-7.4">
-            <p id="section-6.1-7.4.1">Exempted: The domain cannot be provisioned because it should be a
-member of a same entity set but the Primary Domain of that set is
-itself Exempt<a href="#section-6.1-7.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-6.1-9.4">
+            <p id="section-6.1-9.4.1">Exempted: The domain cannot be provisioned because it should be a
+member of a same entity set but the the set contains Exempted members.<a href="#section-6.1-9.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.1-7.5">
-            <p id="section-6.1-7.5.1">PendingTransfer: The domain cannot be provisioned because it is a
+          <li class="normal" id="section-6.1-9.5">
+            <p id="section-6.1-9.5.1">PendingTransfer: The domain cannot be provisioned because it is a
 member of a same entity set that is currently being transferred to a
-different registrar.<a href="#section-6.1-7.5.1" class="pilcrow">¶</a></p>
+different registrar.<a href="#section-6.1-9.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.1-7.6">
-            <p id="section-6.1-7.6.1">Custom: Additional custom value that may be used for server peculiarities.<a href="#section-6.1-7.6.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-6.1-9.6">
+            <p id="section-6.1-9.6.1">Custom: Additional custom value that may be used for server
+peculiarities.<a href="#section-6.1-9.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1645,16 +1748,16 @@ different registrar.<a href="#section-6.1-7.5.1" class="pilcrow">¶</a></p>
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-epp-info-command" class="section-name selfRef">EPP &lt;info&gt; command</a>
         </h3>
 <p id="section-6.2-1">The &lt;info&gt; command always acts on the target domain in the
-command.  There is no change on the client side when using the
+command. There is no change on the client side when using the
 &lt;info&gt; command.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <p id="section-6.2-2">The main part of the response <span class="bcp14">MUST</span> contain the actual data of the target
 domain name (contacts, hosts, status values, etc.).<a href="#section-6.2-2" class="pilcrow">¶</a></p>
 <p id="section-6.2-3">When the server receives an &lt;info&gt; command from a same entity
 agnostic client the response <span class="bcp14">MUST</span> contain the actual data of the
-domain, independent of whether it is a member of a same entity set. In
-addition, if the same entity agnostic registrar is inquiring about a
-domain with a status of Allocatable, the response <span class="bcp14">SHOULD</span> be the same
-as if the client were inquiring about a reserved name.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
+target domain, independent of whether it is a member of a same entity
+set. In addition, if the same entity agnostic registrar is inquiring
+about a domain with a status of Allocatable, the response <span class="bcp14">SHOULD</span> be
+the same as if the client were inquiring about a reserved name.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
 <p id="section-6.2-4">When the server receives an &lt;info&gt; command from a same entity
 aware client and the target domain is or could be a member of a same
 entity set, if that same entity set has at least one Allocated or
@@ -1687,6 +1790,53 @@ Allocated or Exempted members such that each same entity set list has
 its Primary Domain listed first.<a href="#section-6.2-7.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
+<p id="section-6.2-8">Example &lt;info&gt; response when querying a primary domain name:
+~~~~~~~~~~~
+S: &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+S: &lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+S:   &lt;response&gt;
+S:     &lt;result code="1000"&gt;
+S:       &lt;msg lang="en-US"&gt;Command completed successfully&lt;/msg&gt;
+S:     &lt;/result&gt;
+S:     &lt;resData&gt;
+S:       &lt;infData xmlns="urn:ietf:params:xml:ns:domain-1.0"&gt;
+S:         &lt;name&gt;example.com&lt;/name&gt;
+S:         &lt;roid&gt;D123456789&lt;/roid&gt;
+S:         &lt;status s="active"/&gt;
+S:         &lt;registrant&gt;abc123&lt;/registrant&gt;
+S:         &lt;contact type="tech"&gt;ghi789&lt;/contact&gt;
+S:         &lt;ns&gt;
+S:           &lt;hostObj&gt;ns1.example.net&lt;/hostObj&gt;
+S:           &lt;hostObj&gt;ns2.example.net&lt;/hostObj&gt;
+S:         &lt;/ns&gt;
+S:         &lt;clID&gt;registrar&lt;/clID&gt;
+S:         &lt;crID&gt;registrar&lt;/crID&gt;
+S:         &lt;crDate&gt;2010-09-08T07:06:05.0Z&lt;/crDate&gt;
+S:         &lt;exDate&gt;2012-09-08T23:59:59.0Z&lt;/exDate&gt;
+S:         &lt;authInfo&gt;
+S:           &lt;pw&gt;secret&lt;/pw&gt;
+S:         &lt;/authInfo&gt;
+S:       &lt;/infData&gt;
+S:     &lt;/resData&gt;
+S:     &lt;extension&gt;
+S:       &lt;var:infData xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0"&gt;
+S:         &lt;var:primary&gt;
+S:           &lt;var:name&gt;example.com&lt;/var:name&gt;
+S:           &lt;var:name&gt;example.comv1&lt;/var:name&gt;
+S:           &lt;var:name&gt;example.comv2&lt;/var:name&gt;
+S:         &lt;/var:primary&gt;
+S:         &lt;var:related&gt;
+S:           &lt;var:name&gt;examplev1.com&lt;/var:name&gt;
+S:           &lt;var:name&gt;examplev2.com&lt;/var:name&gt;
+S:         &lt;/var:related&gt;
+S:       &lt;/var:infData&gt;
+S:     &lt;/extension&gt;
+S:     &lt;trID&gt;
+S:       &lt;svTRID&gt;ZYX-99958&lt;/svTRID&gt;
+S:     &lt;/trID&gt;
+S:   &lt;/response&gt;
+S: &lt;/epp&gt;
+~~~~~~~~~~~<a href="#section-6.2-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="epp-lttransfergt-command">
@@ -1695,56 +1845,62 @@ its Primary Domain listed first.<a href="#section-6.2-7.2.1" class="pilcrow">¶<
 <a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-epp-transfer-command" class="section-name selfRef">EPP &lt;transfer&gt; command</a>
         </h3>
 <p id="section-6.3-1">The &lt;transfer&gt; command always acts on the target domain in the
-command.  The use of the &lt;transfer&gt; command is extended if both
+command. The use of the &lt;transfer&gt; command is extended if both
 the server and the client support same entity sets.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 <p id="section-6.3-2">When the server receives a &lt;transfer&gt; command from a same entity
 agnostic client and the target domain is or could be a member of a
-same entity set, if that same entity set has at least one Allocated or
-Exempted member the transfer request <span class="bcp14">MUST</span> be denied using 2305 "Object
-status prohibits operation".<a href="#section-6.3-2" class="pilcrow">¶</a></p>
+same entity set, if that same entity set has exactly one Allocated or
+Exempted member the transfer request is acted upon according to the
+standard. If the target domain has a status of Exempted, it retains
+that status.<a href="#section-6.3-2" class="pilcrow">¶</a></p>
 <p id="section-6.3-3">When the server receives a &lt;transfer&gt; command from a same entity
+agnostic client and the target domain is or could be a member of a
+same entity set, if that same entity set has more than one Allocated or
+Exempted member the transfer request <span class="bcp14">MUST</span> be denied using 2305 "Object
+status prohibits operation".<a href="#section-6.3-3" class="pilcrow">¶</a></p>
+<p id="section-6.3-4">When the server receives a &lt;transfer&gt; command from a same entity
 aware client and the target domain is or could be a member of a same
 entity set, the request must include an &lt;extension&gt; element with
 a &lt;var:primary&gt; element matching the Primary Domain, including
-if the Primary Domain is the target domain.  If the extension is not
+if the Primary Domain is the target domain. If the extension is not
 present the transfer request <span class="bcp14">MUST</span> be denied using '2003 "Required
 parameter missing"'. Note that the &lt;check&gt; or &lt;info&gt;
-command <span class="bcp14">MAY</span> be used to identify the Primary Domain.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
-<p id="section-6.3-4">A valid transfer request <span class="bcp14">MUST</span> apply to all members of a same entity
-set.  If the registry of the target domain is itself a member of a
+command <span class="bcp14">MAY</span> be used to identify the Primary Domain.<a href="#section-6.3-4" class="pilcrow">¶</a></p>
+<p id="section-6.3-5">A valid transfer request <span class="bcp14">MUST</span> apply to all members of a same entity
+set. If the registry of the target domain is itself a member of a
 same entity set, then the transfer request <span class="bcp14">MUST</span> apply to all same
-entity sets in all registries of the registry's same entity set.<a href="#section-6.3-4" class="pilcrow">¶</a></p>
-<p id="section-6.3-5">The server's response to the transfer request <span class="bcp14">MUST</span> contain an
-&lt;extension&gt; element with the following child elements;<a href="#section-6.3-5" class="pilcrow">¶</a></p>
+entity sets in all registries of the registry's same entity set.<a href="#section-6.3-5" class="pilcrow">¶</a></p>
+<p id="section-6.3-6">The server's response to the transfer request <span class="bcp14">MUST</span> contain an
+&lt;extension&gt; element with the following child elements;<a href="#section-6.3-6" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.3-6.1">
-            <p id="section-6.3-6.1.1">A &lt;var:primary&gt; element matching the Primary Domain for the
-same entity set of the target domain, which <span class="bcp14">MAY</span> match the target domain.<a href="#section-6.3-6.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.3-7.1">
+            <p id="section-6.3-7.1.1">A &lt;var:primary&gt; element matching the Primary Domain for the
+same entity set of the target domain, which <span class="bcp14">MAY</span> match the target domain.<a href="#section-6.3-7.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.3-6.2">
-            <p id="section-6.3-6.2.1">A list of all the Allocated and Exempted members of the same entity set.<a href="#section-6.3-6.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-6.3-7.2">
+            <p id="section-6.3-7.2.1">A list of all the Allocated and Exempted members of the same entity set.<a href="#section-6.3-7.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-6.3-7">If the registry of the target domain is itself a member of a same
+<p id="section-6.3-8">If the registry of the target domain is itself a member of a same
 entity set and the target domain is or could be a member of a same
 entity set in any registry in that registry's same entity set, if any
 one of those target domain same entity sets has at least one Allocated
 or Exempted member, the server's response <span class="bcp14">MUST</span> contain an
-&lt;extension&gt; element with the following child elements:<a href="#section-6.3-7" class="pilcrow">¶</a></p>
+&lt;extension&gt; element with the following child elements:<a href="#section-6.3-8" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.3-8.1">
-            <p id="section-6.3-8.1.1">A &lt;var:primary&gt; element matching the Primary Domain for the
-same entity set of the target domain, which <span class="bcp14">MAY</span> match the target domain.<a href="#section-6.3-8.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.3-9.1">
+            <p id="section-6.3-9.1.1">A &lt;var:primary&gt; element matching the Primary Domain for the
+same entity set of the target domain, which <span class="bcp14">MAY</span> match the target domain.<a href="#section-6.3-9.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.3-8.2">
-            <p id="section-6.3-8.2.1">A list of all the same entity sets of the target domain with
+          <li class="normal" id="section-6.3-9.2">
+            <p id="section-6.3-9.2.1">A list of all the same entity sets of the target domain with
 Allocated or Exempted members such that each same entity set list has
-its Primary Domain listed first.<a href="#section-6.3-8.2.1" class="pilcrow">¶</a></p>
+its Primary Domain listed first.<a href="#section-6.3-9.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-6.3-9"><strong>TODO</strong>: It must be ensured that the poll message to the losing registrar
+<p id="section-6.3-10"><strong>TODO</strong>: It must be ensured that the poll message to the losing registrar
 also contains the full list of domains that will be transferred together with
-the primary domain.<a href="#section-6.3-9" class="pilcrow">¶</a></p>
+the primary domain.<a href="#section-6.3-10" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="epp-ltcreategt-command">
@@ -1752,41 +1908,39 @@ the primary domain.<a href="#section-6.3-9" class="pilcrow">¶</a></p>
         <h3 id="name-epp-create-command">
 <a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-epp-create-command" class="section-name selfRef">EPP &lt;create&gt; command</a>
         </h3>
-<p id="section-6.4-1">The EPP &lt;create&gt; command's standard task is to provision a new
+<p id="section-6.4-1">The &lt;create&gt; command always acts on the target domain in the
+command. There is no change on the client side when using the
+&lt;create&gt; command.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
+<p id="section-6.4-2">The EPP &lt;create&gt; command's standard task is to provision a new
 domain. When same entity sets are supported, the &lt;create&gt; command
 <span class="bcp14">MUST</span> be used to create the Primary Domain and <span class="bcp14">MUST NOT</span> be used to
 provision any other member of the Primary Domain's same entity set. The
 task of converting an allocatable domain into an allocated domain <span class="bcp14">MUST</span>
-be performed using the &lt;update&gt; command.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
-<p id="section-6.4-2">When the server receives a &lt;create&gt; command from a same entity
+be performed using the &lt;update&gt; command.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
+<p id="section-6.4-3">When the server receives a &lt;create&gt; command from a same entity
 agnostic client and the target domain is or could be a member of a
 same entity set, one of the following actions <span class="bcp14">MUST</span> be completed as
-appropriate.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
+appropriate.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.4-3.1">
-            <p id="section-6.4-3.1.1">If any member of the same entity set is currently Allocated or
-Exempted, the command <span class="bcp14">MUST</span> be rejected and the response should be the
-same as if the domain to be created is reserved.<a href="#section-6.4-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.4-4.1">
+            <p id="section-6.4-4.1.1">If any member of the same entity set is currently Allocated or
+Exempted, the command <span class="bcp14">MUST</span> be rejected and the response <span class="bcp14">MUST</span> be the
+same as if the domain to be created is reserved.<a href="#section-6.4-4.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.4-3.2">
-            <p id="section-6.4-3.2.1">If there are no members of the same entity set either Allocated or
+          <li class="normal" id="section-6.4-4.2">
+            <p id="section-6.4-4.2.1">If there are no members of the same entity set either Allocated or
 Exempted, the &lt;create&gt; <span class="bcp14">MUST</span> proceed according to the standard
 with the server implicitly reserving all other members of the same
 entity set such that they <span class="bcp14">MUST NOT</span> be allocated until such time as the
 client is same entity aware and the client <span class="bcp14">MUST</span> indicate that the target
 domain is to be extended to be a Primary Domain as described in the
-&lt;update&gt; command.<a href="#section-6.4-3.2.1" class="pilcrow">¶</a></p>
+&lt;update&gt; command.<a href="#section-6.4-4.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-6.4-4">When the server receives a &lt;create&gt; command from a same entity
-aware client and the target domain is or could be a member of a same
-entity set, the command <span class="bcp14">MUST</span> include an &lt;extension&gt; element with
-the &lt;var:primary&gt; child element that must match the target
-domain. If not, the command <span class="bcp14">MUST</span> be rejected using '2003 "Required
-parameter missing"'.<a href="#section-6.4-4" class="pilcrow">¶</a></p>
-<p id="section-6.4-5">Upon receiving a &lt;create&gt; command from a same entity aware
-client with a valid &lt;extension&gt; element, one of the following
-actions <span class="bcp14">MUST</span> be completed as appropriate.<a href="#section-6.4-5" class="pilcrow">¶</a></p>
+<p id="section-6.4-5">When the server receives a &lt;create&gt; command from a same entity
+aware client and the target domain is or could be a member of a
+same entity set, one of the following actions <span class="bcp14">MUST</span> be completed as
+appropriate.<a href="#section-6.4-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.4-6.1">
             <p id="section-6.4-6.1.1">If the target domain does not exist and any other member of the
@@ -1798,16 +1952,7 @@ and indicate that it is an inappropriate use of the command.<a href="#section-6.
 entity set is Allocated or Exempted, the &lt;create&gt; command <span class="bcp14">MUST</span>
 proceed according to the standard with the server implicitly noting to
 itself the existence of all other members of the same entity set and
-setting their status value as prescribed by registry policy. The
-response <span class="bcp14">MUST</span> include the &lt;extension&gt; element with the
-&lt;var:primary&gt; child element indicating the Primary Domain, which
-must match the target domain.<a href="#section-6.4-6.2.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-6.4-6.3">
-            <p id="section-6.4-6.3.1">If the target domain does exist, the &lt;create&gt; command <span class="bcp14">MUST</span> be
-rejected according to the standard. The response <span class="bcp14">MUST</span> include the
-&lt;extension&gt; element with the &lt;var:primary&gt; child element
-indicating the Primary Domain, which must match the target domain.<a href="#section-6.4-6.3.1" class="pilcrow">¶</a></p>
+setting their status value as prescribed by registry policy.<a href="#section-6.4-6.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-6.4-7">The EPP &lt;create&gt; command may have five new errors, as described
@@ -1820,7 +1965,7 @@ in the &lt;check&gt; section above.<a href="#section-6.4-7" class="pilcrow">¶</
         <h3 id="name-epp-update-command">
 <a href="#section-6.5" class="section-number selfRef">6.5. </a><a href="#name-epp-update-command" class="section-name selfRef">EPP &lt;update&gt; command</a>
         </h3>
-<p id="section-6.5-1">The EPP &lt;update&gt;gt; command provides a transform operation that
+<p id="section-6.5-1">The EPP &lt;update&gt; command provides a transform operation that
 allows a client to change the options of a member of a same entity
 set. It is extended to cover three new tasks:<a href="#section-6.5-1" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -1838,15 +1983,16 @@ domains of the same entity set.<a href="#section-6.5-2.3.1" class="pilcrow">¶</
 </li>
         </ul>
 <p id="section-6.5-3">This extended &lt;update&gt; command is not valid for use by a same
-entity agnostic client. Any use by a same entity agnostic client <span class="bcp14">MUST</span>
-be rejected and indicate it is an inappropriate use of the command.<a href="#section-6.5-3" class="pilcrow">¶</a></p>
-<p id="section-6.5-4">A same entity agnostic client <span class="bcp14">MUST</span> only use the standard-defined
+entity agnostic client. Any such use by a same entity agnostic client
+<span class="bcp14">MUST</span> be rejected and indicate it is an inappropriate use of the
+command.<a href="#section-6.5-3" class="pilcrow">¶</a></p>
+<p id="section-6.5-4">A same entity agnostic client <span class="bcp14">MUST</span> only use the standard defined
 &lt;update&gt; command and the server <span class="bcp14">MUST</span> only respond as defined by
 the standard.<a href="#section-6.5-4" class="pilcrow">¶</a></p>
 <p id="section-6.5-5">The rest of this section specifies behavior when same entity aware
 servers and same entity aware clients are interacting and describes
 the three new tasks.<a href="#section-6.5-5" class="pilcrow">¶</a></p>
-<p id="section-6.5-6">When the target domain of the update command is any member of the same
+<p id="section-6.5-6">When the target domain of the update command is any member of a same
 entity set, including the Primary Domain of the same entity set, the
 client <span class="bcp14">MUST</span> include an &lt;extension&gt; element that <span class="bcp14">MUST</span> include at
 least the &lt;var:primary&gt; child element indicating the Primary
@@ -1886,19 +2032,19 @@ indicated and the revised status indicated.<a href="#section-6.5-10.2.1" class="
         </ul>
 <p id="section-6.5-11">If the &lt;var:status&gt; child element is not present in the
 extension, then all elements other than the Primary Domain indication
-<span class="bcp14">MUST</span> be ignored and the update command <span class="bcp14">MUST</span> be processed as a standard
-defined update command acting on the target domain.<a href="#section-6.5-11" class="pilcrow">¶</a></p>
+<span class="bcp14">MUST</span> be ignored and the update command <span class="bcp14">MUST</span> be processed according to
+the standard acting on the target domain.<a href="#section-6.5-11" class="pilcrow">¶</a></p>
 <p id="section-6.5-12">Note that depending on registry policy, the target domain may share
-attributes with the Primary Domain, e.g., nameservers.  A registry
+attributes with the Primary Domain, e.g., nameservers. A registry
 policy <span class="bcp14">MAY</span> specify rules or guidelines for the set of elements
 required or permitted for a domain according to the Primary Domain.<a href="#section-6.5-12" class="pilcrow">¶</a></p>
-<p id="section-6.5-13">The EPP domain mapping from RFC3915 describes the elements that have
-to be specified within an &lt;update&gt;gt; command.  The requirement to
-provide at least one &lt;domain:add&gt;gt;, &lt;domain:rem&gt;gt;, or
-&lt;domain:chg&gt;gt; element is updated by this extension such that at
-least one empty &lt;domain:add&gt;gt;, &lt;domain:rem&gt;gt;, or
-&lt;domain:chg&gt;gt; element <span class="bcp14">MUST</span> be present if this extension is
-specified within an &lt;update&gt;gt; command.  This requirement is
+<p id="section-6.5-13">The EPP domain mapping from <span>[<a href="#RFC3915" class="cite xref">RFC3915</a>]</span> describes the elements that
+have to be specified within an &lt;update&gt; command. The requirement
+to provide at least one &lt;domain:add&gt;, &lt;domain:rem&gt;, or
+&lt;domain:chg&gt; element is updated by this extension such that at
+least one empty &lt;domain:add&gt;, &lt;domain:rem&gt;, or
+&lt;domain:chg&gt; element <span class="bcp14">MUST</span> be present if this extension is
+specified within an &lt;update&gt; command. This requirement is
 updated to disallow the possibility of modifying a domain object as
 part of the deactivation.<a href="#section-6.5-13" class="pilcrow">¶</a></p>
 <p id="section-6.5-14">If a client wishes to convert an Exempted domain into the Primary
@@ -1925,24 +2071,6 @@ change the status of the indicated domains from Exempted to Allocated,
 and <span class="bcp14">MUST</span> indicate the Primary Domain. The response <span class="bcp14">MUST</span> include an
 extension indicating the Primary Domain and the list of domains whose
 status changed from Exempted to Allocated.<a href="#section-6.5-16" class="pilcrow">¶</a></p>
-<p id="section-6.5-17">If a previously same entity agnostic client becomes same entity aware
-and wishes to convert a registered domain to be a Primary Domain of
-same entity set, the update command from the client <span class="bcp14">MUST</span> be provided as
-follows.<a href="#section-6.5-17" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-6.5-18.1">
-            <p id="section-6.5-18.1.1">The target domain of the update command and the Primary Domain in
-the extension <span class="bcp14">MUST</span> match.<a href="#section-6.5-18.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-6.5-18.2">
-            <p id="section-6.5-18.2.1">The target domain <span class="bcp14">MUST</span> have the status of registered and <span class="bcp14">MUST</span> have
-the same Registrar of Record as the update requesting registrar.<a href="#section-6.5-18.2.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-<p id="section-6.5-19">If the update command is valid as indicated above, the server <span class="bcp14">MUST</span>
-change the status of the indicated domains to Allocated, and <span class="bcp14">MUST</span>
-indicate it as the Primary Domain. The response <span class="bcp14">MUST</span> include an
-extension indicating the Primary Domain.<a href="#section-6.5-19" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="epp-ltdeletegt-command">
@@ -1950,34 +2078,30 @@ extension indicating the Primary Domain.<a href="#section-6.5-19" class="pilcrow
         <h3 id="name-epp-delete-command">
 <a href="#section-6.6" class="section-number selfRef">6.6. </a><a href="#name-epp-delete-command" class="section-name selfRef">EPP &lt;delete&gt; command</a>
         </h3>
-<p id="section-6.6-1">The &lt;delete&gt; command is extended to REQUIRE the deletion of all
-members of a same entity set if the Primary Domain is deleted.<a href="#section-6.6-1" class="pilcrow">¶</a></p>
-<p id="section-6.6-2">This extended &lt;delete&gt; command is not valid for use by a same
-entity agnostic client. Any use by a same entity agnostic client <span class="bcp14">MUST</span>
-be rejected and indicate it is an inappropriate use of the command.<a href="#section-6.6-2" class="pilcrow">¶</a></p>
-<p id="section-6.6-3">A same entity agnostic client <span class="bcp14">MUST</span> only use the standard-defined
-&lt;update&gt; command and the server <span class="bcp14">MUST</span> only respond as defined by
-the standard.<a href="#section-6.6-3" class="pilcrow">¶</a></p>
-<p id="section-6.6-4">The rest of this section specifies behavior when same entity aware
-servers and same entity aware clients are interacting.<a href="#section-6.6-4" class="pilcrow">¶</a></p>
-<p id="section-6.6-5">A same entity aware client <span class="bcp14">MUST NOT</span> use the &lt;delete&gt; command to
+<p id="section-6.6-1">When the server receives a &lt;delete&gt; command from a same entity
+agnostic client the server <span class="bcp14">MUST</span> respond as defined by the standard.<a href="#section-6.6-1" class="pilcrow">¶</a></p>
+<p id="section-6.6-2">The rest of this section specifies behavior when same entity aware
+servers and same entity aware clients are interacting.<a href="#section-6.6-2" class="pilcrow">¶</a></p>
+<p id="section-6.6-3">The &lt;delete&gt; command is extended to REQUIRE the deletion of all
+members of a same entity set if the Primary Domain is deleted.<a href="#section-6.6-3" class="pilcrow">¶</a></p>
+<p id="section-6.6-4">A same entity aware client <span class="bcp14">MUST NOT</span> use the &lt;delete&gt; command to
 delete any member of a same entity set except the Primary Domain. Any
 other use <span class="bcp14">MUST</span> be rejected and indicate it is an inappropriate use of
-the command. Note that the &lt;update&gt; command is used for this
-purpose.<a href="#section-6.6-5" class="pilcrow">¶</a></p>
-<p id="section-6.6-6">When the server receives a &lt;delete&gt; command from a same entity
+the command. Note that the &lt;update&gt; command is used for the
+purpose of deactivating other members of a same entity set.<a href="#section-6.6-4" class="pilcrow">¶</a></p>
+<p id="section-6.6-5">When the server receives a &lt;delete&gt; command from a same entity
 aware client, the command <span class="bcp14">MUST</span> include the &lt;extension&gt; element
 which <span class="bcp14">MUST</span> include the &lt;var:primary&gt; child element which <span class="bcp14">MUST</span>
-match the target domain name.<a href="#section-6.6-6" class="pilcrow">¶</a></p>
-<p id="section-6.6-7">The delete command is extended such that all Allocated members of the
+match the target domain name.<a href="#section-6.6-5" class="pilcrow">¶</a></p>
+<p id="section-6.6-6">The delete command is extended such that all Allocated members of the
 same entity set defined by the Primary Domain <span class="bcp14">MUST</span> all be deleted at
 once. If it is not possible for any member of the same entity set to
 be deleted for any reason, the delete command <span class="bcp14">MUST</span> fail leaving all
-members of the same entity set intact.<a href="#section-6.6-7" class="pilcrow">¶</a></p>
-<p id="section-6.6-8">If the delete command is successful, the response <span class="bcp14">MUST</span> include the
+members of the same entity set intact.<a href="#section-6.6-6" class="pilcrow">¶</a></p>
+<p id="section-6.6-7">If the delete command is successful, the response <span class="bcp14">MUST</span> include the
 extension element which <span class="bcp14">MUST</span> include both an indication of the Primary
 Domain and the list of all members of the same entity set that were
-deleted, including the Primary Domain.<a href="#section-6.6-8" class="pilcrow">¶</a></p>
+deleted, including the Primary Domain.<a href="#section-6.6-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="epp-renew-command">
@@ -1985,7 +2109,7 @@ deleted, including the Primary Domain.<a href="#section-6.6-8" class="pilcrow">�
         <h3 id="name-epp-renew-command">
 <a href="#section-6.7" class="section-number selfRef">6.7. </a><a href="#name-epp-renew-command" class="section-name selfRef">EPP renew command</a>
         </h3>
-<p id="section-6.7-1">The EPP renew command is not extended.<a href="#section-6.7-1" class="pilcrow">¶</a></p>
+<p id="section-6.7-1">The renew command is not extended.<a href="#section-6.7-1" class="pilcrow">¶</a></p>
 <p id="section-6.7-2">The server <span class="bcp14">MAY</span> reject renewals while a same entity set is being
 transferred.<a href="#section-6.7-2" class="pilcrow">¶</a></p>
 </section>
@@ -1995,12 +2119,12 @@ transferred.<a href="#section-6.7-2" class="pilcrow">¶</a></p>
         <h3 id="name-epp-transfer-query-command">
 <a href="#section-6.8" class="section-number selfRef">6.8. </a><a href="#name-epp-transfer-query-command" class="section-name selfRef">EPP &lt;transfer&gt; query command</a>
         </h3>
-<p id="section-6.8-1">The EPP &lt;transfer&gt; query command is not extended.<a href="#section-6.8-1" class="pilcrow">¶</a></p>
-<p id="section-6.8-2">Note that because same entity sets are transferred as a set, the
-result of the a &lt;transfer&gt; query command is necessarily the same
-for all domains in a set. Therefore, the result of a &lt;transfer&gt;
-query command for any domain in a same entity set applies to all
-domains in the set.<a href="#section-6.8-2" class="pilcrow">¶</a></p>
+<p id="section-6.8-1">Same entity sets are transferred as a set and thus the result of a
+&lt;transfer&gt; query command is necessarily the same for all domains
+in a set. Therefore, the result of a &lt;transfer&gt; query command
+for any domain in a same entity set applies to all domains in the
+set.<a href="#section-6.8-1" class="pilcrow">¶</a></p>
+<p id="section-6.8-2">The transfer query command is not extended.<a href="#section-6.8-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2099,6 +2223,10 @@ domain.<a href="#section-9-2" class="pilcrow">¶</a></p>
 <a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="RFC3915">[RFC3915]</dt>
+        <dd>
+<span class="refAuthor">Hollenbeck, S.</span>, <span class="refTitle">"Domain Registry Grace Period Mapping for the Extensible Provisioning Protocol (EPP)"</span>, <span class="seriesInfo">RFC 3915</span>, <span class="seriesInfo">DOI 10.17487/RFC3915</span>, <time datetime="2004-09" class="refDate">September 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3915">https://www.rfc-editor.org/rfc/rfc3915</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC7940">[RFC7940]</dt>
         <dd>
 <span class="refAuthor">Davies, K.</span> and <span class="refAuthor">A. Freytag</span>, <span class="refTitle">"Representing Label Generation Rulesets Using XML"</span>, <span class="seriesInfo">RFC 7940</span>, <span class="seriesInfo">DOI 10.17487/RFC7940</span>, <time datetime="2016-08" class="refDate">August 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7940">https://www.rfc-editor.org/rfc/rfc7940</a>&gt;</span>. </dd>
