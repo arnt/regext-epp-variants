@@ -742,7 +742,7 @@ __TODO__: check alignment of the new error codes
 
 ## EPP &lt;update&gt; command
 
-The EPP &lt;update>gt; command provides a transform operation that
+The EPP &lt;update&gt; command provides a transform operation that
 allows a client to change the options of a member of a same entity
 set. It is extended to cover three new tasks:
 
