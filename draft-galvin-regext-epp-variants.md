@@ -694,7 +694,7 @@ __TODO__: check alignment of the new error codes
 
 ## EPP &lt;update&gt; command
 
-The EPP &lt;update>gt; command provides a transform operation that
+The EPP &lt;update&gt; command provides a transform operation that
 allows a client to change the options of a member of a same entity
 set. It is extended to cover three new tasks:
 
@@ -768,12 +768,12 @@ policy MAY specify rules or guidelines for the set of elements
 required or permitted for a domain according to the Primary Domain.
 
 The EPP domain mapping from {{RFC3915}} describes the elements that
-have to be specified within an &lt;update>gt; command. The requirement
-to provide at least one &lt;domain:add>gt;, &lt;domain:rem>gt;, or
-&lt;domain:chg>gt; element is updated by this extension such that at
-least one empty &lt;domain:add>gt;, &lt;domain:rem>gt;, or
-&lt;domain:chg>gt; element MUST be present if this extension is
-specified within an &lt;update>gt; command. This requirement is
+have to be specified within an &lt;update&gt; command. The requirement
+to provide at least one &lt;domain:add&gt;, &lt;domain:rem&gt;, or
+&lt;domain:chg&gt; element is updated by this extension such that at
+least one empty &lt;domain:add&gt;, &lt;domain:rem&gt;, or
+&lt;domain:chg&gt; element MUST be present if this extension is
+specified within an &lt;update&gt; command. This requirement is
 updated to disallow the possibility of modifying a domain object as
 part of the deactivation.
 
