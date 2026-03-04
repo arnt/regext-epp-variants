@@ -508,27 +508,33 @@ When the server receives an &lt;info&gt; command from a same entity
 aware client and the target domain is or could be a member of a same
 entity set, if that same entity set has at least one Allocated or
 Exempted member, the server's response MUST contain an
-&lt;extension&gt; element with the following child elements:
+&lt;extension&gt element, which MUST contain a child
+&lt;var:infData&gt; element with the following child elements:
 
-* A &lt;var:primary&gt; element matching the Primary Domain for the
-same entity set of the target domain, which MAY match the target domain.
+* A &lt;var:primary&gt; element containing a &lt;var:name&gt; element
+matching the Primary Domain for the same entity set of the target domain,
+which MAY match the target domain.
 
-* A list of all the Allocated and Exempted members of the same entity
-set.
+* A &lt;var:related&gt; element containing the list of all the Allocated
+and Exempted members of the same entity set, each in their own 
+&lt;var:name&gt; element.
 
 If the registry of the target domain is itself a member of a same
 entity set and the target domain is or could be a member of a same
 entity set in any registry in that registry's same entity set, if any
 one of those target domain same entity sets has at least one Allocated
 or Exempted member, the server's response MUST contain an
-&lt;extension&gt; element with the following child elements:
+&lt;extension&gt; element, which MUST contain a child
+&lt;var:infData&gt; element with the following child elements:
 
-* A &lt;var:primary&gt; element matching the Primary Domain for the
-same entity set of the target domain, which MAY match the target domain.
+* A &lt;var:primary&gt; element containing &lt;var:name&gt; elements
+listing each allocated Primary Domain for all registries that are members
+of the same entity set.
 
-* A list of all the same entity sets of the target domain with
-Allocated or Exempted members such that each same entity set list has
-its Primary Domain listed first.
+* A &lt;var:related&gt; element containing the list of all the same entity
+sets of the target domain with Allocated or Exempted members, each in their
+own &lt;var:name&gt; element, such that each same entity set list has its 
+Primary Domain listed first.
 
 
 Example &lt;info&gt; response when querying a primary domain name:
