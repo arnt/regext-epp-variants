@@ -29,6 +29,7 @@ normative:
   RFC5730:
 
 informative:
+  RFC3915:
   RFC7940:
   EPDP:
     title: Phase 2 Initial Report of the EPDP on Internationalized Domain Names
@@ -143,7 +144,7 @@ conceptually.
 
 * Since all members of a Same Entity Set exist, at least conceptually,
 upon creation of a Primary Domain, the &lt;update&gt; transform is
-used to allocate or de-allocate an object in a set, thus making it 
+used to allocate or de-allocate an object in a set, thus making it
 exist in the central repository.
 
 This extension is backwards compatible with registrars that do not
@@ -326,7 +327,7 @@ which MUST include at least the following properties.
     defines the members of the Same Entity Set. Second, it defines the
     options of the members of the set.
 
-    In the case of IDN variants, one of those options is the disposition 
+    In the case of IDN variants, one of those options is the disposition
     value of the label. If a registry is itself a member of a same entity
     set, the Primary Domain MAY indicate different values for an
     option of a domain in the same entity set of different registries.
@@ -410,59 +411,59 @@ availability status of the queried domain.
 Example &lt;check&gt; response:
 
 ~~~~~~~~~~~
-S: <?xml version="1.0" encoding="utf-8" standalone="no"?>
-S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
-S:   <response>
-S:     <result code="1000">
-S:       <msg>Command completed successfully</msg>
-S:     </result>
-S:     <resData>
+S: <?xml version="1.0" encoding="utf-8" standalone="no"?&gt;
+S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+S:   <response&gt;
+S:     <result code="1000"&gt;
+S:       <msg&gt;Command completed successfully</msg&gt;
+S:     </result&gt;
+S:     <resData&gt;
 S:       <domain:chkData
-S:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
-S:         <domain:cd>
-S:           <domain:name avail="1">examplev1.com</domain:name>
-S:         </domain:cd>
-S:         <domain:cd>
-S:           <domain:name avail="0">examplev1.net</domain:name>
-S:         </domain:cd>
-S:         <domain:cd>
-S:           <domain:name avail="0">examplev1.tel</domain:name>
-S:         </domain:cd>
-S:         <domain:cd>
-S:           <domain:name avail="0">examplev1.swiss</domain:name>
-S:         </domain:cd>
-S:       </domain:chkData>
-S:     </resData>
-S:     <extension>
+S:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0"&gt;
+S:         <domain:cd&gt;
+S:           <domain:name avail="1"&gt;examplev1.com</domain:name&gt;
+S:         </domain:cd&gt;
+S:         <domain:cd&gt;
+S:           <domain:name avail="0"&gt;examplev1.net</domain:name&gt;
+S:         </domain:cd&gt;
+S:         <domain:cd&gt;
+S:           <domain:name avail="0"&gt;examplev1.tel</domain:name&gt;
+S:         </domain:cd&gt;
+S:         <domain:cd&gt;
+S:           <domain:name avail="0"&gt;examplev1.swiss</domain:name&gt;
+S:         </domain:cd&gt;
+S:       </domain:chkData&gt;
+S:     </resData&gt;
+S:     <extension&gt;
 S:       <var:chkData
-S:           xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
-S:         <var:cd avail="1">
-S:           <var:objID>examplev1.com</var:objID>
-S:           <var:primary>example.com</var:primary>
-S:           <var:status>AllocatableMember</var:status>
-S:         </var:cd>
-S:         <var:cd avail="0">
-S:           <var:objID>examplev1.net</var:objID>
-S:           <var:primary>example.net</var:primary>
-S:           <var:status>NotSameEntity</var:status>
-S:         </var:cd>
-S:         <var:cd avail="0">
-S:           <var:objID>examplev1.tel</var:objID>
-S:           <var:status>Exempted</var:status>
-S:         </var:cd>
-S:         <var:cd avail="0">
-S:           <var:objID>examplev1.swiss</var:objID>
-S:           <var:primary>example.swiss</var:primary>
-S:           <var:status>PendingTransfer</var:status>
-S:         </var:cd>
-S:       </var:chkData>
-S:     </extension>
-S:     <trID>
-S:       <clTRID>ABC-12345</clTRID>
-S:       <svTRID>54322-XYZ</svTRID>
-S:     </trID>
-S:   </response>
-S: </epp>
+S:           xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0"&gt;
+S:         <var:cd avail="1"&gt;
+S:           <var:objID&gt;examplev1.com</var:objID&gt;
+S:           <var:primary&gt;example.com</var:primary&gt;
+S:           <var:status&gt;AllocatableMember</var:status&gt;
+S:         </var:cd&gt;
+S:         <var:cd avail="0"&gt;
+S:           <var:objID&gt;examplev1.net</var:objID&gt;
+S:           <var:primary&gt;example.net</var:primary&gt;
+S:           <var:status&gt;NotSameEntity</var:status&gt;
+S:         </var:cd&gt;
+S:         <var:cd avail="0"&gt;
+S:           <var:objID&gt;examplev1.tel</var:objID&gt;
+S:           <var:status&gt;Exempted</var:status&gt;
+S:         </var:cd&gt;
+S:         <var:cd avail="0"&gt;
+S:           <var:objID&gt;examplev1.swiss</var:objID&gt;
+S:           <var:primary&gt;example.swiss</var:primary&gt;
+S:           <var:status&gt;PendingTransfer</var:status&gt;
+S:         </var:cd&gt;
+S:       </var:chkData&gt;
+S:     </extension&gt;
+S:     <trID&gt;
+S:       <clTRID&gt;ABC-12345</clTRID&gt;
+S:       <svTRID&gt;54322-XYZ</svTRID&gt;
+S:     </trID&gt;
+S:   </response&gt;
+S: </epp&gt;
 ~~~~~~~~~~~
 
 The EPP &lt;check&gt; command may return six new results:
@@ -539,50 +540,50 @@ Primary Domain listed first.
 
 Example &lt;info&gt; response when querying a primary domain name:
 ~~~~~~~~~~~
-S: <?xml version="1.0" encoding="UTF-8"?>
-S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
-S:   <response>
-S:     <result code="1000">
-S:       <msg lang="en-US">Command completed successfully</msg>
-S:     </result>
-S:     <resData>
-S:       <infData xmlns="urn:ietf:params:xml:ns:domain-1.0">
-S:         <name>example.com</name>
-S:         <roid>D123456789</roid>
-S:         <status s="active"/>
-S:         <registrant>abc123</registrant>
-S:         <contact type="tech">ghi789</contact>
-S:         <ns>
-S:           <hostObj>ns1.example.net</hostObj>
-S:           <hostObj>ns2.example.net</hostObj>
-S:         </ns>
-S:         <clID>registrar</clID>
-S:         <crID>registrar</crID>
-S:         <crDate>2010-09-08T07:06:05.0Z</crDate>
-S:         <exDate>2012-09-08T23:59:59.0Z</exDate>
-S:         <authInfo>
-S:           <pw>secret</pw>
-S:         </authInfo>
-S:       </infData>
-S:     </resData>
-S:     <extension>
-S:       <var:infData xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
-S:         <var:primary>
-S:           <var:name>example.com</var:name>
-S:           <var:name>example.comv1</var:name>
-S:           <var:name>example.comv2</var:name>
-S:         </var:primary>
-S:         <var:related>
-S:           <var:name>examplev1.com</var:name>
-S:           <var:name>examplev2.com</var:name>
-S:         </var:related>
-S:       </var:infData>
-S:     </extension>
-S:     <trID>
-S:       <svTRID>ZYX-99958</svTRID>
-S:     </trID>
-S:   </response>
-S: </epp>
+S: &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+S: &lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+S:   &lt;response&gt;
+S:     &lt;result code="1000"&gt;
+S:       &lt;msg lang="en-US"&gt;Command completed successfully&lt;/msg&gt;
+S:     &lt;/result&gt;
+S:     &lt;resData&gt;
+S:       &lt;infData xmlns="urn:ietf:params:xml:ns:domain-1.0"&gt;
+S:         &lt;name&gt;example.com&lt;/name&gt;
+S:         &lt;roid&gt;D123456789&lt;/roid&gt;
+S:         &lt;status s="active"/&gt;
+S:         &lt;registrant&gt;abc123&lt;/registrant&gt;
+S:         &lt;contact type="tech"&gt;ghi789&lt;/contact&gt;
+S:         &lt;ns&gt;
+S:           &lt;hostObj&gt;ns1.example.net&lt;/hostObj&gt;
+S:           &lt;hostObj&gt;ns2.example.net&lt;/hostObj&gt;
+S:         &lt;/ns&gt;
+S:         &lt;clID&gt;registrar&lt;/clID&gt;
+S:         &lt;crID&gt;registrar&lt;/crID&gt;
+S:         &lt;crDate&gt;2010-09-08T07:06:05.0Z&lt;/crDate&gt;
+S:         &lt;exDate&gt;2012-09-08T23:59:59.0Z&lt;/exDate&gt;
+S:         &lt;authInfo&gt;
+S:           &lt;pw&gt;secret&lt;/pw&gt;
+S:         &lt;/authInfo&gt;
+S:       &lt;/infData&gt;
+S:     &lt;/resData&gt;
+S:     &lt;extension&gt;
+S:       &lt;var:infData xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0"&gt;
+S:         &lt;var:primary&gt;
+S:           &lt;var:name&gt;example.com&lt;/var:name&gt;
+S:           &lt;var:name&gt;example.comv1&lt;/var:name&gt;
+S:           &lt;var:name&gt;example.comv2&lt;/var:name&gt;
+S:         &lt;/var:primary&gt;
+S:         &lt;var:related&gt;
+S:           &lt;var:name&gt;examplev1.com&lt;/var:name&gt;
+S:           &lt;var:name&gt;examplev2.com&lt;/var:name&gt;
+S:         &lt;/var:related&gt;
+S:       &lt;/var:infData&gt;
+S:     &lt;/extension&gt;
+S:     &lt;trID&gt;
+S:       &lt;svTRID&gt;ZYX-99958&lt;/svTRID&gt;
+S:     &lt;/trID&gt;
+S:   &lt;/response&gt;
+S: &lt;/epp&gt;
 ~~~~~~~~~~~
 
 ## EPP &lt;transfer&gt; command
@@ -902,7 +903,7 @@ team included Dennis Tan, Rick Wilhelm, Edmon Chung, and Jennifer Chung.
 This text (in RFC format) was initially written by Arnt
 Gulbrandsen based on a conference presentation by James Galvin.
 
-YOU YES YOU (<- insert name) have reviewed it and provided helpful
+YOU YES YOU (&lt;- insert name) have reviewed it and provided helpful
 comments or contributed in other ways.
 
 
