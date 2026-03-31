@@ -203,7 +203,7 @@ brings all domains in the Same Entity Set together. See the
 
 Primary Domain: The chronologically first domain allocated in a Same
 Entity Set. While the member relationship in a Same Entity Set is
-symmetric, the option values of its members are not. For example, when
+symmetric, the option values of its members may not be. For example, when
 an IDN and its equivalent variants are members of a Same Entity Set,
 the members other than the Primary Domain can have a disposition value
 of either blocked or allocatable. The Primary Domain name therefore
@@ -248,7 +248,7 @@ receive a response that is fail-safe including when the registrar may
 not be able to fully understand the reason for the rejection.
 
 A registry that does not support Same Entity Sets will behave
-according to the sstandard when interacting with a registrar that
+according to the standard when interacting with a registrar that
 supports Same Entity Sets.
 
 ## Same Entity Management
@@ -298,8 +298,8 @@ themselves be members of a Same Entity Set.
     defining the eligible members of a set. However, some Latin characters
     with diacritic marks are not considered variants of Latin
     characters without diacritic marks and yet there are circumstances
-    when it is desirable for them to be considerated equivalent. As a
-    result this extension presumes the existence of a set and sets
+    when it is desirable for them to be considered equivalent. As a
+    result this extension presumes the existence of a set and deems
     outside its scope the actual definition of the equivalence of the
     members of the set.
 
