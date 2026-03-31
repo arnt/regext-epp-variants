@@ -80,11 +80,12 @@ the method by which it is shared is outside the scope of this
 specification.
 
 This document exemplifies the use of three types of options that may
-be specified in the registry policy. These types are neither required
-nor limiting. They are described to exemplify how a Same Entity Set
-may be used. What is REQUIRED is that the Primary Domain determines
-how each option is applied to the remaining members of the set and
-this(ese) action(s) are agreed between the registry and the registrar.
+be specified in the registry policy: prescribed, settable, and linked.
+These types are neither required nor limiting. They are described to
+exemplify how a Same Entity Set may be used. What is REQUIRED is that
+the Primary Domain determines how each option is applied to the
+remaining members of the set and this(ese) action(s) are agreed 
+between the registry and the registrar.
 
 An option is Prescribed if its value is determined immediately upon
 creation of the Primary Domain. For example, whether or not another
@@ -111,8 +112,8 @@ Entity Set or just the member being acted upon.
 After the creation of the Primary Domain, subsequent domains in the
 same set can only be registered in the central repository by the same
 registrar. The registrar is responsible for ensuring that each domain
-in the set is assigned to the same registrant. Each domain in a same
-entity set may be the target of any EPP command, with the following
+in the set is assigned to the same registrant. Each domain in a Same
+Entity Set may be the target of any EPP command, with the following
 restrictions.
 
 * A &lt;transfer&gt; of any domain in any Same Entity Set always acts
@@ -122,7 +123,7 @@ registrar. If multiple registries share a common policy using a shared
 central repository, then the transfer always acts on all sets in all
 registries.
 
-* The &lt;delete&gt; of a Primary Domain in any same entity set always
+* The &lt;delete&gt; of a Primary Domain in any Same Entity Set always
 acts on the entire set in the relevant registry. This is required to
 support the option where the Primary Domain governs options as defined
 by the registry.
@@ -138,7 +139,7 @@ the EPP server never lists the complete set. This leads to the third
 restriction:
 
 * A &lt;create&gt; of a later member of a Same Entity Set is not
-possible; &lt;create&gt; creates a same entity set with at least one
+possible; &lt;create&gt; creates a Same Entity Set with at least one
 allocated member and all other members MUST exist at least
 conceptually.
 
@@ -148,7 +149,7 @@ used to allocate or de-allocate an object in a set, thus making it
 exist in the central repository.
 
 This extension is backwards compatible with registrars that do not
-support same entity sets. Registrars that attempt to act on a member
+support Same Entity Sets. Registrars that attempt to act on a member
 of a set inappropriately will receive a compatible error response with
 which they can continue to function. The compatible error response
 may not provide sufficient detail to fully understand the rejection
@@ -219,11 +220,11 @@ the same set.
 
 Same Entity Set: An implicit set of domains defined by a registry
 policy. The relationship between the members of the set is
-symmetric. Hence, an arbitrary member of a same entity set defines the
+symmetric. Hence, an arbitrary member of a Same Entity Set defines the
 whole set. The set is not expressed explicitly in EPP, because it can
 be impractically large.
 
-Status Value: While a same entity set relationship is symmetric, a set
+Status Value: While a Same Entity Set relationship is symmetric, a set
 member has its own option values that are not necessarily
 symmetric. The Status Value is one option that a member may have that
 can be "allocatable" (i.e., available for the same entity) or
@@ -246,32 +247,32 @@ Backwards compatibility is REQUIRED to mean that a registrar will
 receive a response that is fail-safe including when the registrar may
 not be able to fully understand the reason for the rejection.
 
-A registry that does not support same entity sets will behave
+A registry that does not support Same Entity Sets will behave
 according to the sstandard when interacting with a registrar that
-supports same entity sets.
+supports Same Entity Sets.
 
 ## Same Entity Management
 
 When a registry supports this extensions, all domains created are
-eligible to be in a same entity set MUST be managed by the same
+eligible to be in a Same Entity Set MUST be managed by the same
 entity, including if the set has only one member, i.e., the domain
 being created. This has three requirements.
 
-1. Registrars MUST ensure that domains in a same entity set are
+1. Registrars MUST ensure that domains in a Same Entity Set are
 managed by the same registrant.
 
-2. Registries MUST ensure that domains in a same entity set are
+2. Registries MUST ensure that domains in a Same Entity Set are
 managed by the same registrar.
 
-3. Registries that are a member of a same entity set MUST be managed
+3. Registries that are a member of a Same Entity Set MUST be managed
 such that they share a central repository, which ordinarily is
 expected to mean they share a single service provider.
 
 ## Same Entity Set Management
 
 Most EPP commands may be executed independently on any member of the
-same entity set. However, commands that change the membership or an
-option value of one or more members in a same entity set, or change
+Same Entity Set. However, commands that change the membership or an
+option value of one or more members in a Same Entity Set, or change
 the Same Entity Management requirements, MUST operate on the members
 of the set as a set.
 
@@ -285,7 +286,7 @@ commands with explicit requirements: &lt;transfer&gt; and
 The following technical principles have guided the development of this
 extension and established operational requirements.
 
-* The members of a same entity set are defined by registry policy and
+* The members of a Same Entity Set are defined by registry policy and
 that policy must be agreed by both the registry and the registrar. The
 establishment of this policy and the method by which the parties agree
 is outside the scope of this specification. Multiple registries may
@@ -305,21 +306,21 @@ themselves be members of a Same Entity Set.
 * The registry policy MUST define the options of a Same Entity Set,
 which MUST include at least the following properties.
 
-  * If the same entity set exists in a registry that itself is a
-    member of a same entity set, then all the same entity sets in any
-    registry in the registry's same entity set MUST be consistent
-    to each other, i.e., membership in a same entity set is consistent.
+  * If the Same Entity Set exists in a registry that itself is a
+    member of a Same Entity Set, then all the Same Entity Sets in any
+    registry in the registry's Same Entity Set MUST be consistent
+    to each other, i.e., membership in a Same Entity Set is consistent.
 
     This principle derives directly from the Same Entity Principle.
 
     In the case of IDNs, the LGR tables may be different in each
     registry but the tables MUST be harmonized to ensure symmetry.
 
-  * The first domain created in a same entity set is designated the
+  * The first domain created in a Same Entity Set is designated the
     Primary Domain.
 
-    If the registry of the same entity set is itself a member of a
-    same entity set, the Primary Domain in a same entity set MAY be
+    If the registry of the Same Entity Set is itself a member of a
+    Same Entity Set, the Primary Domain in a Same Entity Set MAY be
     different in each registry.
 
 
@@ -328,12 +329,12 @@ which MUST include at least the following properties.
     options of the members of the set.
 
     In the case of IDN variants, one of those options is the disposition
-    value of the label. If a registry is itself a member of a same entity
-    set, the Primary Domain MAY indicate different values for an
-    option of a domain in the same entity set of different registries.
+    value of the label. If a registry is itself a member of a Same Entity
+    Eet, the Primary Domain MAY indicate different values for an
+    option of a domain in the Same Entity Set of different registries.
 
 * EPP today implicitly defines two status values for any domain:
-  registered and available. This same entity set extension adds the
+  registered and available. This Same Entity Set extension adds the
   following status values.
 
   The Allocated status means that the member of the set is active in
@@ -371,19 +372,19 @@ command. There is no change on the client side when using the
 
 When the server receives a &lt;check&gt; command from a same entity
 agnostic client and the target domain is or could be a member of a
-same entity set, if that same entity set has at least one Allocated or
+Same Entity Set, if that Same Entity Set has at least one Allocated or
 Exempted member, the server's response:
 
 * MUST NOT include the &lt;extension&gt; element.
 
 * MUST indicate 'available = "false"'.
 
-* MAY indicate a reason of "Unavailable (except as member of a same
-  entity set)".
+* MAY indicate a reason of "Unavailable (except as member of a Same
+  Entity Set)".
 
 When the server receive a &lt;check&gt; command from a same entity
-aware client and the target domain is or could be a member of a same
-entity set, if that same entity set has at least one Allocated or
+aware client and the target domain is or could be a member of a Same
+Entity Set, if that Same Entity Set has at least one Allocated or
 Exempted member, the server's response:
 
 * MUST contain an &lt;extension&gt, which MUST contain a child
@@ -400,7 +401,7 @@ elements:
     referenced in the client &lt;check&gt; command.
 
   * A &lt;var:primary&gt; element matching the Primary Domain for the
-    same entity set if it is known. This is not possible for sets with
+    Same Entity Set if it is known. This is not possible for sets with
     exempted domains as no (unique) Primary Domain exists, in which
     case the &lt;var:primary&gt; element MUST NOT be included.
 
@@ -468,7 +469,7 @@ S: </epp>
 
 The EPP &lt;check&gt; command may return six new results:
 
-- AllocatableMember: A member of the same entity set is already
+- AllocatableMember: A member of the Same Entity Set is already
 active. Provisioning of this domain must be to the same registrant via
 the same registrar.
 
@@ -479,10 +480,10 @@ member of a Same Entity Set, and the set belongs to a different client
 value is blocked.
 
 - Exempted: The domain cannot be provisioned because it should be a
-member of a same entity set but the the set contains Exempted members.
+member of a Same Entity Set but the the set contains Exempted members.
 
 - PendingTransfer: The domain cannot be provisioned because it is a
-member of a same entity set that is currently being transferred to a
+member of a Same Entity Set that is currently being transferred to a
 different registrar.
 
 - Custom: Additional custom value that may be used for server
@@ -500,41 +501,41 @@ domain name (contacts, hosts, status values, etc.).
 
 When the server receives an &lt;info&gt; command from a same entity
 agnostic client the response MUST contain the actual data of the
-target domain, independent of whether it is a member of a same entity
-set. In addition, if the same entity agnostic registrar is inquiring
+target domain, independent of whether it is a member of a Same Entity
+Set. In addition, if the same entity agnostic registrar is inquiring
 about a domain with a status of Allocatable, the response SHOULD be
 the same as if the client were inquiring about a reserved name.
 
 When the server receives an &lt;info&gt; command from a same entity
-aware client and the target domain is or could be a member of a same
-entity set, if that same entity set has at least one Allocated or
+aware client and the target domain is or could be a member of a Same
+Entity Set, if that Same Entity Set has at least one Allocated or
 Exempted member, the server's response MUST contain an
 &lt;extension&gt element, which MUST contain a child
 &lt;var:infData&gt; element with the following child elements:
 
 * A &lt;var:primary&gt; element containing a &lt;var:name&gt; element
-matching the Primary Domain for the same entity set of the target domain,
+matching the Primary Domain for the Same Entity Set of the target domain,
 which MAY match the target domain.
 
 * A &lt;var:related&gt; element containing the list of all the Allocated
-and Exempted members of the same entity set, each in their own 
+and Exempted members of the Same Entity Set, each in their own 
 &lt;var:name&gt; element.
 
-If the registry of the target domain is itself a member of a same
-entity set and the target domain is or could be a member of a same
-entity set in any registry in that registry's same entity set, if any
-one of those target domain same entity sets has at least one Allocated
+If the registry of the target domain is itself a member of a Same
+Entity Set and the target domain is or could be a member of a Same
+Entity Set in any registry in that registry's Same Entity Set, if any
+one of those target domain Same Entity Sets has at least one Allocated
 or Exempted member, the server's response MUST contain an
 &lt;extension&gt; element, which MUST contain a child
 &lt;var:infData&gt; element with the following child elements:
 
 * A &lt;var:primary&gt; element containing &lt;var:name&gt; elements
 listing each allocated Primary Domain for all registries that are members
-of the same entity set.
+of the Same Entity Set.
 
-* A &lt;var:related&gt; element containing the list of all the same entity
-sets of the target domain with Allocated or Exempted members, each in their
-own &lt;var:name&gt; element, such that each same entity set list has its 
+* A &lt;var:related&gt; element containing the list of all the Same Entity
+Sets of the target domain with Allocated or Exempted members, each in their
+own &lt;var:name&gt; element, such that each Same Entity Set list has its 
 Primary Domain listed first.
 
 
@@ -590,55 +591,55 @@ S: </epp>
 
 The &lt;transfer&gt; command always acts on the target domain in the
 command. The use of the &lt;transfer&gt; command is extended if both
-the server and the client support same entity sets.
+the server and the client support Same Entity Sets.
 
 When the server receives a &lt;transfer&gt; command from a same entity
 agnostic client and the target domain is or could be a member of a
-same entity set, if that same entity set has exactly one Allocated or
+Same Entity Set, if that Same Entity Set has exactly one Allocated or
 Exempted member the transfer request is acted upon according to the
 standard. If the target domain has a status of Exempted, it retains
 that status.
 
 When the server receives a &lt;transfer&gt; command from a same entity
 agnostic client and the target domain is or could be a member of a
-same entity set, if that same entity set has more than one Allocated or
+Same Entity Set, if that Same Entity Set has more than one Allocated or
 Exempted member the transfer request MUST be denied using 2305 "Object
 status prohibits operation".
 
 When the server receives a &lt;transfer&gt; command from a same entity
-aware client and the target domain is or could be a member of a same
-entity set, the request must include an &lt;extension&gt; element with
+aware client and the target domain is or could be a member of a Same
+Entity Set, the request must include an &lt;extension&gt; element with
 a &lt;var:primary&gt; element matching the Primary Domain, including
 if the Primary Domain is the target domain. If the extension is not
 present the transfer request MUST be denied using '2003 "Required
 parameter missing"'. Note that the &lt;check&gt; or &lt;info&gt;
 command MAY be used to identify the Primary Domain.
 
-A valid transfer request MUST apply to all members of a same entity
-set. If the registry of the target domain is itself a member of a
-same entity set, then the transfer request MUST apply to all same
-entity sets in all registries of the registry's same entity set.
+A valid transfer request MUST apply to all members of a Same Entity
+Set. If the registry of the target domain is itself a member of a
+Same Entity Set, then the transfer request MUST apply to all Same
+Entity Sets in all registries of the registry's Same Entity Set.
 
 The server's response to the transfer request MUST contain an
 &lt;extension&gt; element with the following child elements;
 
 * A &lt;var:primary&gt; element matching the Primary Domain for the
-same entity set of the target domain, which MAY match the target domain.
+Same Entity Set of the target domain, which MAY match the target domain.
 
-* A list of all the Allocated and Exempted members of the same entity set.
+* A list of all the Allocated and Exempted members of the Same Entity Set.
 
-If the registry of the target domain is itself a member of a same
-entity set and the target domain is or could be a member of a same
-entity set in any registry in that registry's same entity set, if any
-one of those target domain same entity sets has at least one Allocated
+If the registry of the target domain is itself a member of a Same
+Entity Set and the target domain is or could be a member of a Same
+Entity Set in any registry in that registry's Same Entity Set, if any
+one of those target domain Same Entity Sets has at least one Allocated
 or Exempted member, the server's response MUST contain an
 &lt;extension&gt; element with the following child elements:
 
 * A &lt;var:primary&gt; element matching the Primary Domain for the
-same entity set of the target domain, which MAY match the target domain.
+Same Entity Set of the target domain, which MAY match the target domain.
 
-* A list of all the same entity sets of the target domain with
-Allocated or Exempted members such that each same entity set list has
+* A list of all the Same Entity Sets of the target domain with
+Allocated or Exempted members such that each Same Entity Set list has
 its Primary Domain listed first.
 
 __TODO__: It must be ensured that the poll message to the losing registrar
@@ -654,42 +655,42 @@ command. There is no change on the client side when using the
 &lt;create&gt; command.
 
 The EPP &lt;create&gt; command's standard task is to provision a new
-domain. When same entity sets are supported, the &lt;create&gt; command
+domain. When Same Entity Sets are supported, the &lt;create&gt; command
 MUST be used to create the Primary Domain and MUST NOT be used to
-provision any other member of the Primary Domain's same entity set. The
+provision any other member of the Primary Domain's Same Entity Set. The
 task of converting an allocatable domain into an allocated domain MUST
 be performed using the &lt;update&gt; command.
 
 When the server receives a &lt;create&gt; command from a same entity
 agnostic client and the target domain is or could be a member of a
-same entity set, one of the following actions MUST be completed as
+Same Entity Set, one of the following actions MUST be completed as
 appropriate.
 
-* If any member of the same entity set is currently Allocated or
+* If any member of the Same Entity Set is currently Allocated or
 Exempted, the command MUST be rejected and the response MUST be the
 same as if the domain to be created is reserved.
 
-* If there are no members of the same entity set either Allocated or
+* If there are no members of the Same Entity Set either Allocated or
 Exempted, the &lt;create&gt; MUST proceed according to the standard
-with the server implicitly reserving all other members of the same
-entity set such that they MUST NOT be allocated until such time as the
+with the server implicitly reserving all other members of the Same
+Entity Set such that they MUST NOT be allocated until such time as the
 client is same entity aware and the client MUST indicate that the target
 domain is to be extended to be a Primary Domain as described in the
 &lt;update&gt; command.
 
 When the server receives a &lt;create&gt; command from a same entity
 aware client and the target domain is or could be a member of a
-same entity set, one of the following actions MUST be completed as
+Same Entity Set, one of the following actions MUST be completed as
 appropriate.
 
 * If the target domain does not exist and any other member of the
-same entity set is Allocated or Exempted, the command MUST be rejected
+Same Entity Set is Allocated or Exempted, the command MUST be rejected
 and indicate that it is an inappropriate use of the command.
 
-* If the target domain does not exist and no other member of the same
-entity set is Allocated or Exempted, the &lt;create&gt; command MUST
+* If the target domain does not exist and no other member of the Same
+Entity Set is Allocated or Exempted, the &lt;create&gt; command MUST
 proceed according to the standard with the server implicitly noting to
-itself the existence of all other members of the same entity set and
+itself the existence of all other members of the Same Entity Set and
 setting their status value as prescribed by registry policy.
 
 The EPP &lt;create&gt; command may have five new errors, as described
@@ -702,17 +703,17 @@ __TODO__: check alignment of the new error codes
 ## EPP &lt;update&gt; command
 
 The EPP &lt;update&gt; command provides a transform operation that
-allows a client to change the options of a member of a same entity
-set. It is extended to cover three new tasks:
+allows a client to change the options of a member of a Same Entity
+Set. It is extended to cover three new tasks:
 
-* Activating an allocatable domain in an existing same entity set.
+* Activating an allocatable domain in an existing Same Entity Set.
 
-* Deactivating an activated domain in an existing same entity set.
+* Deactivating an activated domain in an existing Same Entity Set.
 
 * Converting an Allocated or Exempted Domain into a Primary Domain and
 optionally converting other Exempted Domains that are eligible to be
-in the same entity set of the stated Primary Domain to be activated
-domains of the same entity set.
+in the Same Entity Set of the stated Primary Domain to be activated
+domains of the Same Entity Set.
 
 This extended &lt;update&gt; command is not valid for use by a same
 entity agnostic client. Any such use by a same entity agnostic client
@@ -727,11 +728,11 @@ The rest of this section specifies behavior when same entity aware
 servers and same entity aware clients are interacting and describes
 the three new tasks.
 
-When the target domain of the update command is any member of a same
-entity set, including the Primary Domain of the same entity set, the
+When the target domain of the update command is any member of a Same
+Entity Set, including the Primary Domain of the Same Entity Set, the
 client MUST include an &lt;extension&gt; element that MUST include at
 least the &lt;var:primary&gt; child element indicating the Primary
-Domain of the corresponding same entity set. The extension MAY include
+Domain of the corresponding Same Entity Set. The extension MAY include
 additional elements as indicated below to provision a new task. If the
 extension is not present the command MUST be rejected and indicate
 that a required parameter is missing.
@@ -785,7 +786,7 @@ updated to disallow the possibility of modifying a domain object as
 part of the deactivation.
 
 If a client wishes to convert an Exempted domain into the Primary
-Domain of a same entity set, the update command from the client MUST be
+Domain of a Same Entity Set, the update command from the client MUST be
 provided as follows.
 
 * The target domain of the update command and the Primary Domain in
@@ -794,7 +795,7 @@ the extension MUST match.
 * The target domain MUST have the status of Exempted.
 
 * If there exists multiple Exempted domains that would ordinarily be
-members of the same entity set, they MUST all have the same Registrar
+members of the Same Entity Set, they MUST all have the same Registrar
 of Record and it MUST match the update requesting registrar, and the
 extension MUST include a list of all Exempted domains, including the
 Primary Domain, that MUST match the list maintained by the registry.
@@ -815,13 +816,13 @@ The rest of this section specifies behavior when same entity aware
 servers and same entity aware clients are interacting.
 
 The &lt;delete&gt; command is extended to REQUIRE the deletion of all
-members of a same entity set if the Primary Domain is deleted.
+members of a Same Entity Set if the Primary Domain is deleted.
 
 A same entity aware client MUST NOT use the &lt;delete&gt; command to
-delete any member of a same entity set except the Primary Domain. Any
+delete any member of a Same Entity Set except the Primary Domain. Any
 other use MUST be rejected and indicate it is an inappropriate use of
 the command. Note that the &lt;update&gt; command is used for the
-purpose of deactivating other members of a same entity set.
+purpose of deactivating other members of a Same Entity Set.
 
 When the server receives a &lt;delete&gt; command from a same entity
 aware client, the command MUST include the &lt;extension&gt; element
@@ -829,14 +830,14 @@ which MUST include the &lt;var:primary&gt; child element which MUST
 match the target domain name.
 
 The delete command is extended such that all Allocated members of the
-same entity set defined by the Primary Domain MUST all be deleted at
-once. If it is not possible for any member of the same entity set to
+Same Entity Set defined by the Primary Domain MUST all be deleted at
+once. If it is not possible for any member of the Same Entity Set to
 be deleted for any reason, the delete command MUST fail leaving all
-members of the same entity set intact.
+members of the Same Entity Set intact.
 
 If the delete command is successful, the response MUST include the
 extension element which MUST include both an indication of the Primary
-Domain and the list of all members of the same entity set that were
+Domain and the list of all members of the Same Entity Set that were
 deleted, including the Primary Domain.
 
 
@@ -844,16 +845,16 @@ deleted, including the Primary Domain.
 
 The renew command is not extended.
 
-The server MAY reject renewals while a same entity set is being
+The server MAY reject renewals while a Same Entity Set is being
 transferred.
 
 
 ## EPP &lt;transfer&gt; query command
 
-Same entity sets are transferred as a set and thus the result of a
+Same Entity Sets are transferred as a set and thus the result of a
 &lt;transfer&gt; query command is necessarily the same for all domains
 in a set. Therefore, the result of a &lt;transfer&gt; query command
-for any domain in a same entity set applies to all domains in the
+for any domain in a Same Entity Set applies to all domains in the
 set.
 
 The transfer query command is not extended.
@@ -913,8 +914,8 @@ If two domains are different according to the DNS rules and identical
 in the eyes of the intended audience, then the audience may be
 confused. Confusion can always have security-related effects.
 
-This extension expresses the relationships between members of a same
-entity set clearly, making it a little more difficult for a would-be
+This extension expresses the relationships between members of a Same
+Entity Set clearly, making it a little more difficult for a would-be
 impersonator to register a member of another registrant's existing
 domain.
 
