@@ -387,7 +387,7 @@ aware client and the target domain is or could be a member of a Same
 Entity Set, if that Same Entity Set has at least one Allocated or
 Exempted member, the server's response:
 
-* MUST contain an &lt;extension&gt, which MUST contain a child
+* MUST contain an &lt;extension&gt;, which MUST contain a child
 &lt;var:chkData&gt; element.
 
 * The &lt;fee:chkData&gt; element MUST contain a &lt;var:cd&gt;
@@ -467,7 +467,9 @@ S:   </response>
 S: </epp>
 ~~~~~~~~~~~
 
-The EPP &lt;check&gt; command may return six new results:
+The EPP &lt;check&gt; command may returns seven new results:
+
+- Allocated: The domain is already registered/allocated.
 
 - AllocatableMember: A member of the Same Entity Set is already
 active. Provisioning of this domain must be to the same registrant via
