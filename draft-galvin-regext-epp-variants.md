@@ -134,7 +134,7 @@ Domain creates a set. The other members of the set thereby begin to
 exist in a conceptual sense, as the set may be extremely large (a set
 containing 10¹⁵ domains has been described in a realistic use case).
 Therefore, this extension offers no way to enumerate the set's
-members. The EPP client may list the allocated members of the set, but
+members. The EPP server may list the allocated members of the set, but
 the EPP server never lists the complete set. This leads to the third
 restriction:
 
@@ -338,8 +338,7 @@ which MUST include at least the following properties.
   following status values.
 
   The Allocated status means that the member of the set is active in
-  the registry. It may or may not be delegated in the DNS. It may or
-  may not be registered in the registry.
+  the registry. It may or may not be delegated in the DNS. 
 
   The Allocatable status means that the member of the set is
   available to be allocated by the same entity.
