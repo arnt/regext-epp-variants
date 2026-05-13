@@ -645,14 +645,14 @@ the server and the client support Same Entity Sets.
 When the server receives a &lt;transfer&gt; command from a same entity
 agnostic client and the target domain is or could be a member of a
 Same Entity Set, if that Same Entity Set has exactly one Allocated or
-Exempted member the transfer request is acted upon according to the
-standard. If the target domain has a status of Exempted, it retains
-that status.
+any number of Exempted members the transfer request is acted upon 
+according to the standard. If the target domain has a status of Exempted,
+it retains that status.
 
 When the server receives a &lt;transfer&gt; command from a same entity
 agnostic client and the target domain is or could be a member of a
-Same Entity Set, if that Same Entity Set has more than one Allocated or
-Exempted member the transfer request MUST be denied using 2305 "Object
+Same Entity Set, if that Same Entity Set has more than one Allocated 
+member the transfer request MUST be denied using 2305 "Object
 status prohibits operation".
 
 When the server receives a &lt;transfer&gt; command from a same entity
@@ -675,21 +675,112 @@ The server's response to the transfer request MUST contain an
 * A &lt;var:primary&gt; element matching the Primary Domain for the
 Same Entity Set of the target domain, which MAY match the target domain.
 
-* A list of all the Allocated and Exempted members of the Same Entity Set.
+* A list of all the Allocated members of the Same Entity Set.
 
 If the registry of the target domain is itself a member of a Same
 Entity Set and the target domain is or could be a member of a Same
 Entity Set in any registry in that registry's Same Entity Set, if any
-one of those target domain Same Entity Sets has at least one Allocated
-or Exempted member, the server's response MUST contain an
-&lt;extension&gt; element with the following child elements:
+one of those target domain Same Entity Sets has at least one Allocated,
+the server's response MUST contain an &lt;extension&gt; element with 
+the following child elements:
 
 * A &lt;var:primary&gt; element matching the Primary Domain for the
 Same Entity Set of the target domain, which MAY match the target domain.
 
 * A list of all the Same Entity Sets of the target domain with
-Allocated or Exempted members such that each Same Entity Set list has
+Allocated members such that each Same Entity Set list has
 its Primary Domain listed first.
+
+Example &lt;transfer&gt; request when transferring a Same Entity Set:
+~~~~~~~~~~~
+C: <?xml version="1.0" encoding="UTF-8"?>
+C: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+C:   <command>
+C:     <transfer op="request">
+C:       <transfer xmlns="urn:ietf:params:xml:ns:domain-1.0">
+C:         <name>example.com</name>
+C:         <authInfo>
+C:           <pw>secret</pw>
+C:         </authInfo>
+C:       </transfer>
+C:     </transfer>
+C:     <extension>
+C:       <var:primary xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
+C:         <var:name>example.com</var:name>
+C:       </var:primary>
+C:     </extension>
+C:     <clTRID>tr-1759740608479</clTRID>
+C:   </command>
+C: </epp>
+~~~~~~~~~~~
+
+
+Example &lt;transfer&gt; response when transferring a Same Entity Set:
+~~~~~~~~~~~
+S: <?xml version="1.0" encoding="UTF-8"?>
+S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+S:   <response>
+S:     <result code="1001">
+S:       <msg>Command completed successfully; action pending</msg>
+S:     </result>
+S:     <resData>
+S:       <domain:trnData xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+S:         <domain:name>example.com</domain:name>
+S:         <domain:trStatus>pending</domain:trStatus>
+S:         <domain:reID>4148</domain:reID>
+S:         <domain:reDate>2025-10-06T08:50:08Z</domain:reDate>
+S:         <domain:acID>106</domain:acID>
+S:         <domain:acDate>2025-10-11T08:50:08Z</domain:acDate>
+S:         <domain:exDate>2027-05-11T09:01:33Z</domain:exDate>
+S:       </domain:trnData>
+S:     </resData>
+S:     <extension>
+S:       <var:infData xmlns:var="urn:ietf:params:xml:ns:epp:variants-1.0">
+S:         <var:primary>
+S:           <var:name>example.com</var:name>
+S:           <var:name>example.comv1</var:name>
+S:           <var:name>example.comv2</var:name>
+S:         </var:primary>
+S:         <var:variant>
+S:           <var:name>examplev1.com</var:name>
+S:           <var:name>examplev2.com</var:name>
+S:           <var:name>examplev1.comv1</var:name>
+S:           <var:name>examplev1.comv2</var:name>
+S:         </var:variant>
+S:       </var:infData>
+S:     </extension>
+S:     <trID>
+S:       <clTRID>tr-1759740608479</clTRID>[transfer-error-response.xml](transfer-error-response.xml)
+S:       <svTRID>14847187000-1759740608529-33232260892</svTRID>
+S:     </trID>
+S:   </response>
+S: </epp>
+~~~~~~~~~~~
+
+
+Example &lt;transfer&gt; error response when a same entity
+agnostic client tries to transfer a domain being a part of a Same Entity Set
+~~~~~~~~~~~
+S: <?xml version="1.0" encoding="UTF-8"?>
+S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+S:   <response>
+S:     <result code="2305">
+S:       <msg>Object status prohibits operation</msg>
+S:       <extValue>
+S:         <value xmlns:epp="urn:ietf:params:xml:ns:epp-1.0">
+S:           <epp:undef/>
+S:         </value>
+S:         <reason>Domain is part of a Same Entity Set. Use extension.</reason>
+S:       </extValue>
+S:     </result>
+S:     <trID>
+S:       <clTRID>O733952948_1759741733997</clTRID>
+S:       <svTRID>14847241225-1759741733979</svTRID>
+S:     </trID>
+S:   </response>
+S: </epp>
+~~~~~~~~~~~
+
 
 __TODO__: It must be ensured that the poll message to the losing registrar
 also contains the full list of domains that will be transferred together with
