@@ -750,7 +750,7 @@ S:         </var:variant>
 S:       </var:infData>
 S:     </extension>
 S:     <trID>
-S:       <clTRID>tr-1759740608479</clTRID>[transfer-error-response.xml](transfer-error-response.xml)
+S:       <clTRID>tr-1759740608479</clTRID>
 S:       <svTRID>14847187000-1759740608529-33232260892</svTRID>
 S:     </trID>
 S:   </response>
