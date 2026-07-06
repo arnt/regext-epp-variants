@@ -6,7 +6,7 @@ submissiontype: IETF
 area: "Applications and Real-Time"
 wg: regext
 
-docname: draft-galvin-regext-epp-variants-latest
+docname: draft-ietf-regext-epp-same-entity-latest
 
 title: Domain variant support for EPP
 abbrev: EPP Variants
@@ -364,6 +364,7 @@ The main part of the response MUST contain the actual data of the queried
 domain name (contacts, hosts, status values, etc.)
 
 Example &lt;info&gt; response when querying a primary domain name:
+
 ~~~~~~~~~~~
 S: <?xml version="1.0" encoding="UTF-8"?>
 S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
@@ -476,7 +477,7 @@ __TODO__: check alignment of the new error codes
 
 ## EPP &lt;update&gt; command
 
-The EPP <update> command provides a transform operation that allows a
+The EPP &lt;update&gt; command provides a transform operation that allows a
 client to change the state of a variant domain object. It is extended
 to cover three new tasks:
 
@@ -521,6 +522,7 @@ The command MUST contain an &lt;extension&gt; element, which MUST contain a
 variant should be added.
 
 Example &lt;update&gt; command activating a new variant:
+
 ~~~~~~~~~~~
 C: <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 C: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
@@ -557,25 +559,26 @@ The response is not extended and returns the standard success result in case
 the variant was successfullly activated.
 
 If a client wishes to deactivate a previously activated variant (except the
-primary domain) it also uses the  &lt;update&gt; command.  
+primary domain) it also uses the  &lt;update&gt; command.
 
 The EPP domain mapping from RFC3915 describes the elements that
-have to be specified within an <update> command.  The requirement to
-provide at least one <domain:add>, <domain:rem>, or <domain:chg>
+have to be specified within an &lt;update&gt; command.  The requirement to
+provide at least one &lt;domain:add&gt;, &lt;domain:rem&gt;, or &lt;domain:chg&gt;
 element is updated by this extension such that at least one empty
-<domain:add>, <domain:rem>, or <domain:chg> element MUST be present
-if this extension is specified within an <update> command.  This
+&lt;domain:add&gt;, &lt;domain:rem&gt;, or &lt;domain:chg&gt; element MUST be present
+if this extension is specified within an &lt;update&gt; command.  This
 requirement is updated to disallow the possibility of modifying a
 domain object as part of the deactivation.
 
 The command MUST contain an &lt;extension&gt; element, which MUST contain a
 &lt;var:update&gt; element. The &lt;var:update&gt; element MUST contain one
-&lt;var:deactivate&gt; element set to true. This confirms to the server 
+&lt;var:deactivate&gt; element set to true. This confirms to the server
 that the client is not trying to update the content of the variant domain,
 but rather deactivate it.
 
 
 Example &lt;update&gt; command deactivating an existing variant:
+
 ~~~~~~~~~~~
 C: <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 C: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
@@ -684,7 +687,7 @@ team included Dennis Tan, Rick Wilhelm, Edmon Chung, and Jennifer Chung.
 This text (in RFC format) was initially written by Arnt
 Gulbrandsen based on a conference presentation by James Galvin.
 
-[YOUR NAME HERE] have reviewed it and provided helpful
+YOUR NAME HERE have reviewed it and provided helpful
 comments or contributed in other ways.
 
 # Security Considerations {#Security}
