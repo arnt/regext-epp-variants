@@ -598,6 +598,7 @@ S: </epp>
 ~~~~~~~~~~~
 
 Example &lt;info&gt; response when querying a primary domain name:
+
 ~~~~~~~~~~~
 S: <?xml version="1.0" encoding="UTF-8"?>
 S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
@@ -701,6 +702,7 @@ Allocated members such that each Same Entity Set list has
 its Primary Domain listed first.
 
 Example &lt;transfer&gt; request when transferring a Same Entity Set:
+
 ~~~~~~~~~~~
 C: <?xml version="1.0" encoding="UTF-8"?>
 C: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
@@ -725,6 +727,7 @@ C: </epp>
 
 
 Example &lt;transfer&gt; response when transferring a Same Entity Set:
+
 ~~~~~~~~~~~
 S: <?xml version="1.0" encoding="UTF-8"?>
 S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
@@ -769,6 +772,7 @@ S: </epp>
 
 Example &lt;transfer&gt; error response when a same entity
 agnostic client tries to transfer a domain being a part of a Same Entity Set
+
 ~~~~~~~~~~~
 S: <?xml version="1.0" encoding="UTF-8"?>
 S: <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
