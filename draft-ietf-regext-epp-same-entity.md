@@ -344,7 +344,7 @@ which MUST include at least the following properties.
   following status values.
 
   The Allocated status means that the member of the set is active in
-  the registry. It may or may not be delegated in the DNS. 
+  the registry. It may or may not be delegated in the DNS.
 
   The Allocatable status means that the member of the set is
   available to be allocated by the same entity.
@@ -655,13 +655,13 @@ the server and the client support Same Entity Sets.
 When the server receives a &lt;transfer&gt; command from a same entity
 agnostic client and the target domain is or could be a member of a
 Same Entity Set, if that Same Entity Set has exactly one Allocated or
-any number of Exempted members the transfer request is acted upon 
+any number of Exempted members the transfer request is acted upon
 according to the standard. If the target domain has a status of Exempted,
 it retains that status.
 
 When the server receives a &lt;transfer&gt; command from a same entity
 agnostic client and the target domain is or could be a member of a
-Same Entity Set, if that Same Entity Set has more than one Allocated 
+Same Entity Set, if that Same Entity Set has more than one Allocated
 member the transfer request MUST be denied using 2305 "Object
 status prohibits operation".
 
