@@ -704,12 +704,12 @@ S:           <var:name>example.com</var:name>
 S:           <var:name>example.comv1</var:name>
 S:           <var:name>example.comv2</var:name>
 S:         </var:primary>
-S:         <var:variant>
+S:         <var:related>
 S:           <var:name>examplev1.com</var:name>
 S:           <var:name>examplev2.com</var:name>
 S:           <var:name>examplev1.comv1</var:name>
 S:           <var:name>examplev1.comv2</var:name>
-S:         </var:variant>
+S:         </var:related>
 S:       </var:infData>
 S:     </extension>
 S:     <trID>
@@ -853,7 +853,7 @@ the Primary Domain indicated in the extension do not match.
 If the &lt;var:status&gt; child element is present in the extension,
 one of the following actions MUST be completed as appropriate.
 
-Example &lt;update&gt; command activating a new variant:
+Example &lt;update&gt; command activating a new related domain:
 
 ~~~~~~~~~~~
 C: <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -927,11 +927,11 @@ part of the deactivation.
 The command MUST contain an &lt;extension&gt; element, which MUST contain a
 &lt;var:update&gt; element. The &lt;var:update&gt; element MUST contain one
 &lt;var:deactivate&gt; element set to true. This confirms to the server
-that the client is not trying to update the content of the variant domain,
+that the client is not trying to update the content of the related domain,
 but rather deactivate it.
 
 
-Example &lt;update&gt; command deactivating an existing variant:
+Example &lt;update&gt; command deactivating an existing related domain:
 
 ~~~~~~~~~~~
 C: <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -1049,11 +1049,11 @@ The following additional result codes are defined:
 
 23x1: Change impossible because of a transfer in progress.
 
-23x2: Change impossible because something is not a variant.
+23x2: Change impossible because something is not a related domain.
 
 This error code is used when a change presupposes that two domains
-belong to the same variant group, but the EPP server's implementation
-disagrees.
+belong to the same related domain group, but the EPP server's 
+implementation disagrees.
 
 23x3: Change impossible due to invalid primary domain
 
@@ -1073,8 +1073,8 @@ instead.
 
 23x6: Specified domain is allocatable, but not by you.
 
-This result code is used when a domain is a member of a variant set,
-and the command did not refer to the primary domain.
+This result code is used when a domain is a member of a related
+domain set, and the command did not refer to the primary domain.
 
 
 
