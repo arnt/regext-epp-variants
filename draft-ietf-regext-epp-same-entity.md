@@ -648,12 +648,12 @@ one of those target domain Same Entity Sets has at least one Allocated
 domain, the server's response MUST contain an &lt;extension&gt;
 element with the following child elements:
 
-* A &lt;var:primary&gt; element matching the Primary Domain for the
-Same Entity Set of the target domain, which MAY match the target domain.
+* A &lt;var:primary&gt; element matching the Primary Domain of each
+registry's Same Entity Set with at least one Allocated domain; one 
+of those MAY match the target domain.
 
-* A list of all the Same Entity Sets of the target domain with
-Allocated members such that each Same Entity Set list has
-its Primary Domain listed first.
+* A list of all Allocated members of all registry's Same Entity Set 
+of the target domain.
 
 Example &lt;transfer&gt; request when transferring a Same Entity Set:
 
