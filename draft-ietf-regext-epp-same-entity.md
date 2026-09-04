@@ -524,7 +524,9 @@ Exempted member, the server's response MUST contain an
 
 * A &lt;var:primary&gt; element containing a &lt;var:name&gt; element
 matching the Primary Domain for the Same Entity Set of the target domain,
-which MAY match the target domain.
+which MAY match the target domain. This is not possible for sets with
+exempted domains as no (unique) Primary Domain exists, in which
+case the &lt;var:primary&gt; element MUST NOT be included.
 
 * A &lt;var:related&gt; element containing the list of all the Allocated
 and Exempted members of the Same Entity Set, each in their own
@@ -540,7 +542,9 @@ or Exempted member, the server's response MUST contain an
 
 * A &lt;var:primary&gt; element containing &lt;var:name&gt; elements
 listing each allocated Primary Domain for all registries that are members
-of the Same Entity Set.
+of the Same Entity Set. This is not possible for sets with
+exempted domains as no (unique) Primary Domain exists, in which
+case the &lt;var:primary&gt; element MUST NOT be included.
 
 * A &lt;var:related&gt; element containing the list of all the Same Entity
 Sets of the target domain with Allocated or Exempted members, each in their
