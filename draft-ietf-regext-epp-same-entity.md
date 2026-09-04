@@ -386,8 +386,7 @@ Exempted member, the server's response:
 
 * MUST indicate 'available = "false"'.
 
-* MAY indicate a reason of "Unavailable (except as member of a Same
-  Entity Set)".
+* MAY indicate a reason of "Unavailable (in Same Entity Set)".
 
 When the server receives a &lt;check&gt; command from a same entity
 aware client and the target domain is or could be a member of a Same
