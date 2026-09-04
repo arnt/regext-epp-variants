@@ -76,7 +76,7 @@ is generally used throughout this document.) A registry specifies a
 policy that is shared with registrars that defines the
 characteristic(s) that make the members of the set equivalent and the
 options that are relevant to the members of the set. This policy and
-the method by which it is shared is outside the scope of this
+the method by which it is shared are outside the scope of this
 specification.
 
 This document exemplifies the use of three types of options that may
@@ -175,12 +175,12 @@ https://docs.google.com/document/d/1WR00oB43XZCDqD0zvRvRajuWAq_9wQ3c0RrFKlGC3So/
 # Terms
 
 Allocated Member: A domain that has been created in the registry, and
-which is related to an existing Primary Domain according to a registry
-defined policy.
+which is related to an existing Primary Domain according to a 
+registry-defined policy.
 
 Allocatable Member: A domain that has not been allocated and exists at
 least conceptually in a Same Entity Set because it is related to the
-aforementioned set's Primary Domain according to a registry defined
+aforementioned set's Primary Domain, according to a registry-defined 
 policy.
 
 Activated Member: An Allocated Member domain that is in the DNS. For
@@ -191,7 +191,7 @@ disposition value option in relation to the Primary Domain name. This
 is common when a domain is an IDN and the members of a set are created
 according to Label Generation Rules.
 
-Exempted domain: A preexisting domain that exists as a stand-alone
+Exempted domain: A preexisting domain that existed as a stand-alone
 domain prior to the introduction of support for this extension and
 would be part of a set if it were created or allocated now. Exempted
 domains may exist with any registrant at any registrar. The exemption
@@ -247,11 +247,11 @@ at any time.
 
 ## Backwards Compatibility
 
-Support for Same Entity Sets is optional and therefore it is REQUIRED
+Support for Same Entity Sets is optional, and therefore it is REQUIRED
 that a registry supporting Same Entity Sets MUST be backwards
 compatible with a registrar that does not support Same Entity Sets.
 Backwards compatibility is REQUIRED to mean that a registrar will
-receive a response that is fail-safe including when the registrar may
+receive a response that is fail-safe, including when the registrar may
 not be able to fully understand the reason for the rejection.
 
 A registry that does not support Same Entity Sets will behave
@@ -293,7 +293,7 @@ commands with explicit requirements: &lt;transfer&gt; and
 The following technical principles have guided the development of this
 extension and established operational requirements.
 
-* The members of a Same Entity Set are defined by registry policy and
+* The members of a Same Entity Set are defined by registry policy, and
 that policy must be agreed by both the registry and the registrar. The
 establishment of this policy and the method by which the parties agree
 is outside the scope of this specification. Multiple registries may
@@ -304,9 +304,9 @@ themselves be members of a Same Entity Set.
     have the advantage that there is a relatively formal process for
     defining the eligible members of a set. However, some Latin
     characters with diacritic marks are not considered variants of
-    Latin characters without diacritic marks and yet there are
+    Latin characters without diacritic marks, and yet there are
     circumstances when it is desirable for them to be considered
-    equivalent. As a result this extension presumes the existence of a
+    equivalent. As a result, this extension presumes the existence of a
     set and deems outside its scope the actual definition of the
     equivalence of the members of the set.
 
@@ -321,7 +321,7 @@ which MUST include at least the following properties.
     This principle derives directly from the Same Entity Principle.
 
     In the case of IDNs, the LGR tables may be different in each
-    registry but the tables MUST be harmonized to ensure symmetry.
+     registry, but the tables MUST be harmonized to ensure symmetry.
 
   * The first domain created in a Same Entity Set is designated the
     Primary Domain.
@@ -360,7 +360,7 @@ which MUST include at least the following properties.
   registries in the Same Entity Set of the registry. This ensures that
   only the same registrar is permitted to register or allocate any
   member of the set in any registry. Note, this implicit creation only
-  ensures emembership. In particular, there is no implied designation
+  ensures membership. In particular, there is no implied designation
   of a Primary Domain; the Primary Domain MUST be explicitly created.
 
 
@@ -389,7 +389,7 @@ Exempted member, the server's response:
 * MAY indicate a reason of "Unavailable (except as member of a Same
   Entity Set)".
 
-When the server receive a &lt;check&gt; command from a same entity
+When the server receives a &lt;check&gt; command from a same entity
 aware client and the target domain is or could be a member of a Same
 Entity Set, if that Same Entity Set has at least one Allocated or
 Exempted member, the server's response:
@@ -398,10 +398,10 @@ Exempted member, the server's response:
 &lt;var:chkData&gt; element.
 
 * The &lt;fee:chkData&gt; element MUST contain a &lt;var:cd&gt;
-element for each object referenced in the client &lt;check&gt;
-command.
+(check data) element for each object referenced in the 
+client &lt;check&gt; command.
 
-* Each &lt;var:cd&gt; (check data) element MUST contain the following child
+* Each &lt;var:cd&gt; element MUST contain the following child
 elements:
 
   * A &lt;var:objID&gt; element, which MUST match an element
@@ -412,8 +412,8 @@ elements:
     exempted domains as no (unique) Primary Domain exists, in which
     case the &lt;var:primary&gt; element MUST NOT be included.
 
-* MAY contain a &lt;var:status&gt; element, which explains in more
-detail the availability status of the queried domain.
+  * MAY contain a &lt;var:status&gt; element, which explains in more
+    detail the availability status of the queried domain.
 
 
 Example &lt;check&gt; response:
@@ -490,7 +490,7 @@ registrar.
 value is blocked.
 
 - Exempted: The domain cannot be provisioned because it should be a
-member of a Same Entity Set but the the set contains Exempted members.
+member of a Same Entity Set, but the set contains Exempted members.
 
 - PendingTransfer: The domain cannot be provisioned because it is a
 member of a Same Entity Set that is currently being transferred to a
@@ -510,7 +510,7 @@ The main part of the response MUST contain the actual data of the target
 domain name (contacts, hosts, status values, etc.).
 
 When the server receives an &lt;info&gt; command from a same entity
-agnostic client the response MUST contain the actual data of the
+agnostic client, the response MUST contain the actual data of the
 target domain, independent of whether it is a member of a Same Entity
 Set. In addition, if the same entity agnostic registrar is inquiring
 about a domain with a status of Allocatable, the response SHOULD be
@@ -613,7 +613,7 @@ it retains that status.
 When the server receives a &lt;transfer&gt; command from a same entity
 agnostic client and the target domain is or could be a member of a
 Same Entity Set, if that Same Entity Set has more than one Allocated
-member the transfer request MUST be denied using 2305 "Object
+member, the transfer request MUST be denied using 2305 "Object
 status prohibits operation".
 
 When the server receives a &lt;transfer&gt; command from a same entity
@@ -621,7 +621,7 @@ aware client and the target domain is or could be a member of a Same
 Entity Set, the request must include an &lt;extension&gt; element with
 a &lt;var:primary&gt; element matching the Primary Domain, including
 if the Primary Domain is the target domain. If the extension is not
-present the transfer request MUST be denied using '2003 "Required
+present, the transfer request MUST be denied using '2003 "Required
 parameter missing"'. Note that the &lt;check&gt; or &lt;info&gt;
 command MAY be used to identify the Primary Domain.
 
@@ -839,7 +839,7 @@ least the &lt;var:primary&gt; child element indicating the Primary
 Domain of the corresponding Same Entity Set, including when the target
 domain is or intended to be the Primary Domain. The extension MAY
 include additional elements as indicated below to provision a new
-task. If the extension is not present the command MUST be rejected and
+task. If the extension is not present, the command MUST be rejected and
 indicate that a required parameter is missing.
 
 If the Primary Domain and the target domain match, all other elements
@@ -890,18 +890,18 @@ C: </epp>
 * In order to Activate an Allocatable domain, the target domain MUST
 have a status of Allocatable and the extension MUST include the
 &lt;var:status&gt; child element with a value of "allocated". The
-server MUST update the status of the target domain and the response
+server MUST update the status of the target domain, and the response
 MUST include the extension element with both the Primary Domain
 indicated and the revised status indicated.
 
 * In order to deactivate an Allocated domain, the target domain MUST
 have a status of Allocated and the extension MUST include the
 &lt;var:status&gt; child element with a value of "allocatable". The
-server MUST update the status of the target domain and the response
+server MUST update the status of the target domain, and the response
 MUST include the extension element with both the Primary Domain
 indicated and the revised status indicated.
 
-* In all other cases, if the status element is present the command
+* In all other cases, if the status element is present, the command
 MUST be rejected and indicate an invalid parameter is present.
 
 If the &lt;var:status&gt; child element is not present in the
@@ -962,9 +962,9 @@ the extension MUST match.
 
 * The target domain MUST have the status of Exempted.
 
-* If there exists multiple Exempted domains that would ordinarily be
+* If there exist multiple Exempted domains that would ordinarily be
 members of the Same Entity Set, they MUST all have the same Registrar
-of Record and it MUST match the update requesting registrar, and the
+of Record, it MUST match the update requesting registrar, and the
 extension MUST include a list of all Exempted domains, including the
 Primary Domain, that MUST match the list maintained by the registry.
 
@@ -975,7 +975,7 @@ extension indicating the Primary Domain and the list of domains whose
 status changed from Exempted to Allocated.
 
 If a previously same entity agnostic client becomes same entity aware
-and wishes to convert a registered domain to be a Primary Domain of
+and wishes to convert a registered domain to be a Primary Domain of a
 same entity set, the update command from the client MUST be provided as
 follows.
 
@@ -1015,7 +1015,7 @@ match the target domain name.
 The delete command is extended such that all Allocated members of the
 Same Entity Set defined by the Primary Domain MUST all be deleted at
 once. If it is not possible for any member of the Same Entity Set to
-be deleted for any reason, the delete command MUST fail leaving all
+be deleted for any reason, the delete command MUST fail, leaving all
 members of the Same Entity Set intact.
 
 If the delete command is successful, the response MUST include the
@@ -1034,7 +1034,7 @@ transferred.
 
 ## EPP &lt;transfer&gt; query command
 
-Same Entity Sets are transferred as a set and thus the result of a
+Same Entity Sets are transferred as a set, and thus the result of a
 &lt;transfer&gt; query command is necessarily the same for all domains
 in a set. Therefore, the result of a &lt;transfer&gt; query command
 for any domain in a Same Entity Set applies to all domains in the
@@ -1058,12 +1058,12 @@ implementation disagrees.
 23x3: Change impossible due to invalid primary domain
 
 This error code is used when the primary domain specified in the
-command is not registered, or is not registered via this registrar.
+command is not registered or is not registered via this registrar.
 
 23x4: Change impossible due to unspecified primary domain
 
 This error code is used when a command needs to specify a primary
-domain, and does not.
+domain and does not.
 
 23x5: Specified domain is exempted
 
@@ -1120,7 +1120,7 @@ protocol affects security in any way.
 
 Open issue: Check how to insert a DS record in a variant domain.
 
-Open issue: Can a unicode upgrade cause domains to become
+Open issue: Can a Unicode upgrade cause domains to become
 exempted?  Yes, I think, and the terminology covers it, but as of
 now, it's difficult for the EPP client to understand the situation.
 Extending the &lt;info&gt; command would help here, perhaps.
