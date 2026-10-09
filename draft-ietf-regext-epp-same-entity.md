@@ -370,6 +370,19 @@ which MUST include at least the following properties.
 In this section, the behavior of each EPP command when Same Entity
 Sets are supported is specified.
 
+In general, the server decides between same entity aware clients and
+same entity agnostic clients. The behaviour and responses of some
+server responses depend on this distinction. The sever needs to
+ensure that same entity agnostic clients can operate normally
+without accidentally activating any related domains in a same entity set.
+They still can register a single primary domain in any same entity set
+as the server will need to ensure all related domains are unavailable 
+to different entities.
+
+The disctinction MAY be done by storing out-of-band information 
+about the client. Alternatively, the server MAY also ascertain this
+information during the EPP login command.
+
 
 ## EPP &lt;check&gt; command
 
@@ -777,13 +790,11 @@ appropriate.
 Exempted, the command MUST be rejected and the response MUST be the
 same as if the domain to be created is reserved.
 
-* If there are no members of the Same Entity Set either Allocated or
-Exempted, the &lt;create&gt; MUST proceed according to the EPP standard
-with the server implicitly reserving all other members of the Same
-Entity Set such that they MUST NOT be allocated until such time as the
-client is same entity aware and the client MUST indicate that the target
-domain is to be extended to be a Primary Domain as described in the
-&lt;update&gt; command.
+* If the target domain does not exist and no other member of the Same
+Entity Set is Allocated or Exempted, the &lt;create&gt; command MUST
+proceed according to the EPP standard with the server implicitly
+noting to itself the existence of all other members of the Same Entity
+Set and setting their status value as prescribed by registry policy.
 
 When the server receives a &lt;create&gt; command from a same entity
 aware client and the target domain is or could be a member of a
@@ -817,7 +828,7 @@ Set. It is extended to cover three new tasks:
 
 * Deactivating an activated domain in an existing Same Entity Set.
 
-* Converting an Allocated or Exempted Domain into a Primary Domain and
+* Converting an Exempted Domain into a Primary Domain and
 optionally converting other Exempted Domains that are eligible to be
 in the Same Entity Set of the stated Primary Domain to be activated
 domains of the Same Entity Set.
@@ -831,9 +842,8 @@ A same entity agnostic client MUST only use the standard defined
 &lt;update&gt; command and the server MUST only respond as defined by
 the standard.
 
-The rest of this section specifies behavior when same entity aware
-servers and same entity aware clients are interacting and describes
-the three new tasks.
+The rest of this section specifies behavior when servers and same 
+entity aware clients are interacting and describes the three new tasks.
 
 When the target domain of the update command is any member of a Same
 Entity Set, including the Primary Domain of the Same Entity Set, the
@@ -977,29 +987,22 @@ and MUST indicate the Primary Domain. The response MUST include an
 extension indicating the Primary Domain and the list of domains whose
 status changed from Exempted to Allocated.
 
-If a previously same entity agnostic client becomes same entity aware
-and wishes to convert a registered domain to be a Primary Domain of a
-same entity set, the update command from the client MUST be provided as
-follows.
 
-* The target domain of the update command and the Primary Domain in
-the extension MUST match.
-
-* The target domain MUST have the status of registered and MUST have
-the same Registrar of Record as the update requesting registrar.
-
-If the update command is valid as indicated above, the server MUST
-change the status of the indicated domains to Allocated, and MUST
-indicate it as the Primary Domain. The response MUST include an
-extension indicating the Primary Domain.
 
 ## EPP &lt;delete&gt; command
 
 When the server receives a &lt;delete&gt; command from a same entity
-agnostic client the server MUST respond as defined by the standard.
+agnostic client and the domain is the single domain the same
+entity set, the server MUST respond as defined by the standard.
+The set is disolved and all domains are again available for registration.
+Note that a registration of any of those domains will again create
+a same entity set containin the exact same members as before. Should
+the to be deleted domain's same entity set contain at least one other
+related domain, the command MUST be denied using 2305 "Object
+status prohibits operation".
 
-The rest of this section specifies behavior when same entity aware
-servers and same entity aware clients are interacting.
+The rest of this section specifies behavior when servers and same
+entity aware clients are interacting.
 
 The &lt;delete&gt; command is extended to REQUIRE the deletion of all
 members of a Same Entity Set if the Primary Domain is deleted.
